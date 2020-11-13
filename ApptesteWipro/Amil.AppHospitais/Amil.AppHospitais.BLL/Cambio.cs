@@ -11,28 +11,7 @@ namespace Amil.AppHospitais.BLL
 {
     public class Cambio
     {
-        public static List<DTO.Cambio> Listar(bool listSomenteAtivos = true)
-        {
-            var retorno = new List<DTO.Cambio>();
-            try
-            {
-                CambioDAO dao = new CambioDAO();
-
-                if (listSomenteAtivos)
-                    retorno = dao.ListarAtivos();
-                else
-                    retorno = dao.ListarTodos();
-            }
-            catch (Exception ex)
-            {
-                WebOperationContext.Current.OutgoingResponse.StatusCode = HttpStatusCode.InternalServerError;
-                throw new WebFaultException<DTO.Erro>(new DTO.Erro { codigoErro = "3", mensagemErro = "Erro ao listar os Convênios: " + ex.Message }, HttpStatusCode.InternalServerError);
-            }
-
-            return retorno;
-
-        }
-
+        
         public static DTO.Cambio ListarPorId(int idCambio)
         {
             var retorno = new DTO.Cambio();
@@ -46,7 +25,7 @@ namespace Amil.AppHospitais.BLL
                 // throw ex;
 
                 WebOperationContext.Current.OutgoingResponse.StatusCode = HttpStatusCode.InternalServerError;
-                throw new WebFaultException<DTO.Erro>(new DTO.Erro { codigoErro = "3", mensagemErro = "Erro ao listar os Convênios: " + ex.Message }, HttpStatusCode.InternalServerError);
+                throw new WebFaultException<DTO.Erro>(new DTO.Erro { codigoErro = "3", mensagemErro = "Erro ao listar os Cambio " + ex.Message }, HttpStatusCode.InternalServerError);
             }
 
             return retorno;
@@ -66,7 +45,7 @@ namespace Amil.AppHospitais.BLL
             catch (Exception ex)
             {
                 WebOperationContext.Current.OutgoingResponse.StatusCode = HttpStatusCode.InternalServerError;
-                throw new WebFaultException<DTO.Erro>(new DTO.Erro { codigoErro = "4", mensagemErro = "Erro ao gravar novo Cambio " + ex.Message }, HttpStatusCode.InternalServerError);
+                throw new WebFaultException<DTO.Erro>(new DTO.Erro { codigoErro = "4", mensagemErro = "Erro ao gravar novo Cambio: " + ex.Message }, HttpStatusCode.InternalServerError);
             }
             return retorno;
         }

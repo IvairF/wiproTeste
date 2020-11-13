@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Amil.AppHospitais.DTO
 {
-    public class Cambio    {  
+    public class Cambio
+    {  
         
-        public int moeda { get; set; }       
+        public string moeda { get; set; }       
         public DateTime data_inicio { get; set; }        
         public DateTime data_fim { get; set; }
 

@@ -20,11 +20,12 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,67 +54,7 @@
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AlergiasController.cs" />
-    <Compile Include="Controllers\AlterarSenhaController.cs" />
-    <Compile Include="Controllers\AlturaController.cs" />
-    <Compile Include="Controllers\AntecedenteFamiliarController.cs" />
-    <Compile Include="Controllers\AntecedentePessoalController.cs" />
-    <Compile Include="Controllers\AtividadeFisicaController.cs" />
-    <Compile Include="Controllers\BeaconController.cs" />
-    <Compile Include="Controllers\BeneficiarioController.cs" />
-    <Compile Include="Controllers\BuscarConfiguracaoController.cs" />
-    <Compile Include="Controllers\BuscaSenhaPreTriagemController.cs" />
-    <Compile Include="Controllers\CadastrarUsuarioController.cs" />
-    <Compile Include="Controllers\CirurgiaController.cs" />
-    <Compile Include="Controllers\ConfiguracaoController.cs" />
-    <Compile Include="Controllers\ConselhoController.cs" />
-    <Compile Include="Controllers\ConsomeBebidaController.cs" />
-    <Compile Include="Controllers\ConsultaTokenController.cs" />
-    <Compile Include="Controllers\ConvenioController.cs" />
-    <Compile Include="Controllers\UsuarioConselhoController.cs" />
-    <Compile Include="Controllers\EstadoController.cs" />
-    <Compile Include="Controllers\PerfilUsuarioController.cs" />
-    <Compile Include="Controllers\PerfilModuloSistemaController.cs" />
-    <Compile Include="Controllers\ModuloController.cs" />
-    <Compile Include="Controllers\SistemaController.cs" />
-    <Compile Include="Controllers\PerfilController.cs" />
-    <Compile Include="Controllers\DadoMonitoradoController.cs" />
-    <Compile Include="Controllers\DadoMonitoradoGraficoController.cs" />
-    <Compile Include="Controllers\ElegibilidadeController.cs" />
-    <Compile Include="Controllers\EspecialidadesController.cs" />
-    <Compile Include="Controllers\EsqueciSenhaController.cs" />
-    <Compile Include="Controllers\GetTokenController.cs" />
-    <Compile Include="Controllers\GetTokenRedeSocialController.cs" />
-    <Compile Include="Controllers\HistoricoMedicamentoController.cs" />
-    <Compile Include="Controllers\InformacoesPreTriagemController.cs" />
-    <Compile Include="Controllers\ItemAtividadeFisicaController.cs" />
-    <Compile Include="Controllers\ItemBebidaController.cs" />
-    <Compile Include="Controllers\ItensNecessidadesEspeciais.cs" />
-    <Compile Include="Controllers\LoginAlterarSenhaController.cs" />
-    <Compile Include="Controllers\LoginCadastrarUsuarioController.cs" />
-    <Compile Include="Controllers\LoginConsultaTokenController.cs" />
-    <Compile Include="Controllers\LoginEsqueciSenhaController.cs" />
-    <Compile Include="Controllers\LoginValidarLoginController.cs" />
-    <Compile Include="Controllers\LoginValidarTokenController.cs" />
-    <Compile Include="Controllers\MatriculaController.cs" />
-    <Compile Include="Controllers\MedicamentoController.cs" />
-    <Compile Include="Controllers\MedicamentosController.cs" />
-    <Compile Include="Controllers\NecessidadesEspeciaisController.cs" />
-    <Compile Include="Controllers\NotificacoesController.cs" />
-    <Compile Include="Controllers\PacienteController.cs" />
-    <Compile Include="Controllers\PacientesController.cs" />
-    <Compile Include="Controllers\PainelConfigEspecialidadesController.cs" />
-    <Compile Include="Controllers\PainelConfiguracaoController.cs" />
-    <Compile Include="Controllers\PainelPSController.cs" />
-    <Compile Include="Controllers\PesoController.cs" />
-    <Compile Include="Controllers\PressaoArterialController.cs" />
-    <Compile Include="Controllers\PreTriagemController.cs" />
-    <Compile Include="Controllers\SenhaController.cs" />
-    <Compile Include="Controllers\TabagismoController.cs" />
-    <Compile Include="Controllers\UnidadeController.cs" />
-    <Compile Include="Controllers\UnidadeImagensController.cs" />
-    <Compile Include="Controllers\UnidadePorEspecialidadeController.cs" />
-    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Controllers\CambioController.cs" />
     <Compile Include="CustomController\AssemblyControllers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

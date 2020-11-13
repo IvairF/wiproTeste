@@ -15,7 +15,7 @@ namespace Amil.AppHospitais.Model
         public string Moeda { get; set; }
 
         [StringLength(10), Column("DATA_INICIO")]
-        public DateTime Datainicio { get; set; }
+        public DateTime DataInicio { get; set; }
 
         [StringLength(10), Column("DATA_FIM")]
         public DateTime  DataFim { get; set; }
