@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "HOME >> Aplicativo Hospitais >> Configuração";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel-full">
+    <style type="text/css">
+        input[type="checkbox"] {
+            float: left;
+            margin-top: 1px !Important;
+        }
+    </style>
+    <div class="BoxConteudoPagina Box98 FloatEsquerdo">
+        <div class="BoxFull SitePath">
+            <a href="/" />Home</a>          
+            <label>>> </label>
+            <label>Aplicativo Hospitais</label>
+            <label>>> </label>
+            <label>Configurações</label>
+        </div>
+        <div class="LinhaTitulo">
+            <h2>Configuração App Hospitais</h2>
+        </div>
+        <div class="BoxFull FloatEsquerdo">
+
+            <div class="BoxFull">
+
+
+                <fieldset>
+                    <legend>Chaves</legend>
+                    <div class="Box99 FloatEsquerdo">
+
+                        <p>
+                            <input id="chkHabilitarIndisponibilidade" type="checkbox" tabindex="1" />
+                            Habilitar indisponibilidade do aplicativo.
+                        </p>
+                    </div>
+                    <div class="Box99 FloatEsquerdo">
+                        Habilitar raio (circunferência) de:&nbsp;   
+                          @Html.TextBox("txtRaio", null, new { @class = "form-control-max2", maxlength = 2 }) Km. para localização das unidades no mapa.
+              
+                    </div>
+                    <div class="Box99 FloatEsquerdo">
+                        <input id="ckbBloquear" type="checkbox" tabindex="1" height="24px" title="Bloquear a visualização da estimativa do tempo de espera no aplicativo, após" />Bloquear a visualização da estimativa do tempo de espera no aplicativo, após&nbsp;
+                      
+                           @Html.TextBox("txtTempo", null, new { @class = "form-control-max2", maxlength = 2 }) 
+              
+                   
+                        <select id="ddlTipoTempo">
+                            <option value="M" selected>Minuto(s)</option>
+                            <option value="H">Hora(s)</option>
+                        </select>
+                        &nbsp;
+                        de atraso na atualização.   
+                    </div>
+                </fieldset>
+                <br />
+                <br />
+                 <br />
+                <fieldset>
+                    <legend>Avisos</legend>
+                    <div class="Box99 FloatEsquerdo">
+                        Notificação de indisponibilidade do aplicativo:<br />
+                        @Html.TextArea("txtMensagemIndisponibilidade", new {  maxlength = 255 })
+                      
+                    </div>
+                    <div class="Box99 FloatEsquerdo" style="padding-top: 10px;">
+                        Na abertura do aplicativo:
+                        <br />
+                         @Html.TextArea("txtMensagemAbertura", new {  maxlength = 255 })
+                       
+                    </div>
+                    <div class="Box99 FloatEsquerdo" style="padding-top: 10px;">
+                        Informações:<br />
+                         @Html.TextArea("txtMensagemInformacao", new {  maxlength = 255 })
+                       
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Lojas App </legend>
+                    <div>
+                        Android URL:
+                        <textarea id="txtUrlAndroid" maxlength="255" width="90%"></textarea>
+                    </div>
+                    <div>
+                        Versão Mínima:
+                        <textarea id="txtVersaoMinAndroid" maxlength="6" width="70%"></textarea>
+                    </div>
+                    <div>
+                        Versão Atual:
+                        <textarea id="txtVersaoAppAndroid" maxlength="6" width="70%"></textarea>
+                    </div>
+                    <div>
+                        Itunes URL:
+                        <textarea id="txtUrlItunes" maxlength="255" width="90%"></textarea>
+                    </div>
+                    <div>
+                        Versão Mínima:
+                        <textarea id="txtVersaoMinItunes" maxlength="6" width="70%"></textarea>
+                    </div>
+                    <div>
+                        Versão Atual:
+                        <textarea id="txtVersaoAppItunes" maxlength="6" width="70%"></textarea>
+                    </div>
+                    <div>
+                        Windows URL:
+                        <textarea id="txtUrlWin" maxlength="255" width="90%"></textarea>
+                    </div>
+                    <div>
+                        Versão Mínima:
+                        <textarea id="txtVersaoMinWin" maxlength="6" width="70%"></textarea>
+                    </div>
+                    <div>
+                        Versão Atual:
+                        <textarea id="txtVersaoAppWin" maxlength="6" width="70%"></textarea>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="FloatDireito" style="height: 50px; padding-top: 10px;">
+                <input type="button" id="btnGravar" title="Gravar" value="Gravar" />
+                <input type="button" id="btnCancelar" title="Cancelar" value="Cancelar" />
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function limitText(field, maxChar) {
+            var ref = $(field),
+                val = ref.val();
+            if (val.length >= maxChar) {
+                ref.val(function () {
+                    return val.substr(0, maxChar);
+                });
+            }
+        }
+    </script>
+</div>

@@ -1,0 +1,266 @@
+---------------------------------------------------
+-- Export file for user AMESP                    --
+---------------------------------------------------
+
+set define off
+
+create or replace function amesp.agenda_cadastrada_sp(pdtinicio date, pdtfim date)
+   return integer is
+   ireturn integer;
+begin
+   -- drop tabela temporária
+   temp.truncar_tabelas_pg.truncar_agenda_cadastrada;
+
+   ireturn := 0;
+
+   for reg in (select a.codigo, a.especialidade
+                 from amesp.aa_especialidades a) loop
+
+      insert into temp.agenda_cadastrada
+         select   sum(x.total) total, x.data_agenda, x.id_especialidade, x.centro_medico,
+                  x.fl_total_care
+             from (
+                   select   sum(z.qt_agendas) as total, trunc(z.dt_agenda) as data_agenda,
+                            z.id_especialidade, z.centro_medico, z.fl_total_care
+                       from amesp.mc_sa_indicador_vw z join amesp.cm_parametros b
+                            on b.centro_medico = z.centro_medico
+                      where b.fl_integra_sis_agenda = 'S'
+                        and z.dt_agenda between pdtinicio and pdtfim
+                        and z.id_especialidade = reg.codigo
+                        and not exists(
+                               select 1
+                                 from amesp.mc_unidade_especialidade c
+                                where c.id_especialidade = z.id_especialidade
+                                  and c.id_unidade = b.centro_medico)
+                   group by trunc(z.dt_agenda),
+                            z.id_especialidade,
+                            z.centro_medico,
+                            z.fl_total_care) x
+         group by x.data_agenda, x.id_especialidade, x.centro_medico, x.fl_total_care;
+
+      ireturn := 1;
+   end loop;
+
+   return ireturn;
+end;
+/
+
+create or replace function amesp.agenda_disponivel_sp(pdtinicio date, pdtfim date)
+   return integer is
+   ireturn integer;
+begin
+   -- drop tabela temporária
+   temp.truncar_tabelas_pg.truncar_agenda_disponivel;
+
+   ireturn := 0;
+
+   for reg in (select a.codigo, a.especialidade
+                 from amesp.aa_especialidades a) loop
+
+      insert into temp.agenda_disponivel
+         select   sum(x.total) total, x.data_agenda, x.id_especialidade, x.centro_medico,
+                  x.fl_total_care
+             from (select   sum(z.qt_agendas) - sum(z.qt_agendadas) as total, trunc(z.dt_agenda) as data_agenda,
+                            z.id_especialidade, z.centro_medico, z.fl_total_care
+                       from amesp.mc_sa_indicador_vw z join amesp.cm_parametros b
+                            on b.centro_medico = z.centro_medico
+                      where b.fl_integra_sis_agenda = 'S'
+                        and z.dt_agenda between pdtinicio and pdtfim
+                        and z.id_especialidade = reg.codigo
+                        and not exists(
+                               select 1
+                                 from amesp.mc_unidade_especialidade c
+                                where c.id_especialidade = z.id_especialidade
+                                  and c.id_unidade = b.centro_medico)
+                   group by trunc(z.dt_agenda),
+                            z.id_especialidade,
+                            z.centro_medico,
+                            z.fl_total_care) x
+         group by x.data_agenda, x.id_especialidade, x.centro_medico, x.fl_total_care;
+
+      ireturn := 1;
+   end loop;
+
+   return ireturn;
+end;
+/
+
+CREATE OR REPLACE FUNCTION AMESP."GETID_USUARIO_OF_SESSION"
+   return amesp.acesso_login.id_usuario%type is
+   vuser amesp.acesso_login.id_usuario%type;
+begin
+-- Purpose: retornar o id_usuario da tabela acesso_login da sessao Oracle atual
+-- Author: Miguel Faria - 2008/02/11
+   select al.id_usuario
+     into vuser
+     from amesp.acesso_login al, v$session s1, v$mystat s2
+    where s2.sid = s1.sid
+      and lower(al.nome) = lower(s1.username)
+      and rownum = 1;
+
+   return vuser;
+exception
+   when others then
+      return -1;
+end;
+/
+
+CREATE OR REPLACE FUNCTION AMESP."GET_WFHIST_ULT_EXECUTOR"
+  ( pRetorno IN NUMBER,
+    pID_CHAVE IN NUMBER, 
+    pMODULO IN VARCHAR2)
+  RETURN  VARCHAR2 IS
+--
+-- Essa função retorna o responsável pela realização do serviço (ultima pessoa a 
+-- atualizar o status desde que seja um executor. 
+--
+-- Parâmetros:
+-- pRetorno --> 0 - Retorna o ID do Usuario
+--              1 - Retorna o Login do Usuario
+--              2 - Retorna o Nome Completo do Usuario
+-- pID_Chave --> Chave da OS desejada
+-- pModulo --> Modulo da OS desejada
+--
+   vID_Usuario                 Integer;
+   vNome                       VARCHAR2(60);
+BEGIN 
+  select id_usuario into vID_Usuario
+    from (  select id_usuario
+              from wf_historico 
+             where modulo = pModulo
+               and id_chave = pid_chave                
+               and id_status not in (78,79,86,90,92,93,96,97,98,100,101,102)
+          order by data_inclusao desc
+         )
+   where rownum = 1;
+
+  if pRetorno = 0 then
+    RETURN cast(vID_Usuario as varchar2);
+  elsif pRetorno = 1 then
+    select nome into vNome
+      from acesso_login
+     where id_usuario = vID_Usuario; 
+    RETURN vNome;
+  elsif pRetorno = 2 then
+    select nome_Completo into vNome
+      from acesso_login
+     where id_usuario = vID_Usuario; 
+    RETURN vNome;
+  end if;
+END;
+/
+
+CREATE OR REPLACE FUNCTION AMESP.retorna_id_usuario (
+                              p_vc_nome_usu IN VARCHAR2,
+                              p_i_inc_usu   IN PLS_INTEGER DEFAULT 0
+                            )
+RETURN PLS_INTEGER IS
+
+  -- Armazena o valor do param p_vc_nome_usu, sem espaços e em maiúsculo
+  l_vc_nome_usu   ACESSO_LOGIN.NOME%TYPE:= LTRIM(RTRIM(UPPER(p_vc_nome_usu)));
+  l_n_id_usu      ACESSO_LOGIN.ID_USUARIO%TYPE;
+
+BEGIN
+  /*
+     Esta function pesquisa se o usuário informado em p_vc_nome_usu já existe na tabela ACESSO_LOGIN.
+
+     Parametros:
+       p_vc_nome_usu - Nome do usuário a ser pesquisado/incluído. Não pode ser nulo.
+       p_i_inc_usu   - Este parâmetro é obsoleto e foi mantido por questões compatibilidade.
+
+     Retorno...:
+       ID do usuário na tabela ACESSO_LOGIN
+       -1 se usuário ainda não existir na tabela
+
+     Histórico.:
+     -----------+-------+-----------------------------------------------------------------
+     2010.05.31 | Laerte | Desacoplamento da base da operadora
+     -----------+-------+-----------------------------------------------------------------
+     2007.01.12 | Fabio | Removi o parâmetro "p_i_inc_usu" que definia se o usuário
+                |       | deveria ou não ser incluído pela função caso ainda não existisse.
+                |       | Isto foi feito pois os usuários só devem ser incluídos pelo
+                |       | PACESSO.
+     -----------+-------+-----------------------------------------------------------------
+     2003.03.21 | Fabio | Na rotina de inclusão de usuário, o ID_USUARIO era alimentado
+                |       | pela trigger ACESSO_LOGIN_TG1 (que pegava o NEXTVAL da sequence
+                |       | SEQ_ACESSO_LOGIN). Removi esta sequence e passei obter o NEXTVAL
+                |       | diretamente na instrução "INSERT INTO ACESSO_LOGIN..." desta PL.
+                |       | Desta forma, fica obrigatória a utilização desta função para a
+                |       | inserção de registros na tabela ACESSO_LOGIN.
+                |       |
+                |       | Passei a retirar espaços em branco a esquerda/direita do param
+                |       | p_vc_nome_usu (nome do usuario).
+     -----------+-------+-----------------------------------------------------------------
+     2003.01.21 | Fabio | Criação.
+     -----------+-------+-----------------------------------------------------------------
+  */
+
+  -- Não permite que o nome do usuário informado seja nulo
+  IF l_vc_nome_usu IS NULL THEN
+     RAISE_APPLICATION_ERROR(-20500, 'Nome de usuário não pode ser nulo.');
+  END IF;
+
+  -- Baseado em p_vc_nome_usu, pesquisa se o usuário já existe
+  SELECT ID_USUARIO
+  INTO l_n_id_usu
+  FROM ACESSO_LOGIN
+  WHERE NOME = l_vc_nome_usu;
+
+  RETURN l_n_id_usu;
+
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    RETURN -1; -- Se o usuário não existir
+
+END;
+/
+
+CREATE OR REPLACE FUNCTION AMESP.BANCO_PRODUCAO (p_tipo_consulta in char default 'N') return char is
+   v_db_name varchar2(50);
+begin
+  /*
+    Verifica se está o usuário está no banco de produção para p_tipo_consulta -> 'N'-Normal
+    Verifica se está o usuário está em qual banco p_tipo_consulta -> 'D'-Detalhado
+
+    Retorno para  p_tipo_consulta -> 'N'-Normal:
+      S - Sessão conectada no banco de produção
+      N - Sessão conectada em qualquer outro banco que não seja o de produção
+
+    Retorno para  p_tipo_consulta -> 'D'-Detalhado:
+      P - Sessão conectada no banco de produção
+      H - Sessão conectada no banco de homologação
+      D - Sessão conectada no banco de desenvolvimento
+
+    Histórico.:
+    -----------+-----------+--------------------------------------------------------------------
+    2010.21.01 | Fred      | Inclusão do parâmetro p_tipo_consulta para a função também poder
+               |           | determinar qual banco o usuário está conectado.
+               |           | Inclusão dos novos nomes para os bancos "SERVMED_"
+    -----------+-----------+--------------------------------------------------------------------
+    2008.06.02 | Fabio     | - Criação
+    -----------+-----------+--------------------------------------------------------------------
+  */
+
+  v_db_name := upper(sys_context('USERENV', 'DB_NAME'));
+
+  if Upper(p_tipo_consulta) = 'D' then
+    if (v_db_name = 'MDLSGSP' or v_db_name = 'SERVMEDP') then
+      return 'P';
+    else
+      if (v_db_name = 'MDLSGSH' or v_db_name = 'SERVMEDH') then
+        return 'H';
+      else
+        return 'D';
+      end if;
+    end if;
+  else
+    if (v_db_name = 'MDLSGSP' or v_db_name = 'SERVMEDP') then
+       return 'S';
+    else
+       return 'N';
+    end if;
+  end if;
+end;
+/
+
+spool off

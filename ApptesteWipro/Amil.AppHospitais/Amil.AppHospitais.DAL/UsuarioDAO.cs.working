@@ -1,0 +1,239 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Amil.AppHospitais.DTO;
+using Amil.AppHospitais.Model;
+using System;
+using System.Data.Entity;
+
+namespace Amil.AppHospitais.DAL
+{
+    public class UsuarioDAO : BaseDAO
+    {
+
+        /// <summary>
+        /// Acesso à base e recuperar usuário.
+        /// </summary>
+        /// <param name="idCadastro">Identificador do cadastro do usuário no AMS.</param>
+        /// <returns>DTO do usuário do app.</returns>
+        public UsuarioDTO Recuperar(int idCadastro, bool interno)
+        {
+            return (from a in Context.Usuarios
+                    where a.Id_Cadastro.Equals(idCadastro)
+                    && a.Interno == interno
+                    select new UsuarioDTO
+                    {
+                        Id = a.Id,
+                        Id_Cadastro = a.Id_Cadastro,
+                        Interno = a.Interno,
+                        ID_FACEBOOK = a.ID_FACEBOOK,
+                        ID_GOOGLE = a.ID_GOOGLE
+                    }).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Acesso à base e recuperar usuário.
+        /// </summary>
+        /// <param name="idCadastro">Identificador do cadastro do usuário no AMS.</param>
+        /// <returns>DTO do usuário do app.</returns>
+        public UsuarioDTO RecuperarByFacebook(string idFacebook)
+        {
+
+            using (Model.Context ctx = new Context())
+            {
+                var resultado = ctx.Usuarios.FirstOrDefault(o => o.ID_FACEBOOK.Equals(idFacebook));
+
+                if (resultado != null)
+                {
+                    UsuarioDTO user = new UsuarioDTO()
+                    {
+                        Id = resultado.Id,
+                        Id_Cadastro = resultado.Id_Cadastro,
+                        Interno = resultado.Interno,
+                        ID_FACEBOOK = resultado.ID_FACEBOOK,
+                        ID_GOOGLE = resultado.ID_GOOGLE
+                    };
+
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+
+            //return (from a in Context.Usuarios
+            //        where a.ID_FACEBOOK.Equals(idFacebook)
+            //        select new UsuarioDTO
+            //        {
+            //            Id = a.Id,
+            //            Id_Cadastro = a.Id_Cadastro, 
+            //            Interno = a.Interno,
+            //            ID_FACEBOOK = a.ID_FACEBOOK,
+            //            ID_GOOGLE = a.ID_GOOGLE
+            //        }).FirstOrDefault();
+        }
+
+
+        /// <summary>
+        /// Acesso à base e recuperar usuário.
+        /// </summary>
+        /// <param name="idCadastro">Identificador do cadastro do usuário no AMS.</param>
+        /// <returns>DTO do usuário do app.</returns>
+        public UsuarioDTO RecuperarByGoogle(string idGoogle)
+        {
+            using (Model.Context ctx = new Context())
+            {
+                var resultado = ctx.Usuarios.FirstOrDefault(o => o.ID_GOOGLE.Equals(idGoogle));
+
+                if (resultado != null)
+                {
+                    UsuarioDTO user = new UsuarioDTO()
+                    {
+                        Id = resultado.Id,
+                        Id_Cadastro = resultado.Id_Cadastro,
+                        Interno = resultado.Interno,
+                        ID_FACEBOOK = resultado.ID_FACEBOOK,
+                        ID_GOOGLE = resultado.ID_GOOGLE
+                    };
+
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Acesso à base e recuperar usuário.
+        /// </summary>
+        /// <param name="idCadastro">Identificador do cadastro do usuário no AMS.</param>
+        /// <returns>DTO do usuário do app.</returns>
+        public int RecuperarIdCadastro(int idUsuario)
+        {
+           var User = (from a in Context.Usuarios
+                    where a.Id.Equals(idUsuario)                   
+                    select new UsuarioDTO
+                    {
+                        Id = a.Id_Cadastro
+                        
+                    }).FirstOrDefault();
+
+           return User.Id;
+        }
+
+        /// <summary>
+        /// Persiste o cadastro na base.
+        /// </summary>
+        /// <param name="usuario">DTO do objeto a ser persistido na base.</param>/param>
+        /// <returns>Identificador do registro persistido.</returns>
+        public int Gravar(UsuarioDTO usuario)
+        {
+            Usuario model = new Usuario()
+            {
+                Id_Cadastro = usuario.Id_Cadastro,
+                Interno = usuario.Interno,
+                DataCriacao = DateTime.Now, 
+                ID_FACEBOOK = usuario.ID_FACEBOOK, 
+                ID_GOOGLE = usuario.ID_GOOGLE
+            };
+            Context.Usuarios.Add(model);
+            Context.SaveChanges();
+
+            return model.Id;
+        }
+
+        public bool VerificarRedeSocialJaExiste(UsuarioDTO value)
+        {
+            var face = string.IsNullOrWhiteSpace(value.ID_FACEBOOK) ? null : value.ID_FACEBOOK;
+            var goog = string.IsNullOrWhiteSpace(value.ID_GOOGLE) ? null : value.ID_GOOGLE;
+
+            bool resultado = false;
+
+            if (face == null && goog == null)
+            {
+                throw new Exception("Nenhuma rede social informada");
+            }
+
+            //verificação do facebook
+            if (face != null)
+            {
+                using (Model.Context ctx = new Context())
+                {
+                    var user = ctx.Usuarios.FirstOrDefault(o => o.ID_FACEBOOK.Equals(value.ID_FACEBOOK));
+
+                    //existe?
+                    bool existe = user != null;
+
+                    if (existe)
+                    {
+                        if (value.Id != user.Id)
+                        {
+                            throw new Exception("Id do Facebook já está sendo usado em outra conta");
+                        }
+                    }
+
+                    resultado = true;
+                }
+            }
+
+            //verificação do google
+            if (goog != null)
+            {
+                using (Model.Context ctx = new Context())
+                {
+                    var user = ctx.Usuarios.FirstOrDefault(o => o.ID_GOOGLE.Equals(value.ID_GOOGLE));
+
+                    //existe?
+                    bool existe = user != null;
+
+                    if (existe)
+                    {
+                        if (value.Id != user.Id)
+                        {
+                            throw new Exception("Id do Google já está sendo usado em outra conta");
+                        }
+                    }
+
+                    resultado = true;
+                }
+            }
+
+            //se retornar true, é por que pode gravar a rede social
+            return resultado;
+        }
+
+        /// <summary>
+        /// Persiste o cadastro na base.
+        /// </summary>
+        /// <param name="usuario">DTO do objeto a ser persistido na base.</param>/param>
+        /// <returns>Identificador do registro persistido.</returns>
+        public bool Atualizar(UsuarioDTO usuario)
+        {
+            bool resultado = false;
+            try
+            {
+                using (Model.Context ctx = new Model.Context())
+                {
+                    var usuEncontrado = ctx.Usuarios.FirstOrDefault(o => o.Id == usuario.Id);
+                    if (usuEncontrado != null)
+                    {
+                        usuEncontrado.ID_FACEBOOK = usuario.ID_FACEBOOK;
+                        usuEncontrado.ID_GOOGLE = usuario.ID_GOOGLE;
+                    }
+
+                    ctx.SaveChanges();
+                    resultado = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return resultado;
+        }
+    }
+}

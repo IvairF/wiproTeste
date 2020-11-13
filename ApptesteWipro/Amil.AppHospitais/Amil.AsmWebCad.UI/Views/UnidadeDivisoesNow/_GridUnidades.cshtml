@@ -1,0 +1,26 @@
+﻿@model List<Amil.AppHospitais.DTO.UnidadeDTO>
+
+@if (Model != null)
+{
+    <table class="table table-striped table-hover" id="unidadesGrid">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Unidade</th>
+                <th>Status</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr data-idUnidade="@item.Identificador">
+                    <td>@item.CodCorpUnidade</td>
+                    <td>@item.Descricao</td>
+                    <td>@(item.Ativo ? "Ativo" : "Inativo")</td>
+                    <td><a href="@Url.Action("EditarCriarUnidade", new { id = item.Identificador  })" class="glyphicon glyphicon-pencil"></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

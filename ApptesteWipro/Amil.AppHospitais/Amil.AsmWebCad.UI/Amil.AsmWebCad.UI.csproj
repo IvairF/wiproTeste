@@ -1,0 +1,678 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F305939D-2BD4-4CDA-BAE3-F3748CD13156}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Amil.AsmWebCad.UI</RootNamespace>
+    <AssemblyName>Amil.AsmWebCad.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Amil.Framework.Security.1.2.662.1\lib\net45\HtmlSanitizationLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\ASM_NOVAS_FUNCIONALIDADES\dotnet\framework45\AppHospitais\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MessagingToolkit.QRCode, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MessagingToolkit.QRCode.1.3.0\lib\MessagingToolkit.QRCode.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Providers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Providers.Core.2.0.0\lib\net40\System.Web.Providers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AppHospitaisController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ConfigAppController.cs" />
+    <Compile Include="Controllers\ConfigPainelController.cs" />
+    <Compile Include="Controllers\ConvenioController.cs" />
+    <Compile Include="Controllers\UnidadeDivisoesNowController.cs" />
+    <Compile Include="Controllers\EspecialidadeNowController.cs" />
+    <Compile Include="Controllers\EspecialidadePorUnidadeNowController.cs" />
+    <Compile Include="Controllers\UnidadeNowController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PerfilController.cs" />
+    <Compile Include="Controllers\SecurityController.cs" />
+    <Compile Include="Controllers\TelaPrincipalController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\SecurityHelper.cs" />
+    <Compile Include="Helpers\SessionHelper.cs" />
+    <Compile Include="Models\AlterarSenhaModel.cs" />
+    <Compile Include="Models\CadastraLoginModel.cs" />
+    <Compile Include="Models\CadastraPerfilViewModel.cs" />
+    <Compile Include="Models\ConselhoUsuarioModel.cs" />
+    <Compile Include="Models\ConvenioViewModel.cs" />
+    <Compile Include="Models\EspecialidadeNowModel.cs" />
+    <Compile Include="Models\GraficoUnidadeNowModel.cs" />
+    <Compile Include="Models\UnidadeNowModel.cs" />
+    <Compile Include="Models\EsqueciSenhaModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\Login\SelecionarUnidadeViewModel.cs" />
+    <Compile Include="Models\Login\UnidadeViewModel.cs" />
+    <Compile Include="Models\PainelConfigEspecViewModel.cs" />
+    <Compile Include="Models\PainelConfiguracaoViewModel.cs" />
+    <Compile Include="Models\PerfilModel.cs" />
+    <Compile Include="Models\PesquisaPainelConfigViewModel.cs" />
+    <Compile Include="Models\UsuarioConselhoModel.cs" />
+    <Compile Include="Models\UsuarioModel.cs" />
+    <Compile Include="Models\UsuarioPerfilModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Security\SessionTimeoutAttribute.cs" />
+    <Compile Include="Service References\NowWCF\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Imagens\bg-logo.png" />
+    <Content Include="Content\Imagens\cips.png" />
+    <Content Include="Content\Imagens\home_cad.png" />
+    <Content Include="Content\Imagens\images.png" />
+    <Content Include="Content\Imagens\logo.png" />
+    <Content Include="Content\Imagens\logoAmericas.png" />
+    <Content Include="Content\Imagens\logoAmericasCNPS.png" />
+    <Content Include="Content\Imagens\logoAmil.png" />
+    <Content Include="Content\Imagens\logo_Amil_Old.png" />
+    <Content Include="Content\Imagens\mail.png" />
+    <Content Include="Content\Imagens\map_marker_user.png" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Template\bootstrap\css\bootstrap-datetimepicker.css" />
+    <Content Include="Content\Template\bootstrap\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\Template\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\Template\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\Template\bootstrap\css\circularBootstrapTabs.css" />
+    <Content Include="Content\Template\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Template\controls\CheckBoxListCSS.css" />
+    <Content Include="Content\Template\controls\resumoWizard.css" />
+    <Content Include="Content\Template\controls\WizardCSS.css" />
+    <Content Include="Content\Template\dist\css\template.css" />
+    <Content Include="Content\Template\dist\css\template.min.css" />
+    <Content Include="Content\Template\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\Template\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\Template\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Template\metisMenu\metisMenu.css" />
+    <Content Include="Content\Template\metisMenu\metisMenu.min.css" />
+    <Content Include="Content\Template\morris\morris.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\toastr.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Template\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Template\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Template\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Template\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\Template\font-awesome\css\font-awesome.css.map" />
+    <Content Include="Content\Template\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Template\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Template\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Template\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Template\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\Template\font-awesome\less\animated.less" />
+    <Content Include="Content\Template\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Content\Template\font-awesome\less\core.less" />
+    <Content Include="Content\Template\font-awesome\less\extras.less" />
+    <Content Include="Content\Template\font-awesome\less\fixed-width.less" />
+    <Content Include="Content\Template\font-awesome\less\font-awesome.less" />
+    <Content Include="Content\Template\font-awesome\less\icons.less" />
+    <Content Include="Content\Template\font-awesome\less\larger.less" />
+    <Content Include="Content\Template\font-awesome\less\list.less" />
+    <Content Include="Content\Template\font-awesome\less\mixins.less" />
+    <Content Include="Content\Template\font-awesome\less\path.less" />
+    <Content Include="Content\Template\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Content\Template\font-awesome\less\screen-reader.less" />
+    <Content Include="Content\Template\font-awesome\less\spinning.less" />
+    <Content Include="Content\Template\font-awesome\less\stacked.less" />
+    <Content Include="Content\Template\font-awesome\less\variables.less" />
+    <Content Include="Content\Template\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_animated.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_core.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_extras.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_icons.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_larger.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_list.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_mixins.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_path.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_spinning.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_stacked.scss" />
+    <Content Include="Content\Template\font-awesome\scss\_variables.scss" />
+    <Content Include="Scripts\Bootstrap\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\Bootstrap\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\Bootstrap\bootstrap.js" />
+    <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\Bootstrap\npm.js" />
+    <Content Include="Scripts\Datatables\datatables.js" />
+    <Content Include="Scripts\Datatables\datatables.min.js" />
+    <Content Include="Scripts\Download\jquery.fileDownload.js" />
+    <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.2.1.js" />
+    <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.2.1.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JQuery\jquery-3.1.1.js" />
+    <Content Include="Scripts\JQuery\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\JQuery\jquery-ui.js" />
+    <Content Include="Scripts\JQuery\jquery-ui.min.js" />
+    <Content Include="Scripts\JQuery\jquery.js" />
+    <Content Include="Scripts\JQuery\jquery.min.js" />
+    <Content Include="Scripts\JQuery\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\JQuery\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\JQuery\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.min.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\JQuery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.4.2.debug.js" />
+    <Content Include="Scripts\knockout-3.4.2.js" />
+    <Content Include="Scripts\Mask\jquery.mask.js" />
+    <Content Include="Scripts\Mask\jquery.mask.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\Moment\moment-with-locales.js" />
+    <Content Include="Scripts\Moment\moment-with-locales.min.js" />
+    <Content Include="Scripts\Moment\moment.js" />
+    <Content Include="Scripts\Moment\moment.min.js" />
+    <Content Include="Scripts\Moment\pt-br.js" />
+    <Content Include="Scripts\Outros\amil.framework-2.0.js" />
+    <Content Include="Scripts\Outros\Amil.Framework.Maps.js" />
+    <Content Include="Scripts\Outros\funcoes.js" />
+    <Content Include="Scripts\Outros\JIC.js" />
+    <Content Include="Scripts\Outros\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\Outros\knockout-2.2.0.js" />
+    <Content Include="Scripts\Outros\metisMenu.js" />
+    <Content Include="Scripts\Outros\metisMenu.min.js" />
+    <Content Include="Scripts\Outros\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Outros\morris.js" />
+    <Content Include="Scripts\Outros\morris.min.js" />
+    <Content Include="Scripts\Outros\npm.js" />
+    <Content Include="Scripts\Outros\template.js" />
+    <Content Include="Scripts\Outros\template.min.js" />
+    <Content Include="Scripts\Outros\_references.js" />
+    <Content Include="Scripts\Paginas\aviso.js" />
+    <Content Include="Scripts\Paginas\configuracaoAlerta.js" />
+    <Content Include="Scripts\Paginas\configuracaoGeral.js" />
+    <Content Include="Scripts\Paginas\unidadeNow.js" />
+    <Content Include="Scripts\Paginas\especialidadenow.js" />
+    <Content Include="Scripts\Paginas\curso.js" />
+    <Content Include="Scripts\Paginas\grupo.js" />
+    <Content Include="Scripts\Paginas\home.js" />
+    <Content Include="Scripts\Paginas\perfil.js" />
+    <Content Include="Scripts\Paginas\tipoDocumento.js" />
+    <Content Include="Scripts\Paginas\unidade.js" />
+    <Content Include="Scripts\Paginas\usuario.js" />
+    <Content Include="Scripts\Paginas\workflow.js" />
+    <Content Include="Scripts\Scripts\ConfigAppController.js" />
+    <Content Include="Scripts\Scripts\EditarCriarUnidadeController.js" />
+    <Content Include="Scripts\toastr\toastr.min.js" />
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.AccessKeyDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.CM_BASE_DADOS_WPD.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.CM_ESCALA_RISCO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.CM_ESTRATIFICACAO_RISCO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.CM_REGIONAL.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.EspecialidadeDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.EspecialidadePorRiscoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.ESTADOS.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.EstratificacaoRiscoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.GrupoDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.LoginResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.NowSpecialtyDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.NOW_FASE.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.NOW_TEMPO_ESPEC_RISCO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.NOW_TEMPO_FASE_RISCO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.NOW_UNIDADE.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.NOW_UNIDADE_DIVISAO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.NOW_UNIDADE_ESPECIALIDADE.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.NOW_UNIDADE_FASE.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.NOW_UNIDADE_FASE_PERIODO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.PacienteFase.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.PacienteSenha.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.RiscoEspecialidadeDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.Unidade.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.UnidadeDadosGrafico.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.UnidadeDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.UnidadeEstruturaGrafico.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.UnidadeFaseSumario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.UsuarioDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Amil.AsmWebCad.UI.NowWCF.VersionDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\NowWCF\Now.disco" />
+    <Content Include="Service References\NowWCF\configuration91.svcinfo" />
+    <Content Include="Service References\NowWCF\configuration.svcinfo" />
+    <Content Include="Service References\NowWCF\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\AppHospitais\EditarCriarUnidade.cshtml" />
+    <Content Include="Views\AppHospitais\Unidades.cshtml" />
+    <Content Include="Views\AppHospitais\_GridEspecialidades.cshtml" />
+    <Content Include="Views\AppHospitais\_GridUnidades.cshtml" />
+    <Content Include="Views\AppHospitais\_QRCode.cshtml" />
+    <Content Include="Views\ConfigApp\Index.cshtml" />
+    <Content Include="Views\ConfigPainel\Detail.cshtml" />
+    <Content Include="Views\ConfigPainel\Edit.cshtml" />
+    <Content Include="Views\ConfigPainel\Index.cshtml" />
+    <Content Include="Views\ConfigPainel\_GridConfigEspec.cshtml" />
+    <Content Include="Views\ConfigPainel\_GridEspecialidades.cshtml" />
+    <Content Include="Views\ConfigPainel\_GridPainel.cshtml" />
+    <Content Include="Views\Home\SelecionarUnidade.cshtml" />
+    <Content Include="Views\Login\AlteraSenha.cshtml" />
+    <Content Include="Views\Login\CadastraLogin.cshtml" />
+    <Content Include="Views\Login\EsqueciSenha.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\_ModalUsuarioExistente.cshtml" />
+    <Content Include="Views\TelaPrincipal\Manutencao.cshtml" />
+    <Content Include="Views\Shared\_LayoutSemMenu.cshtml" />
+    <Content Include="Views\Shared\_ModalWaitPartial.cshtml" />
+    <Content Include="Views\Convenio\Index.cshtml" />
+    <Content Include="Views\Convenio\_GridConvenios.cshtml" />
+    <Content Include="Views\Convenio\Edit.cshtml" />
+    <Content Include="Views\Usuario\Manutencao.cshtml" />
+    <Content Include="Views\Usuario\Pesquisa.cshtml" />
+    <Content Include="Views\Perfil\Manutencao.cshtml" />
+    <Content Include="Views\Perfil\Pesquisa.cshtml" />
+    <Content Include="Views\Usuario\_vinculoPerfis.cshtml" />
+    <Content Include="Views\Perfil\_vinculoModulos.cshtml" />
+    <Content Include="Views\Usuario\_vinculoConselho.cshtml" />
+    <Content Include="Views\UnidadeNow\Pesquisa.cshtml" />
+    <Content Include="Views\EspecialidadeNow\Pesquisa.cshtml" />
+    <Content Include="Views\EspecialidadeNow\Manutencao.cshtml" />
+    <Content Include="Views\UnidadeNow\Manutencao.cshtml" />
+    <Content Include="Views\EspecialidadePorUnidadeNow\Pesquisa.cshtml" />
+    <Content Include="Views\EspecialidadePorUnidadeNow\Manutencao.cshtml" />
+    <Content Include="Views\Perfil\AssociacaoUsuarioPerfilPartial.cshtml" />
+    <Content Include="Views\Perfil\UsuariosPerfil.cshtml" />
+    <Content Include="Views\UnidadeDivisoesNow\Manutencao.cshtml" />
+    <Content Include="Views\UnidadeDivisoesNow\Pesquisa.cshtml" />
+    <Content Include="Service References\NowWCF\Now.wsdl" />
+    <None Include="Service References\NowWCF\Now.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NowWCF\Now1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NowWCF\Now2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NowWCF\Now3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NowWCF\Now4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NowWCF\Now5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\NowWCF\Now6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\EspecialidadeNow\_PesquisaModal.cshtml" />
+    <Content Include="Views\UnidadeDivisoesNow\_PesquisaModal.cshtml" />
+    <Content Include="Views\UnidadeNow\_PesquisaModal.cshtml" />
+    <Content Include="Views\UnidadeNow\_CodigoBaseModal.cshtml" />
+    <Content Include="Views\EspecialidadePorUnidadeNow\_vinculoEspecialidade.cshtml" />
+    <Content Include="Views\UnidadeNow\_CadastroDivisao.cshtml" />
+    <Content Include="Views\UnidadeNow\_vinculoEspecialidadeUnidadeDivisaoModal.cshtml" />
+    <Content Include="Views\UnidadeNow\_CadastroGrafico.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\QRCodes\" />
+    <Folder Include="Views\Teste\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Amil.AppHospitais.APIClient\Amil.AppHospitais.APIClient.csproj">
+      <Project>{7ce1b542-c38c-413e-9d72-e0b00bcf5953}</Project>
+      <Name>Amil.AppHospitais.APIClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Amil.AppHospitais.BLL\Amil.AppHospitais.BLL.csproj">
+      <Project>{1a48ba6c-12e0-4c8f-a23b-4ed598bba01e}</Project>
+      <Name>Amil.AppHospitais.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Amil.AppHospitais.DTO\Amil.AppHospitais.DTO.csproj">
+      <Project>{a723eff3-a63a-4e18-9747-402d9011cd50}</Project>
+      <Name>Amil.AppHospitais.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Amil.AsmWebCad.Utils\Amil.AsmWebCad.Utils.csproj">
+      <Project>{9c535a45-92b8-4291-ac19-9fd0fc344724}</Project>
+      <Name>Amil.AsmWebCad.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\NowWCF\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

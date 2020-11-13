@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://wsbeneficiarios.amil.com.br" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://wsbeneficiarios.amil.com.br">
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaMarcaOtica">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="dadosSolicitacaoMarcaOtica" nillable="true" type="tns:DadosSolicitacaoMarcaOtica" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DadosSolicitacaoMarcaOtica">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" name="cpf" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="nome" type="xs:string" />
+        <xs:element minOccurs="0" maxOccurs="1" name="sobreNome" type="xs:string" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaMarcaOticaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="BuscaMarcaOticaResult" nillable="true" type="tns:ArrayOfDadosMarcaOtica" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfDadosMarcaOtica">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DadosMarcaOtica" nillable="true" type="tns:DadosMarcaOtica" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DadosMarcaOtica">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="marcaOtica" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomeBeneficiario" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dataNascimento" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="cpf" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dataInicioVigencia" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomeEmpresa" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="beneficiarioNaoEncontrado" type="tns:erro" />
+  <xs:complexType name="erro">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="codigo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="msg" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaDadosBeneficiario">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="dadosSolicitacao" nillable="true" type="tns:DadosSolicitacao" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DadosSolicitacao">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="1" maxOccurs="1" name="marcaOtica" nillable="true" type="xs:string" />
+        <xs:element minOccurs="1" maxOccurs="1" name="marcaOticaTitular" nillable="true" type="xs:string" />
+      </xs:choice>
+      <xs:element minOccurs="0" maxOccurs="1" name="tipoProduto" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaDadosBeneficiarioResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="BuscaDadosBeneficiarioResult" nillable="true" type="tns:ArrayOfDadosBeneficiario" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfDadosBeneficiario">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DadosBeneficiario" nillable="true" type="tns:DadosBeneficiario" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DadosBeneficiario">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="siglaFilialBeneficiario" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codigoFilialBeneficiario" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codigoEmpresa" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomeEmpresa" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="celula" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dataRegulamentacao" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dataInicioVigencia" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="marcaOticaTitular" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="cargo" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomeTitular" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="porteContrato" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="descricaoPorteContrato" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="tipoPlano" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="vip" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomeBeneficiario" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="marcaOtica" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="contrato" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="sexo" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="situacaoCadastralBeneficiario" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dataAtendimentoAte" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dataNascimento" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="totalDiasNoPlano" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codigoPlano" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomePlano" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codigoRede" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomeRede" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dataInclusao" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="cpf" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomePai" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomeMae" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="cpfResponsavel" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomeResponsavel" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codigoOperadora" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="enderecos" type="tns:ArrayOfEndereco" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dddResidencial" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="numeroResidencial" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ramalResidencial" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dddCelularResponsavel" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="numeroCelularResponsavel" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ramalResponsavel" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dddCelular" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="numeroCelular" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dddCobranca" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="numeroCobranca" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ramalCobranca" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="email" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="sistema" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codTs" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="numOperadoraANS" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codigoSituacaoEspecial" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="descSituacaoEspecial" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="codProduto" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="inativo" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="beneficiarioNext" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="beneficiarioNextAutenticado" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="atendimentoAutorizadoNext" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="dataAutenticacaoNext" type="xs:dateTime" />
+      <xs:element minOccurs="0" maxOccurs="1" name="nomeMarca" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ArrayOfEndereco">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Endereco" nillable="true" type="tns:Endereco" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Endereco">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="tipoEndereco" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="tipoLogradouro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="logradouro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="numero" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="complemento" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="bairro" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="cidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="uf" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" maxOccurs="1" name="cep" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaPermissaoMarcaOtica">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="marcaOtica" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaPermissaoMarcaOticaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" name="BuscaPermissaoMarcaOticaResult" type="tns:PermissaoMarcaOtica" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="PermissaoMarcaOtica">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="cartaoIdentificacao" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="envioCartaoIdentificacaoEnderecoBeneficiario" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="segundaViaBoleto" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="solicitacaoComprovantePagamento" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="solicitacaoOrientador" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="solicitacaoOrientadorEnvioEnderecoBeneficiario" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaBoletos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="DadosSolicitacaoBoleto" nillable="true" type="tns:DadosSolicitacaoBoleto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DadosSolicitacaoBoleto">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="marcaOtica" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="situacao" type="xs:int" />
+      <xs:element minOccurs="0" maxOccurs="1" name="statusCobrancaAtiva" type="tns:statusCobrancaAtiva" />
+      <xs:element minOccurs="1" maxOccurs="1" name="competenciaInicial" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="competenciaFinal" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="statusCobrancaAtiva">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="cobrancaAtiva" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaBoletosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="DadosBoletoResult" nillable="true" type="tns:ArrayOfDadosBoleto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfDadosBoleto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DadosBoleto" nillable="true" type="tns:DadosBoleto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DadosBoleto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="competencia" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="vencimento" type="xs:dateTime" />
+      <xs:element minOccurs="1" maxOccurs="1" name="valorBruto" type="xs:double" />
+      <xs:element minOccurs="1" maxOccurs="1" name="valorPago" type="xs:double" />
+      <xs:element minOccurs="0" maxOccurs="1" name="cobrancaAtiva" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="boletoNaoEncontrado" type="tns:erroBoletos" />
+  <xs:complexType name="erroBoletos">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="codigo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="1" maxOccurs="1" name="mensagem" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaSistemaOrigem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="DadosSolicitacaoSistemaOrigem" nillable="true" type="tns:DadosSolicitacaoSistemaOrigem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="DadosSolicitacaoSistemaOrigem">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="marcaOtica" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element ibmSchExtn:docRoot="true" name="BuscaSistemaOrigemResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="DadosSistemaOrigemResult" nillable="true" type="tns:dadosSistemaOrigem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="dadosSistemaOrigem">
+    <xs:sequence>
+      <xs:element minOccurs="1" maxOccurs="1" name="sistema" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+</xsd:schema>

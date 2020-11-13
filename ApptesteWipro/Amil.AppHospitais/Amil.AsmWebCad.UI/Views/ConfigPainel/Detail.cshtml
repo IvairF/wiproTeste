@@ -1,0 +1,73 @@
+﻿@model Amil.AsmWebCad.UI.Models.PainelConfiguracaoViewModel
+
+@{
+    ViewBag.Title = "HOME >> Painel de Filas do PS >> Configuração >> Visualizar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-body">
+            <div class="form-group height-40">
+                @Html.LabelFor(i => i.Id, new { @class = "col-md-2 col-sm-2 col-lg-2 col-xs-3 text-right" })
+                <div class="col-md-3 col-sm-3 col-lg-2 col-xs-3">                    
+                    @Html.DisplayFor(i => i.Id)       
+                </div>
+            </div>
+            <div class="form-group height-40">
+                @Html.LabelFor(i => i.IdUnidade, new { @class = "col-md-2 col-sm-2 col-lg-2 col-xs-3 text-right" })
+                <div class="col-md-4 col-sm-4 col-lg-3 col-xs-3">
+                    @Html.DisplayFor(i => i.DescUnidade)     
+                </div>
+            </div>
+            <div class="form-group height-40">
+                @Html.LabelFor(i => i.Local, new { @class = "col-md-2 col-sm-2 col-lg-2 col-xs-3 text-right" })
+                <div class="col-md-10 col-sm-10 col-lg-8 col-xs-9">
+                    @Html.DisplayFor(i => i.Local)     
+                </div>
+            </div>
+            <div class="form-group height-40">
+                @Html.LabelFor(i => i.IdOrdenacao, new { @class = "col-md-2 col-sm-2 col-lg-2 col-xs-3 text-right" })
+                <div class="col-md-4 col-sm-4 col-lg-3 col-xs-3">
+                    @Html.DisplayFor(i => i.DescOrdenacao)   
+                </div>
+            </div>
+            <div class="form-group height-40">
+                @Html.LabelFor(i => i.TempoRefresh, new { @class = "col-md-2 col-sm-2 col-lg-2 col-xs-3 text-right" })
+                <div class="col-md-3 col-sm-3 col-lg-2 col-xs-3">
+                    @Html.DisplayFor(i => i.TempoRefresh)     
+                </div>
+                @Html.LabelFor(i => i.isAtivo, new { @class = "col-md-2 col-sm-2 col-lg-2 col-xs-3 text-right" })
+                <div class="col-md-4 col-sm-4 col-lg-3 col-xs-3">
+                    @Html.Raw(Model.isAtivo?"Ativo":"Inativo")     
+                </div>
+            </div>           
+            <div class="form-group height-40">
+                <div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
+                    <div class="clearfix">
+                        <span class="pull-right">                                
+                            @Html.ActionLink("Voltar", "Index", new { }, new { @class = "btn btn-primary btn-outline" })
+                        </span>
+                    </div>
+                </div>
+            </div>  
+        
+            <table class="table table-striped table-hover" id="especialidadesGrid">
+                <thead>
+                    <tr>
+                        <th>Especialidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Especialidades != null)
+                    {
+                        foreach (var item in Model.Especialidades)
+                        {
+                            <tr>
+                                <td>@item.Nome</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        
+    </div>
+</div>

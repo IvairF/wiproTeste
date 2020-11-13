@@ -1,0 +1,116 @@
+﻿@using Amil.AsmWebCad.UI.Resources
+@model Amil.AsmWebCad.UI.Models.UnidadeNowModel
+
+
+@{
+    ViewBag.Title = Resource.ListaUnidades;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section SectionHead{
+    @Scripts.Render("~/bundles/unidadeNow")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Unidade.Urls.PesquisaUnidade = '@Url.Action("Pesquisa", "UnidadeNow")';
+            Unidade.Urls.ManutencaoUnidade = '@Url.Action("Manutencao", "UnidadeNow")';
+            Unidade.Urls.ExclusaoUnidade = '@Url.Action("Exclusao", "UnidadeNow")';
+            Unidade.Urls.limparSession = '@Url.Action("Limpar", "UnidadeNow")';
+            Unidade.Urls.ValidarAcessoPesquisa = '@Url.Action("ValidarAcessoPesquisa", "UnidadeNow")';
+            Unidade.Urls.InclusaoEspecialidade = '@Url.Action("Manutencao", "UnidadeNow")';
+
+            //RL - Token - Mapeamento da controler e sua action
+            Unidade.Urls.GerarToken = '@Url.Action("GerarToken", "unidadeNow")';
+
+
+            Unidade.Titulo = '@Resource.UnidadesNow';
+            PesquisaUnidade.Mensagens.SucessoExclusao = '@Resource.MensagemSucessoExclusao';
+            PesquisaUnidade.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusao';            
+            PesquisaUnidade.Mensagens.AlertaPesquisaComCampos = '@Resource.AlertaTelaPesquisaUsuariosCampos';
+            PesquisaUnidade.Mensagens.AlertaNome3Caracteres = '@Resource.AlertaNome3Caracteres';
+            PesquisaUnidade.Inicializar();
+
+
+            $("#txtNomeFiltro").on("input", function () {
+                var regexp = /[^a-zA-ZÀ-ú. ]/g;
+
+                if (this.value.match(regexp)) {
+                    $(this).val(this.value.replace(regexp, ''));
+                }
+
+                $(this).val(this.value.toLowerCase().replace(/(^| )(\w)/g, function (s) { return s.toUpperCase() }));
+                $(this).val(this.value.replace(/( )+/g, ' '));
+            });
+
+        });
+    </script>
+}
+
+
+<form class="form-horizontal" role="form" onsubmit="return false;" id="search-form">
+    <div class="panel-full">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                @Resource.Pesquisa
+                <div class="pull-right" data-toggle="collapse" data-target="#pequisaUsuario">
+                    <button type="button" class="btn btn-default btn-xs" data-toggle="button">
+                        <i class="fa fa-minus-square"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="panel-body collapse in" id="pequisaUsuario">
+                <div class="form-group">
+                    @Html.HiddenFor(a => a.Status)
+                    @Html.HiddenFor(a => a.Tipo)
+                    @Html.HiddenFor(a => a.PrimeiroAcesso)
+                    <div class="row">
+                        <div class="col-md-2">
+                            Pesquisar por
+                            <select id="ddlTipoFiltro" class="form-control">
+                                <option selected="selected" value="0">Descrição</option>
+                                <option value="1">Código</option>
+                            </select>
+                            </div>
+                            <div class="col-md-4">
+                                &nbsp;
+                                <input class="form-control" type="text" id="txtFiltro" maxlength="50" />
+                            </div>
+                        </div>
+                    <br />
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-primary" onclick="PesquisaUnidade.Pesquisar();" title="@Resource.TituloBotaoPesquisar">@Resource.Pesquisar</button>
+                        <button type="reset" class="btn btn-outline btn-primary" onclick="PesquisaUnidade.Limpar();" title="@Resource.TituloBotaoLimpar">@Resource.Limpar</button>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="panel-full">
+    <div class="pull-left">
+        <div class="form-actions">
+            <button title="@Resource.TituloBotaoNovo" id="btnInserir" class="btn btn-primary btnBotaoGridDireita" type="button" >
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+        </div>
+    </div>
+    <div id="dttUnidade" class="dataTables_wrapper form-inline">
+        <table id="grvUnidade" style="cursor: pointer" data-dtid="idProtocolo" class="table table-striped table-bordered dataTable">
+            <thead>
+                <tr>
+                    <th data-dtaction="Acoes" data-column-class="align-mid">@Resource.Acoes</th>
+                    <th data-dtcolumn="NM_UNIDADE" data-column-class="width-40">@Resource.Nome</th>
+                    <th data-dtcolumn="CM_REGIONAL.CM_FILIAL_UF.ESTADOS.ID_UF">@Resource.UF</th>
+                    <th data-dtcolumn="CM_BASE_DADOS_WPD.NOME">Base</th>
+                    <th data-dtcolumn="CD_UNIDADE" data-column-class="align-mid">@Resource.CodigoBase</th>
+                    <th data-dtcolumn="ID_UNIDADE" data-column-class="hide"></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

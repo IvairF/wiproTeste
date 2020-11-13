@@ -1,0 +1,62 @@
+﻿
+label {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+fieldset {
+    display: block;
+    
+    width: 70%;
+    margin-left: 20px;
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+}
+
+fieldset.group  { 
+  margin-left: 20px; 
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-family: interfaceRegular, franklinRegular, Helvetica, Arial, sans-serif!important;
+  color: #898989;
+  overflow-y: auto;
+} 
+
+fieldset.group legend { 
+  margin: 0; 
+  padding: 0; 
+  width: 30%;
+  font-weight: bold; 
+  margin-left: 20px; 
+  font-size: 100%; 
+  color: #898989;
+  border: 1px transparent solid; 
+} 
+
+ul.checkbox  { 
+  margin: 0; 
+  padding: 0; 
+  margin-left: 20px; 
+  list-style: none; 
+} 
+
+ul.checkbox li input { 
+  margin-right: .25em; 
+} 
+
+ul.checkbox li { 
+  border: 1px transparent solid; 
+  margin-left: 15px;
+} 
+
+ul.checkbox li label { 
+  margin-left: -10px; 
+} 
+ul.checkbox li:hover, 
+ul.checkbox li.focus  { 
+  background-color: lightyellow; 
+  border: 1px gray solid; 
+  width: 12em; 
+}

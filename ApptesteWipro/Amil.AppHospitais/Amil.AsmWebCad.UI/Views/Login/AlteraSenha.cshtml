@@ -1,0 +1,80 @@
+﻿@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.AlterarSenhaModel
+
+@{
+    ViewBag.Title = @Resource.AlteraSenha_Titulo;
+    Layout = "~/Views/Shared/_LayoutSemMenu.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("input[type=submit]").on("click", function () {
+            $.each($("input[type=text], input[type=password]"), function () {
+                if (!$(this).val())
+                    return false;
+            });
+            if ($("[name=NovaSenha]").val() != $("[name=ConfirmaSenha]").val())
+                return false;
+
+            $("form").submit();
+        });
+    });
+</script>
+<div class="panel-heading">
+    @Html.Label(Resource.AlterarSenha)
+</div>
+<div class="panel-body">
+    <div class="body-content">
+        <div class="login" style="position: static;">
+            @using (Html.BeginForm("AlteraSenha", "Login", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))//, token = @ViewBag.Token
+            {
+                <div class="col-lg-12 height-70">
+                    <div class="label-text">
+                        @Html.Label(Resource.Login)
+                    </div>
+                    <div class="value-text">
+                        <input readonly name="Login" value="@Model.Login" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-12 height-70">
+                    <div class="label-text">
+                        @Html.Label(Resource.Senha)
+                    </div>
+                    <div class="value-text">
+                        @Html.PasswordFor(x => x.Senha, new {@class = "form-control"})
+                    </div>                </div>
+                <div class="col-lg-12 height-70">
+                    <div class="label-text">
+                        @Html.Label(Resource.NovaSenha)
+                    </div>
+                    <div class="value-text">
+                        @Html.PasswordFor(x => x.NovaSenha, new {@class = "form-control"})
+                    </div>
+                </div>
+                <div class="col-lg-12 height-70">
+                    <div class="label-text">
+                        @Html.Label(Resource.ConfirmacaoNovaSenha)
+                    </div>
+                    <div class="value-text">
+                        @Html.PasswordFor(x => x.ConfirmaSenha, new {@class = "form-control"})
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <p style="height: 35px;">
+                        <input type="submit" value="@Resource.Entrar" class="btn btn-primary"  style="margin-right: 130px; width:90px;" />
+                        <input type="button" value="@Resource.Voltar" class="btn btn-outline btn-primary"  style="margin-right: 5px; width:90px;" 
+                                                onclick="location.href='@Url.Action("Login", "Login")    '" />
+                    </p>
+                </div>
+                <div class="col-lg-12">
+                    @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Count > 0))
+                    { 
+                        <div class="alert alert-danger">
+                            <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            @Html.ValidationSummary(true)
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+﻿@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.LoginModel
+
+@{
+    ViewBag.Title = @Resource.Login_Titulo;
+    Layout = "~/Views/Shared/_LayoutSemMenu.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#Login").attr('title', 'Entre com seu e-mail no campo login');
+        $("input[type=submit]").on("click", function () {
+            $(this).prop("disabled", true);
+            $("form").submit();
+        });
+        $("#AlterarSenha").on("click", function () {
+            window.location = "/Login/";
+        });
+    });
+</script>
+
+<div class="panel-heading">
+    @Html.Label(Resource.LogonAcesso)
+</div>
+<div class="panel-body">
+    <div class="body-content">
+        <div class="login" style="position: static;">
+            
+            @using (Html.BeginForm("Login", "Login", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))//, token = ViewBag.Token 
+            {                             
+                <div class="col-lg-12 height-70">
+                    <div class="label-text">
+                        @Html.Label(Resource.Login)
+                    </div>
+                    <div class="value-text" >
+                        @Html.TextBoxFor(x => x.Login, new {@class = "form-control", @tabindex = "1" })
+
+                    </div>
+                </div>
+                <div class="col-lg-12 height-70">
+                    <div class="label-text" >
+                        @Html.Label(Resource.Senha)
+                        @Html.ActionLink(@Resource.EsqueciMinhaSenha, "EsqueciSenha", "Login", new { @style = "float:right;", @tabindex = "4" })
+                    </div>
+                    <div class="value-text" >
+                        @Html.PasswordFor(x => x.Senha, new {@class = "form-control", @tabindex = "2" })
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <p style="height: 35px;">
+                        <input name="Entrar" type="submit" value="@Resource.Entrar" class="btn btn-primary" style="width: 100%;" tabindex = "3"/>
+                    </p>
+                </div>
+                <div class="col-lg-12">
+                    @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Count > 0) || ViewBag.ErroAlterarSenha != null)
+                    { 
+                        <div class="alert alert-danger">
+                            <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            @if(ViewBag.ErroAlterarSenha != null){
+                                @ViewBag.ErroAlterarSenha
+                            }
+                            else
+                            {
+                            @Html.ValidationSummary(true)
+                            }
+
+                        </div>
+                    }
+                </div>
+                <div class="version">
+                    @Html.Label("Versão") 
+                    1.1.0.7
+                    @*@HttpContext.Current.Application["Version"].ToString()*@
+                </div>
+            }
+        </div>
+    </div>
+</div>

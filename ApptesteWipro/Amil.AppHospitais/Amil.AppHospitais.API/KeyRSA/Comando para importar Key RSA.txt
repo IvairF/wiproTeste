@@ -1,0 +1,7 @@
+1) Abrir o Developer Prompt Command for Vs 2012
+
+2) Acessar o caminho C:/Windows/Microsoft.NET/Framework/v4.0.30319
+
+3) Executar o aspnet_regiis.exe -pi "AppHospitais" "C:\SMED\branches\ASM_NOVAS_FUNCIONALIDADES\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.API\KeyRSA\KeyRSA.xml" -exp
+
+

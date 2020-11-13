@@ -1,0 +1,85 @@
+﻿@using Amil.AsmWebCad.UI.Resources
+@model Amil.AsmWebCad.UI.Models.EspecialidadeNowModel 
+      
+
+
+
+@{
+    ViewBag.Title = Resource.ListaEspecialidades;   
+}
+
+@section SectionHead{
+    @Scripts.Render("~/bundles/EspecialidadeNow")
+    @Scripts.Render("~/bundles/UnidadeNow")
+  
+    
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Epecialidade.Urls.PesquisaEspecialidade = '@Url.Action("Pesquisa", "EspecialidadesNow")';
+            Especialidade.Urls.ManutencaoEspecialidade = '@Url.Action("Manutencao", "EspecialidadesNow")';
+            Especialidade.Urls.ExclusaoEspecialidade = '@Url.Action("Exclusao", "EspecialidadesNow")';
+            Especialidade.Urls.limparSession = '@Url.Action("Limpar", "EspecialidadesNow")';
+            Especialidade.Urls.ValidarAcessoPesquisa = '@Url.Action("ValidarAcessoPesquisa", "EspecialidadesNow")';
+
+            //RL - Token - Mapeamento da controler e sua action
+            Especialidade.Urls.GerarToken = '@Url.Action("GerarToken", "EspecialidadesNow")';
+
+
+            Unidade.Titulo = '@Resource.EspecialidadesNow';
+            PesquisaEspecialidade.Mensagens.SucessoExclusao = '@Resource.MensagemSucessoExclusao';
+            PesquisaEspecialidade.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusao';
+            PesquisaEspecialidade.Mensagens.AlertaPesquisaComCampos = '@Resource.AlertaTelaPesquisaUsuariosCampos';
+            PesquisaEspecialidade.Inicializar();
+
+
+            $("#txtNomeFiltro").on("input", function () {
+                var regexp = /[^a-zA-ZÀ-ú. ]/g;
+
+                if (this.value.match(regexp)) {
+                    $(this).val(this.value.replace(regexp, ''));
+                }
+
+                $(this).val(this.value.toLowerCase().replace(/(^| )(\w)/g, function (s) { return s.toUpperCase() }));
+                $(this).val(this.value.replace(/( )+/g, ' '));
+            });
+
+        });
+    </script>
+}
+
+
+<form class="form-horizontal" role="form" onsubmit="return false;" id="search-form">
+
+    <div class="panel-full">
+        <div class="panel panel-primary">
+            <div class="panel-body collapse in" id="pequisaEspecialidade">
+                <div class="form-group">
+                    @Html.HiddenFor(a => a.IdEspecialidade)
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-8">
+                            @Html.Label(Resource.EspecialidadeNow, (object)new { @class = "control-label" })
+                            @Html.TextBoxFor(a => a.Descricao, (object)new { @class = "form-control", @maxlength = 50, @disabled = "disabled" })
+                            @Html.ValidationMessageFor(a => a.Descricao)
+                        </div>
+
+                        <div class="col-lg-3">
+                            @Html.Label(Resource.CodigoBase, (object)new { @class = "control-label" })
+                            @Html.TextBoxFor(a => a.CodigoBase, (object)new { @class = "form-control", @maxlength = 10 })
+                            @Html.ValidationMessageFor(a => a.CodigoBase)
+                        </div>
+                    </div>
+
+                    <br />
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-primary" onclick="ManutencaoUnidade.IncluirEspecialidadeUnidade();" title="@Resource.TituloBotaoSalvar">@Resource.Salvar</button>
+                        <button type="reset" class="btn btn-outline btn-primary" onclick="PesquisaEspecialidade.LimparCodigoBaseModal();" title="@Resource.TituloBotaoLimpar">@Resource.Voltar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

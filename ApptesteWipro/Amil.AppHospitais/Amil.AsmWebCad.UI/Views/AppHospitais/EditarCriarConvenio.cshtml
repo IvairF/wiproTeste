@@ -1,0 +1,78 @@
+﻿@model Amil.AppHospitais.DTO.Convenio
+
+@{
+    ViewBag.Title = "HOME >> Aplicativo Hospitais >> Convênio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    bool EhEdicao = false;
+    if (Model == null){
+        EhEdicao = false;
+    }
+    else{
+        EhEdicao = true;    
+    }
+}
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("EditarCriarConvenio", "AppHospitais", FormMethod.Post))
+        {
+            @Html.HiddenFor(x => x.Id, new { @class = "", id = "" })
+            <div class="form-group">
+                <label for="Nome">Nome do Convênio</label>
+                @Html.TextBoxFor(x => x.Nome, new { @class = "form-control", id = "Nome",@maxlength = 70, placeholder = "" })
+            </div>
+            <div class="form-group">
+                <label for="NomeAbreviado">Nome Abreviado do Convênio</label>
+                @Html.TextBoxFor(x => x.NomeAbreviado, new { @class = "form-control", id = "NomeAbreviado",@maxlength = 20, placeholder = "" })
+            </div>
+            <div class="form-group">
+                <label for="RegistroANS">Registro ANS</label>
+                @Html.TextBoxFor(x => x.RegistroANS, new { @class = "form-control", id = "RegistroANS", placeholder = "" })
+            </div>
+            <div class="form-group">
+                <label for="CodCorporativo">Código Corporativo do Convênio</label>
+                @Html.TextBoxFor(x => x.CodCorporativo, new { @class = "form-control", id = "CodCorporativo", placeholder = "" })
+            </div>
+            
+            <div class="col-xs-10">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(x => x.isElegibilidade, new { @class = "form-check-input", id = "Elegivel" })
+                        Elegível
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(x => x.GrupoAmil, new { @class = "form-check-input", id = "GrupoAmil" })
+                        Grupo Amil
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @if (EhEdicao){
+                            @Html.CheckBoxFor(x => x.isAtivo, new { @class = "form-check-input", id = "Ativo" })
+                        }
+                        else{
+                            @Html.CheckBoxFor(x => x.isAtivo, new { @class = "form-check-input", id = "Ativo", @checked = "checked", disabled = "disabled" })
+                        }
+                        Ativo
+                    </label>
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <input type="submit" value="Confirmar" class="btn btn-success" onclick="Salvar(); return false;" />
+                    <input type="button" value="Cancelar" class="btn btn-danger" onclick="javascript:window.history.go(-1)" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#RegistroANS").mask('999999');
+        $("#CodCorporativo").mask('9999999');
+    });
+</script>

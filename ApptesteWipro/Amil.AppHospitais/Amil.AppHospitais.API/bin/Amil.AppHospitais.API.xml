@@ -1,0 +1,736 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Amil.AppHospitais.API</name>
+    </assembly>
+    <members>
+        <member name="T:Amil.AppHospitais.Api.Controllers.AlergiasController">
+            <summary>
+            API para a tela de alergias do app.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AlergiasController.Get(System.Int32)">
+            <summary>
+            Méotodo para buscar lista de alergias do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns>Lista de DTO's de alergias do usuário.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AlergiasController.Post(Amil.AppHospitais.DTO.AlergiaDTO)">
+            <summary>
+            Gravar nova alergia do usuário.
+            </summary>
+            <param name="value">DTO da alergia.</param>
+            <returns>Identificador salvo da alergia.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AlergiasController.Put(Amil.AppHospitais.DTO.AlergiaDTO)">
+            <summary>
+            Alterar registro de alergia.
+            </summary>
+            <param name="value">DTO da alergia alterada.</param>
+            <returns>True</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AlergiasController.Delete(System.Int32)">
+            <summary>
+            Deletar logicamente uma alergia.
+            </summary>
+            <param name="id">Identificador da alergia.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.AlturaController">
+            <summary>
+            API para tela de alturas do usuário.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AlturaController.Get(System.Int32)">
+            <summary>
+            Recuperar lista de alturas do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns>Lista de DTO's</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AlturaController.Post(Amil.AppHospitais.DTO.AlturaDTO)">
+            <summary>
+            Salvar novo registro de altura do usuário.
+            </summary>
+            <param name="value">DTO com o valor.</param>
+            <returns>Identificador do registro salvo.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AlturaController.Delete(System.Int32)">
+            <summary>
+            Excluir registro de altura do usuário.
+            </summary>
+            <param name="id">Identificador do registro a ser excluído.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.AntecedenteFamiliarController">
+            <summary>
+            API para tela de antecedentes familiares.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AntecedenteFamiliarController.Get(System.Int32)">
+            <summary>
+            Recuperar todos os registros de antecedentes familiares do usuário.
+            </summary>
+            <param name="id">Idenficador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AntecedenteFamiliarController.Post(Amil.AppHospitais.DTO.AntecedenteFamiliarUsuarioDTO)">
+            <summary>
+            Salvar um novo histórico de antecedente familiar.
+            </summary>
+            <param name="value">DTO com dados a serem gravados.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AntecedenteFamiliarController.Put(Amil.AppHospitais.DTO.AntecedenteFamiliarUsuarioDTO)">
+            <summary>
+            Alterar informações de um registro salvo.
+            </summary>
+            <param name="value">DTO do registro com as informações alteradas.</param>
+            <returns>True</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AntecedenteFamiliarController.Delete(System.Int32)">
+            <summary>
+            Deletar um registro de antecedente familiar.
+            </summary>
+            <param name="id">Identificador do registro a ser deletado.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.AntecedentePessoalController">
+            <summary>
+            API para tela de antecedentes pessoais.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AntecedentePessoalController.Get(System.Int32)">
+            <summary>
+            Recupera lista de antecedentes pessoais do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AntecedentePessoalController.Post(Amil.AppHospitais.DTO.AntecedenteDTO)">
+            <summary>
+            Salvar novo antecedente pessoal.
+            </summary>
+            <param name="value">DTO do antecedente a ser salvo.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AntecedentePessoalController.Put(Amil.AppHospitais.DTO.AntecedenteDTO)">
+            <summary>
+            Alterar dados de um antecedente.
+            </summary>
+            <param name="value">DTO do objeto a ser alterado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AntecedentePessoalController.Delete(System.Int32)">
+            <summary>
+            Deletar antecedente pessoal.
+            </summary>
+            <param name="id">Identificador do antecedente a ser excluído.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.AtividadeFisicaController">
+            <summary>
+            API para tela de atividades físicas.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AtividadeFisicaController.Get(System.Int32)">
+            <summary>
+            Recuperar dados sobre atividades físicas do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AtividadeFisicaController.Post(Amil.AppHospitais.DTO.HabitoAtividadeFisicaDTO)">
+            <summary>
+            Caso não haja registro sobre atividade física, salvar uma nova.
+            </summary>
+            <param name="value">DTO com nova atividade a ser salva.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.AtividadeFisicaController.Put(Amil.AppHospitais.DTO.HabitoAtividadeFisicaDTO)">
+            <summary>
+            Alterar dado sobre atividade física do usuário.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.WebApi2.Controllers.BuscarConfiguracaoController">
+            <inheritdoc />
+            <summary>
+            Busca configuracao
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.BuscarConfiguracaoController.Get">
+            <summary>
+            Busca configuracao
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.CirurgiaController">
+            <summary>
+            API da pagina de Cirurgias.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.CirurgiaController.Get(System.Int32)">
+            <summary>
+            Listar todas as cirurgias gravadas pelo usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.CirurgiaController.Post(Amil.AppHospitais.DTO.CirurgiaDTO)">
+            <summary>
+            Gravar nova cirurgia ou nova data de cirurgia.
+            </summary>
+            <param name="value">DTO da cirurgia.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.CirurgiaController.Put(Amil.AppHospitais.DTO.CirurgiaDTO)">
+            <summary>
+            Excluir logicamente uma cirurgia.
+            </summary>
+            <param name="value">DTO com o Id da cirurgia a ser excluída.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.CirurgiaController.Delete(System.Int32)">
+            <summary>
+            Excluir data salva de cirurgia a partir do seu identificador.
+            </summary>
+            <param name="id">Identificador do registro da data de cirurgia.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.ConsomeBebidaController">
+            <summary>
+            API para tela sobre Hábitos - Consumo de Bebidas Alcoólicas.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ConsomeBebidaController.Get(System.Int32)">
+            <summary>
+            Recuperar hábitos de consumo de bebidas alcoólicas do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ConsomeBebidaController.Post(Amil.AppHospitais.DTO.HabitoConsumoBebidaDTO)">
+            <summary>
+            Caso não haja registro sobre consumo de bebidas, salvar uma nova.
+            </summary>
+            <param name="value">DTO do objeto sobre o hábito</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ConsomeBebidaController.Put(Amil.AppHospitais.DTO.HabitoConsumoBebidaDTO)">
+            <summary>
+            Alterar sobre os hábitos etílicos do usuário.
+            </summary>
+            <param name="value">DTO do objeto a ser alterado.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.UsuarioConselhoController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.PerfilUsuarioController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.PerfilModuloSistemaController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.ModuloController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.SistemaController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.PerfilController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.DadoMonitoradoController">
+            <summary>
+            Controller que contem os métodos para Dados Monitorados.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoController.Get">
+            <summary>
+            Recuperar lista de prâmetros de dados monitorados.
+            </summary>    
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoController.Post(Amil.AppHospitais.DTO.DadoMonitoradoDTO)">
+            <summary>
+            Gravar dado monitorado.
+            </summary>
+            <param name="value">DTO do dado monitorado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoController.Post(System.Int32)">
+            <summary>
+            Recuperar ultimos valores de todos os dados monitorados por usuario     
+            </summary>         
+            <param name="idUsuario">Id do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoController.MediaDadosMonitorados(System.Int32,System.Int32)">
+            <summary>
+            recuperar o mínimo, a média e o máximo de um dado monitorado por usuario     
+            </summary>         
+            <param name="idUsuario">Id do usuário.</param>
+            <param name="idUsuario">Id do prametro.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoController.Put(Amil.AppHospitais.DTO.DadoMonitoradoDTO)">
+            <summary>
+            Altera o dado monitorado
+            </summary>
+            <param name="value">DTO do dado monitorado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoController.Delete(System.Int32)">
+            <summary>
+            Inativa o dado monitorado
+            </summary>
+            <param name="id">id do dado monitorado</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoController.ListarUltimoValorParametro(Amil.AppHospitais.DTO.DadoMonitoradoDTO)">
+            <summary>
+            recuperar p histórico de um dado monitorado por usuario     
+            </summary>         
+            <param name="idUsuario">Id do usuário.</param>
+            <param name="idUsuario">Id do prametro.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoController.BuscarDadoMonitoradoPorId(System.Int32)">
+            <summary>
+            recuperar p histórico de um dado monitorado por usuario     
+            </summary>         
+            <param name="idUsuario">Id do usuário.</param>
+            <param name="idUsuario">Id do prametro.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.DadoMonitoradoGraficoController">
+            <summary>
+            Controller para gráficos de Dados Monitorados.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoGraficoController.GraficoPorAno(Amil.AppHospitais.DTO.DadoMonitoradoDTO)">
+            <summary>
+            Lista de valores do parâmetro para gráfico anual.
+            </summary>
+            <param name="idUsuario">Identificador do usuário.</param>
+            <param name="idParam">Identificador do parâmetro.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoGraficoController.GraficoPorSemana(Amil.AppHospitais.DTO.DadoMonitoradoDTO)">
+            <summary>
+            Lista de valores do parâmetro para gráfico semanal.
+            </summary>
+            <param name="idUsuario">Identificador do usuário.</param>
+            <param name="idParam">Identificador do parâmetro.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoGraficoController.GraficoPorMes(Amil.AppHospitais.DTO.DadoMonitoradoDTO)">
+            <summary>
+            Lista de valores do parâmetro para gráfico mensal.
+            </summary>
+            <param name="idUsuario">Identificador do usuário.</param>
+            <param name="idParam">Identificador do parâmetro.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.DadoMonitoradoGraficoController.GraficoPorDia(Amil.AppHospitais.DTO.DadoMonitoradoDTO)">
+            <summary>
+            Lista de valores do parâmetro para gráfico mensal.
+            </summary>
+            <param name="idUsuario">Identificador do usuário.</param>
+            <param name="idParam">Identificador do parâmetro.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.EspecialidadesController.Get">
+            <summary>
+            Listar especialidades médicas disponíveis para pre-triagem.
+            </summary>
+            <returns>Lista de Especialidades.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.EspecialidadesController.Get(System.Int32)">
+            <summary>
+            Listar especialidades médicas disponíveis para pre-triagem por unidade.
+            </summary>
+            <returns>Lista de Especialidades.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.EspecialidadesController.RetornaCodigoCorporativo(System.Int32)">
+            <summary>
+            Listar especialidades médicas disponíveis para pre-triagem por unidade.
+            </summary>
+            <returns>Lista de Especialidades.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.GetTokenController.GetTokenFromFacebook(System.String)">
+            <summary>
+            Pega o email para passar para o login e gerarToken
+            </summary>
+            <param name="idGoogle"></param>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.GetTokenController.GetTokenFromGoogle(System.String)">
+            <summary>
+            Pega o email para passar para o login e gerarToken
+            </summary>
+            <param name="idGoogle"></param>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.HistoricoMedicamentoController">
+            <summary>
+            API da parte de histórico de medicamentos.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.HistoricoMedicamentoController.Get(System.Int32)">
+            <summary>
+            Recuperar o Histórico deste medicamento
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.HistoricoMedicamentoController.Post(Amil.AppHospitais.DTO.HistoricoMedicamentoDTO)">
+            <summary>
+            Salva o histórico do horário do medicamento, se o usuário tomou ou não o medicamento daquele horário.
+            </summary>
+            <param name="value">DTO preenchido com o ID do Horário e flag se tomou ou não.</param>
+            <returns>Identificador do histórico.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.HistoricoMedicamentoController.Gravar(Amil.AppHospitais.DTO.MedicamentoHistoricoDTO)">
+            <summary>
+            Controlar o historico do medicamento e seu hoario
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.InformacoesPreTriagemController.Listar(Amil.AppHospitais.DTO.ListarInformacoesPreTriagemDTO)">
+            <summary>
+            Listar nformacoesPreTriagem.
+            </summary>
+            <returns>informacoesPreTriagem.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.InformacoesPreTriagemController.Listar(Amil.AppHospitais.DTO.PreTriagemSemSenhaAtendimentoDTO)">
+            <summary>
+            Listar Informações de Pre Triagem sem senha Atendimento
+            </summary>
+            <returns>PreTriagemSemSenhaAtendimento.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.InformacoesPreTriagemController.ListarComSenhaIdUsuario(System.Int32)">
+            <returns>PreTriagemComSenhaAtendimento.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.InformacoesPreTriagemController.ListarSemSenhaIdUsuario(System.Int32)">
+            <summary>
+            Listar Informações de Pre Triagem sem senha Atendimento
+            </summary>
+            <returns>PreTriagemSemSenhaAtendimento.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.InformacoesPreTriagemController.BuscarSenhaPreTriagem(Amil.AppHospitais.DTO.BuscarPreTriagemDTO)">
+            <summary>
+            Listar Informações de Pre Triagem sem senha Atendimento
+            </summary>
+            <returns>PreTriagemSemSenhaAtendimento.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.InformacoesPreTriagemController.Inserir(Amil.AppHospitais.DTO.InformacoesPreTriagemDTO)">
+            <summary>
+            Inserir uma Nova InformacoesPreTriagem.
+            </summary>
+            <param name="value">DTO InformacoesPreTriagem.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.InformacoesPreTriagemController.Delete">
+            <summary>
+            Excluir registro de Notificação.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.InformacoesPreTriagemController.CancelarPreTriagem(Amil.AppHospitais.DTO.CancelamentoSenhaRequestDTO)">
+            <summary>
+            Excluir registro de Notificação.
+            </summary>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.ItemAtividadeFisicaController">
+            <summary>
+            Controller de Atividades Físicas.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ItemAtividadeFisicaController.Get(System.Int32)">
+            <summary>
+            Listar atividades físicas do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ItemAtividadeFisicaController.Put(Amil.AppHospitais.DTO.HabitoAtividadeFisicaItemDTO)">
+            <summary>
+            Alterar dado de atividade física.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ItemAtividadeFisicaController.Post(Amil.AppHospitais.DTO.HabitoAtividadeFisicaItemDTO)">
+            <summary>
+            Gravar novo dado de atividade física.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ItemAtividadeFisicaController.Delete(System.Int32)">
+            <summary>
+            Deletar dado de atividade física.
+            </summary>
+            <param name="id">Identificador do item a ser excluído.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.ItemBebidaController">
+            <summary>
+            Controller sobre hábito etílico do usuário.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ItemBebidaController.Get(System.Int32)">
+            <summary>
+            Listar dados sobre hábito etílicos do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ItemBebidaController.Put(Amil.AppHospitais.DTO.BebidasItemDTO)">
+            <summary>
+            Alterar dado sobre hábito etílico do usuário.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ItemBebidaController.Post(Amil.AppHospitais.DTO.BebidasItemDTO)">
+            <summary>
+            Gravar novo dado sobre hábito etílico do usuário.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.ItemBebidaController.Delete(System.Int32)">
+            <summary>
+            Deletar dado sobre hábito etílico do usuário.
+            </summary>
+            <param name="id">Identificador do dado a ser excluído.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.WebApi2.Controllers.ItensNecessidadesEspeciaisController">
+            <summary>
+            API para a tela de necessidades especiais do app.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.ItensNecessidadesEspeciaisController.Get(System.Int32)">
+            <summary>
+            Méotodo para buscar lista de necessidades especiais do usuário
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns>Lista de Necessidades Especiais Item DTO do usuário.</returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.MedicamentosController">
+            <summary>
+            Controller para Medicamentos.
+            </summary>
+        </member>
+        <member name="F:Amil.AppHospitais.Api.Controllers.MedicamentosController.bll">
+            <summary>
+            Instância da camada de negócio.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.MedicamentosController.Listar(System.Int32)">
+            <summary>
+            Método para recuperar lista de medicamentos do usuário.
+            </summary>
+            <param name="id">Identificador do Usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.MedicamentosController.Recuperar(System.Int32)">
+            <summary>
+            Recuperar dados de um medicamento.
+            </summary>
+            <param name="id">Identificador do medicamento.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.MedicamentosController.Post(Amil.AppHospitais.DTO.MedicamentoDTO)">
+            <summary>
+            Método para salvar um novo medicamento.
+            </summary>
+            <param name="value">DTO do medicamento alterado.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.MedicamentosController.Put(Amil.AppHospitais.DTO.MedicamentoDTO)">
+            <summary>
+            Alterar dado sobre medicamento.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.MedicamentosController.Delete(System.Int32)">
+            <summary>
+            Deletar medicamento.
+            </summary>
+            <param name="id">Identificador do dado de medicamento.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.NecessidadesEspeciaisController">
+            <summary>
+            Controller para Necessidades especiais.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.NecessidadesEspeciaisController.Get(System.Int32)">
+            <summary>
+            Listar Necessidades especiais do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.NecessidadesEspeciaisController.Post(Amil.AppHospitais.DTO.NecessidadeEspecialUsuarioDTO)">
+            <summary>
+            Gravar necessidades especiais do usuário.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.NotificacoesController.Listar(System.Int32)">
+            <summary>
+            Listar Notificações.
+            </summary>
+            <returns>Notificações.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.NotificacoesController.Buscar(System.Int32)">
+            <summary>
+            Buscar Notificações.
+            </summary>
+            <returns>Notificações.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.NotificacoesController.Inserir(Amil.AppHospitais.DTO.NotificacoesDTO)">
+            <summary>
+            Inserir uma Nova Notificacao.
+            </summary>
+            <param name="value">DTO Notificacao.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.NotificacoesController.Delete">
+            <summary>
+            Excluir registro de Notificação.
+            </summary>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.PesoController">
+            <summary>
+            Controller para parametro monitorado peso.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.PesoController.Get(System.Int32)">
+            <summary>
+            Recuperar parametro monitorado peso do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.PesoController.Post(Amil.AppHospitais.DTO.PesoDTO)">
+            <summary>
+            Gravar novo dado monitorado peso.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.PesoController.Delete(System.Int32)">
+            <summary>
+            Deletar parametro monitorado peso do usuário.
+            </summary>
+            <param name="id">Identificador do parametro.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.PressaoArterialController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.PressaoArterialController.Get(System.Int32)">
+            <summary>
+            Recuperar lista de alturas do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns>Lista de DTO's</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.PressaoArterialController.Post(Amil.AppHospitais.DTO.PressaoArterialDTO)">
+            <summary>
+            Salvar novo registro de altura do usuário.
+            </summary>
+            <param name="value">DTO com o valor.</param>
+            <returns>Identificador do registro salvo.</returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.PressaoArterialController.Delete(System.Int32)">
+            <summary>
+            Excluir registro de altura do usuário.
+            </summary>
+            <param name="id">Identificador do registro a ser excluído.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.TabagismoController">
+            <summary>
+            Controller para hábito tabagista do usuário.
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.TabagismoController.Get(System.Int32)">
+            <summary>
+            Listar hábito tabagista do usuário.
+            </summary>
+            <param name="id">Identificador do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.TabagismoController.Post(Amil.AppHospitais.DTO.HabitoTabagismoDTO)">
+            <summary>
+            Gravar novo hábito tabagista do usuário.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.TabagismoController.Put(Amil.AppHospitais.DTO.HabitoTabagismoDTO)">
+            <summary>
+            Alterar hábito tabagista do usuário.
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.TabagismoController.Delete(System.Int32)">
+            <summary>
+            Deletar hábito tabagista do usuário.
+            </summary>
+            <param name="id">Identificador do item.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.WebApi2.Controllers.UnidadeController.Post(System.Int32,System.Int32)">
+            <summary>
+            Listar tempo de espera de acordo com a especialidade e unidade.
+            </summary>
+            <returns>valor tempo de espera</returns>
+        </member>
+        <member name="T:Amil.AppHospitais.Api.Controllers.UsuarioController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.UsuarioController.GetInterno(System.Int32)">
+            <summary>
+            GET para recuperar usuário interno a partir do identificador de cadastro no AMS.
+            </summary>
+            <param name="idCadastro">Identificador de cadastro do usuário.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Amil.AppHospitais.Api.Controllers.UsuarioController.GetExterno(System.Int32)">
+            <summary>
+            GET para recuperar usuário externo a partir do identificador de cadastro do AMS.
+            </summary>
+            <param name="idCadastro">Identificador de cadastro do usuário.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

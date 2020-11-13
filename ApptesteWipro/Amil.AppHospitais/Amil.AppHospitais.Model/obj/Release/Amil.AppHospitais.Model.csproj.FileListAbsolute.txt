@@ -1,0 +1,16 @@
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\Amil.AppHospitais.Model.dll.config
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\Amil.AppHospitais.Model.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\Amil.AppHospitais.Model.pdb
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\Amil.Framework.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\Devart.Data.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\Devart.Data.Oracle.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\Devart.Data.Oracle.Entity.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\Devart.Data.Oracle.Entity.Spatials.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\EntityFramework.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\EntityFramework.SqlServer.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\Newtonsoft.Json.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\EntityFramework.xml
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\bin\Release\EntityFramework.SqlServer.xml
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\obj\Release\Amil.AppHospitais.Model.dll.licenses
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\obj\Release\Amil.AppHospitais.Model.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Model\obj\Release\Amil.AppHospitais.Model.pdb

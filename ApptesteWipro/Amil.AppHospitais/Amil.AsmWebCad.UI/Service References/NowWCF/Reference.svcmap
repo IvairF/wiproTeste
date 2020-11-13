@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8ebda918-8909-4e95-9798-5679ec310b78" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://10.12.24.152/Amil.Now.WCF/Now.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Now.xsd" MetadataType="Schema" ID="8154f68b-f07a-4e9a-bafe-66d752b03bfb" SourceId="1" SourceUrl="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd5" />
+    <MetadataFile FileName="Now1.xsd" MetadataType="Schema" ID="4241407a-8330-4564-ae0f-caef384cea1e" SourceId="1" SourceUrl="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd6" />
+    <MetadataFile FileName="Now2.xsd" MetadataType="Schema" ID="aea428c5-353c-4a65-a711-8d492abcfe51" SourceId="1" SourceUrl="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd0" />
+    <MetadataFile FileName="Now3.xsd" MetadataType="Schema" ID="c43a19d6-8d83-4d5d-9dba-53b93fda82ec" SourceId="1" SourceUrl="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd1" />
+    <MetadataFile FileName="Now4.xsd" MetadataType="Schema" ID="b1f9b943-9654-4af4-9d0f-1296310ca7f9" SourceId="1" SourceUrl="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd2" />
+    <MetadataFile FileName="Now5.xsd" MetadataType="Schema" ID="a55e9e55-2c86-4571-9a2a-46f0bbdbc8c9" SourceId="1" SourceUrl="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd3" />
+    <MetadataFile FileName="Now.disco" MetadataType="Disco" ID="bceb0cce-4db5-4c70-a68c-52880ebda345" SourceId="1" SourceUrl="http://10.12.24.152/Amil.Now.WCF/Now.svc?disco" />
+    <MetadataFile FileName="Now.wsdl" MetadataType="Wsdl" ID="a6010643-3636-4262-9c62-4e02ad967bf8" SourceId="1" SourceUrl="http://10.12.24.152/Amil.Now.WCF/Now.svc?wsdl" />
+    <MetadataFile FileName="Now6.xsd" MetadataType="Schema" ID="5f7d0573-8d43-4993-85ad-057b8eca2c8e" SourceId="1" SourceUrl="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

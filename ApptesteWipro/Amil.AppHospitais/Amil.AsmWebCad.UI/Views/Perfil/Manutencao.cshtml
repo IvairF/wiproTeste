@@ -1,0 +1,117 @@
+﻿@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.CadastraPerfilViewModel
+
+@{
+    ViewBag.Title = Resource.Perfil_Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section SectionHead{
+    @Scripts.Render("~/bundles/perfil")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Perfil.Urls.PesquisaPerfis = '@Url.Action("Pesquisa", "Perfil")';
+            Perfil.Urls.ManutencaoPerfil = '@Url.Action("Manutencao", "Perfil")';
+            Perfil.Urls.ModuloPerfil = '@Url.Action("Modulos", "Perfil")';
+            Perfil.Urls.SalvarModulos = '@Url.Action("SalvarModulos", "Perfil")';
+
+            Perfil.Mensagens.SucessoGravacao = '@Resource.MensagemSucessoGravacao';
+            Perfil.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusao';
+            PesquisaPerfil.Mensagens.SucessoExclusao = '@Resource.MensagemSucessoExclusao';
+            PesquisaPerfil.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusao';
+            Perfil.Titulo = '@Resource.Perfil_Titulo';
+            ManutencaoPerfil.Inicializar();
+
+            $('#Codigo').on('input', function () {
+                $(this).val(this.value.toUpperCase());
+            });
+
+        });
+
+
+    </script>
+}
+
+<form class="form-horizontal" onsubmit="return false;" id="frmManutencaoPerfil">
+    <div class="panel-full">
+        @Html.ValidationSummary(true)
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                @Resource.TituloFormDadosPerfil
+                <div class="pull-right" data-toggle="collapse" data-target="#pesquisaPerfil">
+                    <button type="button" class="btn btn-default btn-xs" data-toggle="button">
+                        <i class="fa fa-minus-square"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-body collapse in" id="inserePerfil">
+                @Html.HiddenFor(a => a.Id)
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                        <label class="control-label">@Resource.Perfil</label>
+                            @Html.TextBoxFor(a => a.Descricao, (object)new { @class = "form-control", @maxlength = 70 })
+                            @Html.ValidationMessageFor(a => a.Descricao)
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="control-label">@Resource.Codigo</label>
+                            @Html.TextBoxFor(a => a.Codigo, (object)new { @class = "form-control", @maxlength = 50 })
+                            @Html.ValidationMessageFor(a => a.Codigo)
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="control-label">@Resource.Sistema</label>
+                            @Html.DropDownListFor(a => a.IdSistema, (SelectList)ViewBag.SistemaBag, @Resource.Selecione, (object)new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.IdSistema)
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="button" id="btnAssociarModulo" class="btn btn-primary" style="float: left !important;" data-toggle="modal" data-target="#moduloModal">
+                            @Resource.TituloBotaoModuloPerfil
+                        </button>
+                        <button type="button" class="btn btn-primary" title="@Resource.TituloBotaoSalvar" onclick="ManutencaoPerfil.Salvar();">@Resource.Salvar</button>
+                        <button type="reset" class="btn btn-outline btn-primary" onclick="ManutencaoPerfil.Voltar();" title="@Resource.TituloBotaoVoltar">@Resource.Voltar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="moduloModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="perfisLabel">Módulos do Perfil </h4>
+                @Html.HiddenFor(a => a.IdSistema)
+            </div>
+            <div class="modal-body">
+                <div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="salvar" data-dismiss="modal" onclick="javascript: ManutencaoPerfil.AdicionarModulos();">Salvar</button>
+                <button type="button" class="btn btn-primary btn-outline" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#moduloModal').on('show.bs.modal', function (event) {
+        var modal = $(this);
+        $.ajax({
+            url: '@Url.Action("CarregarModulos")/' + $("#Id").val(),
+            type: "POST",
+            success: function (partialView) {
+                modal.find(".modal-body").html(partialView);
+            }
+        });
+    });
+
+</script>
+

@@ -1,0 +1,166 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.UnidadeNowModel
+@{
+    ViewBag.Title = Resource.UnidadeTitulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section SectionHead{
+    @Scripts.Render("~/bundles/unidadeNow")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Unidade.Urls.PesquisaUnidades = '@Url.Action("Pesquisa", "unidadeNow")';
+            Unidade.Urls.ManutencaoUnidade = '@Url.Action("Manutencao", "unidadeNow")';
+            Unidade.Urls.limparSession = '@Url.Action("Limpar", "unidadeNow")';
+
+
+            Unidade.Titulo = '@Resource.UnidadeTitulo';
+            Unidade.Mensagens.MensagemUF = '@Resource.MensagemUF';
+            ManutencaoUnidade.Mensagens.SucessoExclusao = '@Resource.MensagemSucessoExclusao';
+            ManutencaoUnidade.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusaoEditavel';
+            ManutencaoUnidade.Mensagens.SucessoGravacao = '@Resource.MensagemSucessoGravacao';
+            ManutencaoUnidade.Inicializar();
+
+
+
+            $("#Nome").on("input", function () {
+                var regexp = /[^a-zA-ZÀ-ú. ]/g;
+
+                if (this.value.match(regexp)) {
+                    $(this).val(this.value.replace(regexp, ''));
+                }
+
+                $(this).val(this.value.toLowerCase().replace(/(^| )(\w)/g, function (s) { return s.toUpperCase() }));
+                $(this).val(this.value.replace(/( )+/g, ' '));
+
+            });
+
+            $('.sonumero').on("input", function () {
+                $(this).val(this.value.replace(/\D/g, ''));
+
+            });
+
+        });
+    </script>
+}
+@using (Html.BeginForm("frmManutencaoUnidade", "Unidade", FormMethod.Post, new { id = "frmManutencaoUnidade", @class = "form-horizontal", role = "form", onsubmit = "return false;" }))
+{
+ 
+    <div>
+        <div class="panel-full">
+            @Html.ValidationSummary(true)
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @Resource.TituloFormDadosUnidade
+                    <div class="pull-right" data-toggle="collapse" data-target="#insereGrupo">
+                        <button type="button" class="btn btn-default btn-xs" data-toggle="button">
+                            <i class="fa fa-minus-square"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body collapse in" id="insereGrupo">
+                    <div class="form-group">
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.HiddenFor(a => a.Tipo)
+                        <div class="row">
+                            <div class="col-lg-5">
+                                @Html.Label(Resource.Nome, (object)new { @class = "control-label" })
+                                @Html.TextBoxFor(a => a.Nome, (object)new { @class = "form-control", @maxlength = 50 })
+                                @Html.ValidationMessageFor(a => a.Nome)
+                            </div>
+
+                            <div class="col-md-2">
+                                @Html.Label(Resource.UF, (object)new { @class = "control-label" })
+                                @if (Model.Id == 0){
+                                    @Html.DropDownListFor(a => a.UF, (SelectList)ViewBag.UFBag, @Resource.Selecione, (object)new { @class = "form-control"})
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(a => a.UF, (SelectList)ViewBag.UFBag, @Resource.Selecione, (object)new { @class = "form-control"})
+                                }
+                                @Html.ValidationMessageFor(a => a.UF)
+                            </div>
+
+                            <div class="col-md-2">
+                                @Html.Label(Resource.Regional, (object)new { @class = "control-label" })
+                                @if (Model.Id == 0){
+                                    @Html.DropDownListFor(a => a.Regional, (SelectList)ViewBag.RegionalBag, @Resource.Selecione, (object)new { @class = "form-control"})
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(a => a.Regional, (SelectList)ViewBag.RegionalBag, @Resource.Selecione, (object)new { @class = "form-control" })
+                                }
+                                @Html.ValidationMessageFor(a => a.Regional)
+                            </div>
+
+                            <div class="col-lg-3">
+                                @Html.Label(Resource.EscalaRisco, (object)new { @class = "control-label" })
+                                @if (Model.Id == 0){
+                                    @Html.DropDownListFor(a => a.EscalaRisco, (SelectList)ViewBag.StatusUsuarioBag, @Resource.Selecione, (object)new { @class = "form-control"})
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(a => a.EscalaRisco, (SelectList)ViewBag.StatusUsuarioBag, @Resource.Selecione, (object)new { @class = "form-control"})
+                                }
+                                @Html.ValidationMessageFor(a => a.EscalaRisco)
+                            </div>
+
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                             <div class="col-lg-5">
+                                @Html.Label(Resource.Base, (object)new { @class = "control-label" })
+                                @if (Model.Id == 0){
+                                    @Html.DropDownListFor(a => a.Base, (SelectList)ViewBag.StatusUsuarioBag, @Resource.Selecione, (object)new { @class = "form-control"})
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(a => a.Base, (SelectList)ViewBag.StatusUsuarioBag, @Resource.Selecione, (object)new { @class = "form-control"})
+                                }
+                                @Html.ValidationMessageFor(a => a.Base)
+                            </div>
+
+                            <div class="col-lg-3">
+                                @Html.Label(Resource.CodigoCorporativo, (object)new { @class = "control-label" })
+                                @Html.TextBoxFor(a => a.CodigoCorporativo, (object)new { @class = "form-control", @maxlength = 50 })
+                                @Html.ValidationMessageFor(a => a.CodigoCorporativo)
+                            </div>
+
+                            <div class="col-lg-2">
+                                @Html.Label(Resource.Status, (object)new { @class = "control-label" })
+                                @if (Model.Id == 0)
+                                {
+                                    Model.Status = "A"; 
+                                    @Html.DropDownListFor(a => a.Status, (SelectList)ViewBag.StatusUsuarioBag, @Resource.Selecione, (object)new { @class = "form-control", @disabled = "disabled" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(a => a.Status, (SelectList)ViewBag.StatusUsuarioBag, @Resource.Selecione, (object)new { @class = "form-control" })
+                                }
+                                @Html.ValidationMessageFor(a => a.Status)
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" class="btn btn-primary" id="btnSalvar" title="@Resource.TituloBotaoSalvar">@Resource.Salvar</button>
+                            <button type="reset" class="btn btn-outline btn-primary" id="btnVoltar" title="@Resource.TituloBotaoVoltar">@Resource.Voltar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+  
+}
+
+

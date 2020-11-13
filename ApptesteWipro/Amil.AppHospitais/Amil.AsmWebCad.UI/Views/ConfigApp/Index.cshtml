@@ -1,0 +1,152 @@
+﻿@model Amil.AppHospitais.DTO.Configuracao
+@{
+    ViewBag.Title = "HOME >> Aplicativo Hospitais >> Configuração";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "ConfigApp", FormMethod.Post, new { id = "configForm" }))
+        {
+            <fieldset>
+                <legend>Chaves</legend>
+                @Html.HiddenFor(x => x.Id, new { @class = "", id = "" })
+                <div class="col-xs-12">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(x => x.Indisponivel, new { @class = "form-check-input", id = "Indisponivel" })
+                            Habilitar indisponibilidade do aplicativo
+                        </label>
+                    </div>
+                </div>
+                <div class="">
+                    Habilitar raio (circunferência) de:
+                    @Html.TextBoxFor(x => x.RaioLocalizacao, new { @class = "form-control", id = "RaioLocalizacao", style = "width: 50px; display: inline;" })
+                    Km. para localização das unidades no mapa.
+                </div>
+                <div class="col-xs-12">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(x => x.Visualizacao, new { @class = "form-check-input", id = "Indisponivel" })
+                            Bloquear a visualização da estimativa do tempo de espera no aplicativo, após
+                            @Html.TextBoxFor(x => x.TempoVisualizacao, new { @class = "form-control", id = "TempoVisualizacao", style = "width: 50px; display: inline;" })
+                            <select id="ddlTipoTempo">
+                                <option value="M" selected>Minuto(s)</option>
+                                <option value="H">Hora(s)</option>
+                            </select>
+                            de atraso na atualização.
+                            @Html.HiddenFor(x => x.UnidadeTempo, new { id = "HddUnidadeTempo" })
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Avisos</legend>
+                <div class="form-group" style="height: auto;">
+                    <label for="CodCorporativo">Notificação de indisponibilidade do aplicativo:</label>
+                    @Html.TextAreaFor(x => x.MensagemIndisponibilidade, new { @class = "form-control", id = "MensagemIndisponibilidade", rows = "3" })
+                </div>
+                <div class="form-group" style="height: auto;">
+                    <label for="CodCorporativo">Na abertura do aplicativo:</label>
+                    @Html.TextAreaFor(x => x.MensagemAbertura, new { @class = "form-control", id = "MensagemAbertura", rows = "3" })
+                </div>
+                <div class="form-group" style="height: auto;">
+                    <label for="CodCorporativo">Informações:</label>
+                    @Html.TextAreaFor(x => x.MensagemInformacao, new { @class = "form-control", id = "MensagemInformacao", rows = "3" })
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Lojas/Apps</legend>
+                <div class="form-group col-xs-6">
+                    <label for="exampleInputName2">Android URL:</label>
+                    @Html.HiddenFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.ANDROID).FirstOrDefault().Sistema)
+                    @Html.TextBoxFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.ANDROID).FirstOrDefault().UrlLoja, new { @class = "form-control", name = "aplicativo[0].UrlLoja" })
+                </div>
+                <div class="form-group col-xs-3">
+                    <label for="exampleInputEmail2">Versão Mínima</label>
+                    @Html.TextBoxFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.ANDROID).FirstOrDefault().VersaoMinima, new { @class = "form-control", name = "aplicativo[0].VersaoMinima" })
+                </div>
+                <div class="form-group col-xs-3">
+                    <label for="exampleInputEmail2">Versão Atual</label>
+                    @Html.TextBoxFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.ANDROID).FirstOrDefault().VersaoAtual, new { @class = "form-control", name = "aplicativo[0].VersaoAtual" })
+                </div>
+
+                <div class="form-group col-xs-6">
+                    <label for="exampleInputName2">iTunes URL:</label>
+                    @Html.HiddenFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.IOS).FirstOrDefault().Sistema)
+                    @Html.TextBoxFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.IOS).FirstOrDefault().UrlLoja, new { @class = "form-control", name = "aplicativo[1].UrlLoja" })
+                </div>
+                <div class="form-group col-xs-3">
+                    <label for="exampleInputEmail2">Versão Mínima</label>
+                    @Html.TextBoxFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.IOS).FirstOrDefault().VersaoMinima, new { @class = "form-control", name = "aplicativo[1].VersaoMinima" })
+                </div>
+                <div class="form-group col-xs-3">
+                    <label for="exampleInputEmail2">Versão Atual</label>
+                    @Html.TextBoxFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.IOS).FirstOrDefault().VersaoAtual, new { @class = "form-control", name = "aplicativo[1].VersaoAtual" })
+                </div>
+
+                <div class="form-group col-xs-6">
+                    <label for="exampleInputName2">Windows URL:</label>
+                    @Html.HiddenFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.WINDOWSPHONE).FirstOrDefault().Sistema)
+                    @Html.TextBoxFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.WINDOWSPHONE).FirstOrDefault().UrlLoja, new { @class = "form-control", name = "aplicativo[2].UrlLoja" })
+                </div>
+                <div class="form-group col-xs-3">
+                    <label for="exampleInputEmail2">Versão Mínima</label>
+                    @Html.TextBoxFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.WINDOWSPHONE).FirstOrDefault().VersaoMinima, new { @class = "form-control", name = "aplicativo[2].VersaoMinima" })
+                </div>
+                <div class="form-group col-xs-3">
+                    <label for="exampleInputEmail2">Versão Atual</label>
+                    @Html.TextBoxFor(x => x.Aplicativos.Where(a => a.Sistema == Amil.AppHospitais.DTO.Sistema.WINDOWSPHONE).FirstOrDefault().VersaoAtual, new { @class = "form-control", name = "aplicativo[2].VersaoAtual" })
+                </div>
+            </fieldset>
+            
+            <div class="col-md-12">
+                <div class="col-md-4">
+                    <input type="submit" value="Confirmar" class="btn btn-success" onclick="Salvar(); return false;" />
+                    <input type="button" value="Cancelar" class="btn btn-danger" onclick="window.location = '../TelaPrincipal/Manutencao';" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Scripts/Scripts/ConfigAppController.js"></script>
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+<script src="~/Scripts/toastr/toastr.min.js"></script>
+<script type="text/javascript">
+    function Salvar() {
+        $.ajax({
+            url: "@Url.Action("Index")",
+            type: 'POST',
+            data: $('form#configForm').serialize(),
+            success: function (result) {
+                if (result == "True")
+                    Mensagem("Sucesso:", "Alterações salvas com sucesso!.", "success");
+                else
+                    Mensagem("Erro:", "Ocorreu um erro ao tentar salvar as alterações!", "error");
+            },
+            erro: function () {
+                Mensagem("Erro:", "Ocorreu um erro ao tentar salvar as alterações!", "error");
+            }
+        });
+        return false;
+    }
+    function Mensagem(titulo, texto, tipo) {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-full-width",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr[tipo](texto, titulo)
+    }
+</script>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://wsbeneficiarios.amil.com.br" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="IService" targetNamespace="http://wsbeneficiarios.amil.com.br" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="BeneficiarioV2Int_InlineSchema1.xsd" />
+        <binding hasEncoding="false" imported="true" name="BasicHttpBinding_IIService" originalBindingStyle="document" />
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    <xs:schema xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" elementFormDefault="qualified" targetNamespace="http://wsbeneficiarios.amil.com.br" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:include schemaLocation="https://servicos.amil.com.br:443/beneficiario/legado/soap/v3?xsd=xsd0" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="BuscaMarcaOticaRequest">
+    <wsdl:part name="parameters" element="tns:BuscaMarcaOtica" />
+  </wsdl:message>
+  <wsdl:message name="BuscaMarcaOticaResponse">
+    <wsdl:part name="parameters" element="tns:BuscaMarcaOticaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIService_BuscaMarcaOtica_beneficiarioNaoEncontrado_FaultMessage">
+    <wsdl:part name="detail" element="tns:beneficiarioNaoEncontrado" />
+  </wsdl:message>
+  <wsdl:message name="BuscaDadosBeneficiarioRequest">
+    <wsdl:part name="parameters" element="tns:BuscaDadosBeneficiario" />
+  </wsdl:message>
+  <wsdl:message name="BuscaDadosBeneficiarioResponse">
+    <wsdl:part name="parameters" element="tns:BuscaDadosBeneficiarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIService_BuscaDadosBeneficiario_beneficiarioNaoEncontrado_FaultMessage">
+    <wsdl:part name="detail" element="tns:beneficiarioNaoEncontrado" />
+  </wsdl:message>
+  <wsdl:message name="IIService_BuscaPermissaoMarcaOtica_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscaPermissaoMarcaOtica" />
+  </wsdl:message>
+  <wsdl:message name="IIService_BuscaPermissaoMarcaOtica_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscaPermissaoMarcaOticaResponse" />
+  </wsdl:message>
+  <wsdl:message name="BuscaBoletosRequest">
+    <wsdl:part name="parameters" element="tns:BuscaBoletos" />
+  </wsdl:message>
+  <wsdl:message name="BuscaBoletosResponse">
+    <wsdl:part name="parameters" element="tns:BuscaBoletosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IIService_BuscaBoletos_boletoNaoEncontrado_FaultMessage">
+    <wsdl:part name="detail" element="tns:boletoNaoEncontrado" />
+  </wsdl:message>
+  <wsdl:message name="BuscaSistemaOrigemRequest">
+    <wsdl:part name="parameters" element="tns:BuscaSistemaOrigem" />
+  </wsdl:message>
+  <wsdl:message name="BuscaSistemaOrigemResponse">
+    <wsdl:part name="parameters" element="tns:BuscaSistemaOrigemResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IIService">
+    <wsdl:operation name="BuscaMarcaOtica">
+      <wsdl:input wsaw:Action="BuscaMarcaOtica" name="BuscaMarcaOticaRequest" message="tns:BuscaMarcaOticaRequest" />
+      <wsdl:output wsaw:Action="http://wsbeneficiarios.amil.com.br/IIService/BuscaMarcaOticaResponse" name="BuscaMarcaOticaResponse" message="tns:BuscaMarcaOticaResponse" />
+      <wsdl:fault wsaw:Action="BuscaMarcaOtica" name="beneficiarioNaoEncontrado" message="tns:IIService_BuscaMarcaOtica_beneficiarioNaoEncontrado_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscaDadosBeneficiario">
+      <wsdl:input wsaw:Action="BuscaDadosBeneficiario" name="BuscaDadosBeneficiarioRequest" message="tns:BuscaDadosBeneficiarioRequest" />
+      <wsdl:output wsaw:Action="http://wsbeneficiarios.amil.com.br/IIService/BuscaDadosBeneficiarioResponse" name="BuscaDadosBeneficiarioResponse" message="tns:BuscaDadosBeneficiarioResponse" />
+      <wsdl:fault wsaw:Action="BuscaDadosBeneficiario" name="beneficiarioNaoEncontrado" message="tns:IIService_BuscaDadosBeneficiario_beneficiarioNaoEncontrado_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscaPermissaoMarcaOtica">
+      <wsdl:input wsaw:Action="BuscaPermissaoMarcaOtica" message="tns:IIService_BuscaPermissaoMarcaOtica_InputMessage" />
+      <wsdl:output wsaw:Action="http://wsbeneficiarios.amil.com.br/IIService/BuscaPermissaoMarcaOticaResponse" message="tns:IIService_BuscaPermissaoMarcaOtica_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscaBoletos">
+      <wsdl:input wsaw:Action="BuscaBoletos" name="BuscaBoletosRequest" message="tns:BuscaBoletosRequest" />
+      <wsdl:output wsaw:Action="http://wsbeneficiarios.amil.com.br/IIService/BuscaBoletos" name="BuscaBoletosResponse" message="tns:BuscaBoletosResponse" />
+      <wsdl:fault wsaw:Action="BuscaBoletos" name="boletoNaoEncontrado" message="tns:IIService_BuscaBoletos_boletoNaoEncontrado_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscaSistemaOrigem">
+      <wsdl:input wsaw:Action="BuscaSistemaOrigem" name="BuscaSistemaOrigemRequest" message="tns:BuscaSistemaOrigemRequest" />
+      <wsdl:output wsaw:Action="http://wsbeneficiarios.amil.com.br/IIService/BuscaSistemaOrigemResponse" name="BuscaSistemaOrigemResponse" message="tns:BuscaSistemaOrigemResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IIService" type="tns:IIService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BuscaMarcaOtica">
+      <soap:operation soapAction="BuscaMarcaOtica" style="document" />
+      <wsdl:input name="BuscaMarcaOticaRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="BuscaMarcaOticaResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="beneficiarioNaoEncontrado">
+        <soap:fault use="literal" name="beneficiarioNaoEncontrado" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaDadosBeneficiario">
+      <soap:operation soapAction="BuscaDadosBeneficiario" style="document" />
+      <wsdl:input name="BuscaDadosBeneficiarioRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="BuscaDadosBeneficiarioResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="beneficiarioNaoEncontrado">
+        <soap:fault use="literal" name="beneficiarioNaoEncontrado" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaPermissaoMarcaOtica">
+      <soap:operation soapAction="BuscaPermissaoMarcaOtica" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaBoletos">
+      <soap:operation soapAction="BuscaBoletos" style="document" />
+      <wsdl:input name="BuscaBoletosRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="BuscaBoletosResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="boletoNaoEncontrado">
+        <soap:fault use="literal" name="boletoNaoEncontrado" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaSistemaOrigem">
+      <soap:operation soapAction="BuscaSistemaOrigem" style="document" />
+      <wsdl:input name="BuscaSistemaOrigemRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="BuscaSistemaOrigemResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IService">
+    <wsdl:port name="BasicHttpBinding_IIService" binding="tns:BasicHttpBinding_IIService">
+      <soap:address location="https://servicos.amil.com.br:443/beneficiario/legado/soap/v3" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

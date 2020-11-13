@@ -1,0 +1,24 @@
+﻿@model List<Amil.AppHospitais.DTO.PerfilModuloSistemaDTO>
+@using Amil.AsmWebCad.UI.Resources;
+
+<div class="form-group" style="height: 350px;">
+    
+    <div class="col-md-5" style="margin-top: 12px;">
+        Modulos do Sistema </br>
+        @Html.DropDownList("ListaModulosTodos", (MultiSelectList)ViewBag.ListaModulosTodos, (object)new { @class = "form-control", @size = "20", @multiple = "true", @style = "width: 216px; height: 302px;" })
+    </div>
+    <div class="col-md-2">
+        <div style="margin-top: 100px;">
+            <center>
+                <button type="button" id="btnSelecionarTodos" title="@Resource.TituloSelecionarTodos" onclick="AssociarModulo.ControlarSelecao('#ListaModulosTodos option', '#ListaModulosSelecionados');">@Resource.SimboloSelecionarTodos</button><br /><br />
+                <button type="button" id="btnIncluirSelecao" title="@Resource.TituloIncluirSelecao" onclick="AssociarModulo.ControlarSelecao('#ListaModulosTodos option:selected', '#ListaModulosSelecionados');">@Resource.SimboloIncluirSelecao</button><br /><br />
+                <button type="button" id="btnExcluirSelecao" title="@Resource.TituloExcluirSelecao" onclick="AssociarModulo.ControlarSelecao('#ListaModulosSelecionados option:selected', '#ListaModulosTodos');">@Resource.SimboloExcluirSelecao</button><br /><br />
+                <button type="button" id="btnExcluirSelecaoTodos" title="@Resource.TituloExcluirSelecaoTodos" onclick="AssociarModulo.ControlarSelecao('#ListaModulosSelecionados option', '#ListaModulosTodos');">@Resource.SimboloExcluirSelecaoTodos</button>
+            </center>
+        </div>
+    </div>
+    <div class="col-md-5" style="margin-top: 12px;">
+        Modulos do Perfil </br>
+        @Html.DropDownList("ListaModulosSelecionados", (MultiSelectList)ViewBag.ListaModulosSelecionados, (object)new { @class = "form-control", @size = "20", @multiple = "true", @style = "width: 216px; height: 302px;" })
+    </div>
+</div>

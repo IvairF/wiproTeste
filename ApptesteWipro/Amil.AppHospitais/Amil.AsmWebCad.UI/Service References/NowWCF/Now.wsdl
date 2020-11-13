@@ -1,0 +1,1962 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Now" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Amil.Now.DTO" />
+      <xsd:import schemaLocation="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Amil.Now.DTO.Responses" />
+      <xsd:import schemaLocation="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Amil.Now.DTO.Requests" />
+      <xsd:import schemaLocation="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Amil.Framework.Enumerators" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService_DeleteFacilityDivision_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFacilityDivision" />
+  </wsdl:message>
+  <wsdl:message name="IService_DeleteFacilityDivision_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFacilityDivisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_IncludeSpecialtyIntoDivision_InputMessage">
+    <wsdl:part name="parameters" element="tns:IncludeSpecialtyIntoDivision" />
+  </wsdl:message>
+  <wsdl:message name="IService_IncludeSpecialtyIntoDivision_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IncludeSpecialtyIntoDivisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveSpecialtyFromDivision_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSpecialtyFromDivision" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveSpecialtyFromDivision_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSpecialtyFromDivisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_SpecialtiesFromDivision_InputMessage">
+    <wsdl:part name="parameters" element="tns:SpecialtiesFromDivision" />
+  </wsdl:message>
+  <wsdl:message name="IService_SpecialtiesFromDivision_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SpecialtiesFromDivisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAvailableFacilitiesForUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableFacilitiesForUser" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetAvailableFacilitiesForUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvailableFacilitiesForUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUsersFromFacility_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersFromFacility" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUsersFromFacility_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersFromFacilityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUsersFromGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersFromGroup" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetUsersFromGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersFromGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_InsertUserIntoFacility_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertUserIntoFacility" />
+  </wsdl:message>
+  <wsdl:message name="IService_InsertUserIntoFacility_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertUserIntoFacilityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveUserFromFacility_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserFromFacility" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveUserFromFacility_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserFromFacilityResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GravarGrupo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GravarGrupo" />
+  </wsdl:message>
+  <wsdl:message name="IService_GravarGrupo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GravarGrupoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_LoadGrupo_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadGrupo" />
+  </wsdl:message>
+  <wsdl:message name="IService_LoadGrupo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadGrupoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_BuscarGrupo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGrupo" />
+  </wsdl:message>
+  <wsdl:message name="IService_BuscarGrupo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarGrupoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_BuscarUnidadeGrupo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUnidadeGrupo" />
+  </wsdl:message>
+  <wsdl:message name="IService_BuscarUnidadeGrupo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuscarUnidadeGrupoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GravarUnidadeGrupo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GravarUnidadeGrupo" />
+  </wsdl:message>
+  <wsdl:message name="IService_GravarUnidadeGrupo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GravarUnidadeGrupoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_ExcluirUnidadeGrupo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExcluirUnidadeGrupo" />
+  </wsdl:message>
+  <wsdl:message name="IService_ExcluirUnidadeGrupo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExcluirUnidadeGrupoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_ExcluirGrupo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExcluirGrupo" />
+  </wsdl:message>
+  <wsdl:message name="IService_ExcluirGrupo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExcluirGrupoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_ValidarGrupoUnidadeDisponivel_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarGrupoUnidadeDisponivel" />
+  </wsdl:message>
+  <wsdl:message name="IService_ValidarGrupoUnidadeDisponivel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarGrupoUnidadeDisponivelResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_AccessKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:AccessKey" />
+  </wsdl:message>
+  <wsdl:message name="IService_AccessKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AccessKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_ValidateActivationKey_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateActivationKey" />
+  </wsdl:message>
+  <wsdl:message name="IService_ValidateActivationKey_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidateActivationKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Version_InputMessage">
+    <wsdl:part name="parameters" element="tns:Version" />
+  </wsdl:message>
+  <wsdl:message name="IService_Version_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EstratificacaoRisco_InputMessage">
+    <wsdl:part name="parameters" element="tns:EstratificacaoRisco" />
+  </wsdl:message>
+  <wsdl:message name="IService_EstratificacaoRisco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstratificacaoRiscoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EstratificacaoRiscoId_InputMessage">
+    <wsdl:part name="parameters" element="tns:EstratificacaoRiscoId" />
+  </wsdl:message>
+  <wsdl:message name="IService_EstratificacaoRiscoId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstratificacaoRiscoIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Estratificacao_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estratificacao" />
+  </wsdl:message>
+  <wsdl:message name="IService_Estratificacao_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstratificacaoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_ListarUnidades_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarUnidades" />
+  </wsdl:message>
+  <wsdl:message name="IService_ListarUnidades_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarUnidadesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Unidade_InputMessage">
+    <wsdl:part name="parameters" element="tns:Unidade" />
+  </wsdl:message>
+  <wsdl:message name="IService_Unidade_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_FilasUnidade_InputMessage">
+    <wsdl:part name="parameters" element="tns:FilasUnidade" />
+  </wsdl:message>
+  <wsdl:message name="IService_FilasUnidade_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FilasUnidadeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_PacientesNaFila_InputMessage">
+    <wsdl:part name="parameters" element="tns:PacientesNaFila" />
+  </wsdl:message>
+  <wsdl:message name="IService_PacientesNaFila_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PacientesNaFilaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_PacientePorSenha_InputMessage">
+    <wsdl:part name="parameters" element="tns:PacientePorSenha" />
+  </wsdl:message>
+  <wsdl:message name="IService_PacientePorSenha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PacientePorSenhaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_SetaFeedbackPendente_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetaFeedbackPendente" />
+  </wsdl:message>
+  <wsdl:message name="IService_SetaFeedbackPendente_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetaFeedbackPendenteResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_SetaFeedbackOK_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetaFeedbackOK" />
+  </wsdl:message>
+  <wsdl:message name="IService_SetaFeedbackOK_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetaFeedbackOKResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeEstruturaGrafico_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeEstruturaGrafico" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeEstruturaGrafico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeEstruturaGraficoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDadosGrafico_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDadosGrafico" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDadosGrafico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDadosGraficoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EstimativasEspecialidades_InputMessage">
+    <wsdl:part name="parameters" element="tns:EstimativasEspecialidades" />
+  </wsdl:message>
+  <wsdl:message name="IService_EstimativasEspecialidades_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstimativasEspecialidadesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_ListaUnidades_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListaUnidades" />
+  </wsdl:message>
+  <wsdl:message name="IService_ListaUnidades_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListaUnidadesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeCd_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeCd" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeCd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeCdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeId_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeId" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Grafico_InputMessage">
+    <wsdl:part name="parameters" element="tns:Grafico" />
+  </wsdl:message>
+  <wsdl:message name="IService_Grafico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GraficoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_DadosGrafico_InputMessage">
+    <wsdl:part name="parameters" element="tns:DadosGrafico" />
+  </wsdl:message>
+  <wsdl:message name="IService_DadosGrafico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DadosGraficoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Login_InputMessage">
+    <wsdl:part name="parameters" element="tns:Login" />
+  </wsdl:message>
+  <wsdl:message name="IService_Login_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_ChangePassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePassword" />
+  </wsdl:message>
+  <wsdl:message name="IService_ChangePassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDadosId_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDadosId" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDadosId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDadosIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDadosNome_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDadosNome" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDadosNome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDadosNomeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDadosCd_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDadosCd" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDadosCd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDadosCdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeAtivar_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeAtivar" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeAtivar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeAtivarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDesativar_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDesativar" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeDesativar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeDesativarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeEspecialidade_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeEspecialidade" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeEspecialidade_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeEspecialidadeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeIncluir_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeIncluir" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeIncluir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeIncluirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeAlterar_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeAlterar" />
+  </wsdl:message>
+  <wsdl:message name="IService_UnidadeAlterar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnidadeAlterarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Regional_InputMessage">
+    <wsdl:part name="parameters" element="tns:Regional" />
+  </wsdl:message>
+  <wsdl:message name="IService_Regional_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegionalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RegionalId_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegionalId" />
+  </wsdl:message>
+  <wsdl:message name="IService_RegionalId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegionalIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RegionalNome_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegionalNome" />
+  </wsdl:message>
+  <wsdl:message name="IService_RegionalNome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegionalNomeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RegionalUF_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegionalUF" />
+  </wsdl:message>
+  <wsdl:message name="IService_RegionalUF_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegionalUFResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_Estado_InputMessage">
+    <wsdl:part name="parameters" element="tns:Estado" />
+  </wsdl:message>
+  <wsdl:message name="IService_Estado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EstadoNome_InputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoNome" />
+  </wsdl:message>
+  <wsdl:message name="IService_EstadoNome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoNomeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EscalaRisco_InputMessage">
+    <wsdl:part name="parameters" element="tns:EscalaRisco" />
+  </wsdl:message>
+  <wsdl:message name="IService_EscalaRisco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EscalaRiscoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EscalaRiscoId_InputMessage">
+    <wsdl:part name="parameters" element="tns:EscalaRiscoId" />
+  </wsdl:message>
+  <wsdl:message name="IService_EscalaRiscoId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EscalaRiscoIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_BaseWpd_InputMessage">
+    <wsdl:part name="parameters" element="tns:BaseWpd" />
+  </wsdl:message>
+  <wsdl:message name="IService_BaseWpd_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BaseWpdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_BaseWpdId_InputMessage">
+    <wsdl:part name="parameters" element="tns:BaseWpdId" />
+  </wsdl:message>
+  <wsdl:message name="IService_BaseWpdId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BaseWpdIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeIncluir_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeIncluir" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeIncluir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeIncluirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeAlterar_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeAlterar" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeAlterar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeAlterarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeExcluir_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeExcluir" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeExcluir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeExcluirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeVerificar_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeVerificar" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeVerificar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeVerificarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeId_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeId" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeNome_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeNome" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeNome_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeNomeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeGrafico_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeGrafico" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeGrafico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeGraficoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetNowSpecialties_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNowSpecialties" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetNowSpecialties_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNowSpecialtiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetNowSpecialty_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNowSpecialty" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetNowSpecialty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNowSpecialtyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateNowSpecialty_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNowSpecialty" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateNowSpecialty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNowSpecialtyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateNowSpecialty_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateNowSpecialty" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateNowSpecialty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateNowSpecialtyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveNowSpecialty_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveNowSpecialty" />
+  </wsdl:message>
+  <wsdl:message name="IService_RemoveNowSpecialty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveNowSpecialtyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeRemoverGrafico_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeRemoverGrafico" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeRemoverGrafico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeRemoverGraficoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeIncluirGrafico_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeIncluirGrafico" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadeIncluirGrafico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadeIncluirGraficoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadePorRisco_InputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadePorRisco" />
+  </wsdl:message>
+  <wsdl:message name="IService_EspecialidadePorRisco_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EspecialidadePorRiscoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoId_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoId" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidade_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidade" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidade_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeCod_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeCod" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeCod_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeCodResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeIdDados_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeIdDados" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeIdDados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeIdDadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeId_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeId" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeIncluir_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeIncluir" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeIncluir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeIncluirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeAlterar_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeAlterar" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeAlterar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeAlterarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeExcluir_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeExcluir" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorEspecialidadeExcluir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorEspecialidadeExcluirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorGraficoId_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorGraficoId" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorGraficoId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorGraficoIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorGrafico_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorGrafico" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoPorGrafico_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoPorGraficoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoGraficoIncluir_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoGraficoIncluir" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoGraficoIncluir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoGraficoIncluirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoGraficoAlterar_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoGraficoAlterar" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoGraficoAlterar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoGraficoAlterarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoGraficoExcluir_InputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoGraficoExcluir" />
+  </wsdl:message>
+  <wsdl:message name="IService_RiscoGraficoExcluir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RiscoGraficoExcluirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseListar_InputMessage">
+    <wsdl:part name="parameters" element="tns:FaseListar" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseListar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FaseListarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseId_InputMessage">
+    <wsdl:part name="parameters" element="tns:FaseId" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FaseIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseListaUnidade_InputMessage">
+    <wsdl:part name="parameters" element="tns:FaseListaUnidade" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseListaUnidade_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FaseListaUnidadeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseUnidade_InputMessage">
+    <wsdl:part name="parameters" element="tns:FaseUnidade" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseUnidade_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FaseUnidadeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseIncluir_InputMessage">
+    <wsdl:part name="parameters" element="tns:FaseIncluir" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseIncluir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FaseIncluirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseAlterar_InputMessage">
+    <wsdl:part name="parameters" element="tns:FaseAlterar" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseAlterar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FaseAlterarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseExculir_InputMessage">
+    <wsdl:part name="parameters" element="tns:FaseExculir" />
+  </wsdl:message>
+  <wsdl:message name="IService_FaseExculir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FaseExculirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoId_InputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoId" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoLista_InputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoLista" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoLista_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoListaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoAlterar_InputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoAlterar" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoAlterar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoAlterarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoIncluir_InputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoIncluir" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoIncluir_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoIncluirResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoDeletar_InputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoDeletar" />
+  </wsdl:message>
+  <wsdl:message name="IService_PeriodoDeletar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PeriodoDeletarResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetFacilityDivisions_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFacilityDivisions" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetFacilityDivisions_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFacilityDivisionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetFacilityDivision_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFacilityDivision" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetFacilityDivision_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFacilityDivisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateFacilityDivision_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFacilityDivision" />
+  </wsdl:message>
+  <wsdl:message name="IService_CreateFacilityDivision_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFacilityDivisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateFacilityDivision_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateFacilityDivision" />
+  </wsdl:message>
+  <wsdl:message name="IService_UpdateFacilityDivision_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateFacilityDivisionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService">
+    <wsdl:operation name="DeleteFacilityDivision">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/DeleteFacilityDivision" message="tns:IService_DeleteFacilityDivision_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/DeleteFacilityDivisionResponse" message="tns:IService_DeleteFacilityDivision_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IncludeSpecialtyIntoDivision">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/IncludeSpecialtyIntoDivision" message="tns:IService_IncludeSpecialtyIntoDivision_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/IncludeSpecialtyIntoDivisionResponse" message="tns:IService_IncludeSpecialtyIntoDivision_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSpecialtyFromDivision">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RemoveSpecialtyFromDivision" message="tns:IService_RemoveSpecialtyFromDivision_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RemoveSpecialtyFromDivisionResponse" message="tns:IService_RemoveSpecialtyFromDivision_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SpecialtiesFromDivision">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/SpecialtiesFromDivision" message="tns:IService_SpecialtiesFromDivision_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/SpecialtiesFromDivisionResponse" message="tns:IService_SpecialtiesFromDivision_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableFacilitiesForUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetAvailableFacilitiesForUser" message="tns:IService_GetAvailableFacilitiesForUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetAvailableFacilitiesForUserResponse" message="tns:IService_GetAvailableFacilitiesForUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersFromFacility">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetUsersFromFacility" message="tns:IService_GetUsersFromFacility_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetUsersFromFacilityResponse" message="tns:IService_GetUsersFromFacility_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersFromGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetUsersFromGroup" message="tns:IService_GetUsersFromGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetUsersFromGroupResponse" message="tns:IService_GetUsersFromGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertUserIntoFacility">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/InsertUserIntoFacility" message="tns:IService_InsertUserIntoFacility_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/InsertUserIntoFacilityResponse" message="tns:IService_InsertUserIntoFacility_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserFromFacility">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RemoveUserFromFacility" message="tns:IService_RemoveUserFromFacility_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RemoveUserFromFacilityResponse" message="tns:IService_RemoveUserFromFacility_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GravarGrupo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GravarGrupo" message="tns:IService_GravarGrupo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GravarGrupoResponse" message="tns:IService_GravarGrupo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadGrupo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/LoadGrupo" message="tns:IService_LoadGrupo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/LoadGrupoResponse" message="tns:IService_LoadGrupo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGrupo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/BuscarGrupo" message="tns:IService_BuscarGrupo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/BuscarGrupoResponse" message="tns:IService_BuscarGrupo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUnidadeGrupo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/BuscarUnidadeGrupo" message="tns:IService_BuscarUnidadeGrupo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/BuscarUnidadeGrupoResponse" message="tns:IService_BuscarUnidadeGrupo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GravarUnidadeGrupo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GravarUnidadeGrupo" message="tns:IService_GravarUnidadeGrupo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GravarUnidadeGrupoResponse" message="tns:IService_GravarUnidadeGrupo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcluirUnidadeGrupo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ExcluirUnidadeGrupo" message="tns:IService_ExcluirUnidadeGrupo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/ExcluirUnidadeGrupoResponse" message="tns:IService_ExcluirUnidadeGrupo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExcluirGrupo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ExcluirGrupo" message="tns:IService_ExcluirGrupo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/ExcluirGrupoResponse" message="tns:IService_ExcluirGrupo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidarGrupoUnidadeDisponivel">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ValidarGrupoUnidadeDisponivel" message="tns:IService_ValidarGrupoUnidadeDisponivel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/ValidarGrupoUnidadeDisponivelResponse" message="tns:IService_ValidarGrupoUnidadeDisponivel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AccessKey">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/AccessKey" message="tns:IService_AccessKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/AccessKeyResponse" message="tns:IService_AccessKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateActivationKey">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ValidateActivationKey" message="tns:IService_ValidateActivationKey_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/ValidateActivationKeyResponse" message="tns:IService_ValidateActivationKey_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/Version" message="tns:IService_Version_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/VersionResponse" message="tns:IService_Version_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EstratificacaoRisco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EstratificacaoRisco" message="tns:IService_EstratificacaoRisco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EstratificacaoRiscoResponse" message="tns:IService_EstratificacaoRisco_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EstratificacaoRiscoId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EstratificacaoRiscoId" message="tns:IService_EstratificacaoRiscoId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EstratificacaoRiscoIdResponse" message="tns:IService_EstratificacaoRiscoId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estratificacao">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/Estratificacao" message="tns:IService_Estratificacao_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EstratificacaoResponse" message="tns:IService_Estratificacao_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarUnidades">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ListarUnidades" message="tns:IService_ListarUnidades_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/ListarUnidadesResponse" message="tns:IService_ListarUnidades_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Unidade">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/Unidade" message="tns:IService_Unidade_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeResponse" message="tns:IService_Unidade_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FilasUnidade">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/FilasUnidade" message="tns:IService_FilasUnidade_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/FilasUnidadeResponse" message="tns:IService_FilasUnidade_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PacientesNaFila">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/PacientesNaFila" message="tns:IService_PacientesNaFila_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/PacientesNaFilaResponse" message="tns:IService_PacientesNaFila_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PacientePorSenha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/PacientePorSenha" message="tns:IService_PacientePorSenha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/PacientePorSenhaResponse" message="tns:IService_PacientePorSenha_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetaFeedbackPendente">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/SetaFeedbackPendente" message="tns:IService_SetaFeedbackPendente_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/SetaFeedbackPendenteResponse" message="tns:IService_SetaFeedbackPendente_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetaFeedbackOK">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/SetaFeedbackOK" message="tns:IService_SetaFeedbackOK_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/SetaFeedbackOKResponse" message="tns:IService_SetaFeedbackOK_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeEstruturaGrafico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeEstruturaGrafico" message="tns:IService_UnidadeEstruturaGrafico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeEstruturaGraficoResponse" message="tns:IService_UnidadeEstruturaGrafico_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDadosGrafico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeDadosGrafico" message="tns:IService_UnidadeDadosGrafico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeDadosGraficoResponse" message="tns:IService_UnidadeDadosGrafico_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EstimativasEspecialidades">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EstimativasEspecialidades" message="tns:IService_EstimativasEspecialidades_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EstimativasEspecialidadesResponse" message="tns:IService_EstimativasEspecialidades_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListaUnidades">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ListaUnidades" message="tns:IService_ListaUnidades_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/ListaUnidadesResponse" message="tns:IService_ListaUnidades_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeCd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeCd" message="tns:IService_UnidadeCd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeCdResponse" message="tns:IService_UnidadeCd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeId" message="tns:IService_UnidadeId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeIdResponse" message="tns:IService_UnidadeId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Grafico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/Grafico" message="tns:IService_Grafico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GraficoResponse" message="tns:IService_Grafico_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DadosGrafico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/DadosGrafico" message="tns:IService_DadosGrafico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/DadosGraficoResponse" message="tns:IService_DadosGrafico_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/Login" message="tns:IService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/LoginResponse" message="tns:IService_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ChangePassword" message="tns:IService_ChangePassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/ChangePasswordResponse" message="tns:IService_ChangePassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDadosId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeDadosId" message="tns:IService_UnidadeDadosId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeDadosIdResponse" message="tns:IService_UnidadeDadosId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDadosNome">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeDadosNome" message="tns:IService_UnidadeDadosNome_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeDadosNomeResponse" message="tns:IService_UnidadeDadosNome_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDadosCd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeDadosCd" message="tns:IService_UnidadeDadosCd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeDadosCdResponse" message="tns:IService_UnidadeDadosCd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeAtivar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeAtivar" message="tns:IService_UnidadeAtivar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeAtivarResponse" message="tns:IService_UnidadeAtivar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDesativar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeDesativar" message="tns:IService_UnidadeDesativar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeDesativarResponse" message="tns:IService_UnidadeDesativar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeEspecialidade">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeEspecialidade" message="tns:IService_UnidadeEspecialidade_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeEspecialidadeResponse" message="tns:IService_UnidadeEspecialidade_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeIncluir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeIncluir" message="tns:IService_UnidadeIncluir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeIncluirResponse" message="tns:IService_UnidadeIncluir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeAlterar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnidadeAlterar" message="tns:IService_UnidadeAlterar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UnidadeAlterarResponse" message="tns:IService_UnidadeAlterar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Regional">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/Regional" message="tns:IService_Regional_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RegionalResponse" message="tns:IService_Regional_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegionalId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RegionalId" message="tns:IService_RegionalId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RegionalIdResponse" message="tns:IService_RegionalId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegionalNome">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RegionalNome" message="tns:IService_RegionalNome_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RegionalNomeResponse" message="tns:IService_RegionalNome_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RegionalUF">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RegionalUF" message="tns:IService_RegionalUF_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RegionalUFResponse" message="tns:IService_RegionalUF_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/Estado" message="tns:IService_Estado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EstadoResponse" message="tns:IService_Estado_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoNome">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EstadoNome" message="tns:IService_EstadoNome_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EstadoNomeResponse" message="tns:IService_EstadoNome_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EscalaRisco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EscalaRisco" message="tns:IService_EscalaRisco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EscalaRiscoResponse" message="tns:IService_EscalaRisco_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EscalaRiscoId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EscalaRiscoId" message="tns:IService_EscalaRiscoId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EscalaRiscoIdResponse" message="tns:IService_EscalaRiscoId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BaseWpd">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/BaseWpd" message="tns:IService_BaseWpd_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/BaseWpdResponse" message="tns:IService_BaseWpd_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BaseWpdId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/BaseWpdId" message="tns:IService_BaseWpdId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/BaseWpdIdResponse" message="tns:IService_BaseWpdId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeIncluir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadeIncluir" message="tns:IService_EspecialidadeIncluir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadeIncluirResponse" message="tns:IService_EspecialidadeIncluir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeAlterar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadeAlterar" message="tns:IService_EspecialidadeAlterar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadeAlterarResponse" message="tns:IService_EspecialidadeAlterar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeExcluir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadeExcluir" message="tns:IService_EspecialidadeExcluir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadeExcluirResponse" message="tns:IService_EspecialidadeExcluir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeVerificar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadeVerificar" message="tns:IService_EspecialidadeVerificar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadeVerificarResponse" message="tns:IService_EspecialidadeVerificar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadeId" message="tns:IService_EspecialidadeId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadeIdResponse" message="tns:IService_EspecialidadeId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeNome">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadeNome" message="tns:IService_EspecialidadeNome_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadeNomeResponse" message="tns:IService_EspecialidadeNome_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeGrafico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadeGrafico" message="tns:IService_EspecialidadeGrafico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadeGraficoResponse" message="tns:IService_EspecialidadeGrafico_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNowSpecialties">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetNowSpecialties" message="tns:IService_GetNowSpecialties_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetNowSpecialtiesResponse" message="tns:IService_GetNowSpecialties_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNowSpecialty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetNowSpecialty" message="tns:IService_GetNowSpecialty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetNowSpecialtyResponse" message="tns:IService_GetNowSpecialty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateNowSpecialty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/CreateNowSpecialty" message="tns:IService_CreateNowSpecialty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/CreateNowSpecialtyResponse" message="tns:IService_CreateNowSpecialty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateNowSpecialty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UpdateNowSpecialty" message="tns:IService_UpdateNowSpecialty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UpdateNowSpecialtyResponse" message="tns:IService_UpdateNowSpecialty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveNowSpecialty">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RemoveNowSpecialty" message="tns:IService_RemoveNowSpecialty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RemoveNowSpecialtyResponse" message="tns:IService_RemoveNowSpecialty_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeRemoverGrafico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadeRemoverGrafico" message="tns:IService_EspecialidadeRemoverGrafico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadeRemoverGraficoResponse" message="tns:IService_EspecialidadeRemoverGrafico_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeIncluirGrafico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadeIncluirGrafico" message="tns:IService_EspecialidadeIncluirGrafico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadeIncluirGraficoResponse" message="tns:IService_EspecialidadeIncluirGrafico_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadePorRisco">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/EspecialidadePorRisco" message="tns:IService_EspecialidadePorRisco_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/EspecialidadePorRiscoResponse" message="tns:IService_EspecialidadePorRisco_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoId" message="tns:IService_RiscoId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoIdResponse" message="tns:IService_RiscoId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidade">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidade" message="tns:IService_RiscoPorEspecialidade_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeResponse" message="tns:IService_RiscoPorEspecialidade_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeCod">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeCod" message="tns:IService_RiscoPorEspecialidadeCod_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeCodResponse" message="tns:IService_RiscoPorEspecialidadeCod_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeIdDados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeIdDados" message="tns:IService_RiscoPorEspecialidadeIdDados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeIdDadosResponse" message="tns:IService_RiscoPorEspecialidadeIdDados_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeId" message="tns:IService_RiscoPorEspecialidadeId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeIdResponse" message="tns:IService_RiscoPorEspecialidadeId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeIncluir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeIncluir" message="tns:IService_RiscoPorEspecialidadeIncluir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeIncluirResponse" message="tns:IService_RiscoPorEspecialidadeIncluir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeAlterar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeAlterar" message="tns:IService_RiscoPorEspecialidadeAlterar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeAlterarResponse" message="tns:IService_RiscoPorEspecialidadeAlterar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeExcluir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeExcluir" message="tns:IService_RiscoPorEspecialidadeExcluir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoPorEspecialidadeExcluirResponse" message="tns:IService_RiscoPorEspecialidadeExcluir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorGraficoId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoPorGraficoId" message="tns:IService_RiscoPorGraficoId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoPorGraficoIdResponse" message="tns:IService_RiscoPorGraficoId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorGrafico">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoPorGrafico" message="tns:IService_RiscoPorGrafico_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoPorGraficoResponse" message="tns:IService_RiscoPorGrafico_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoGraficoIncluir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoGraficoIncluir" message="tns:IService_RiscoGraficoIncluir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoGraficoIncluirResponse" message="tns:IService_RiscoGraficoIncluir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoGraficoAlterar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoGraficoAlterar" message="tns:IService_RiscoGraficoAlterar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoGraficoAlterarResponse" message="tns:IService_RiscoGraficoAlterar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RiscoGraficoExcluir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/RiscoGraficoExcluir" message="tns:IService_RiscoGraficoExcluir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/RiscoGraficoExcluirResponse" message="tns:IService_RiscoGraficoExcluir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FaseListar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/FaseListar" message="tns:IService_FaseListar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/FaseListarResponse" message="tns:IService_FaseListar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FaseId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/FaseId" message="tns:IService_FaseId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/FaseIdResponse" message="tns:IService_FaseId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FaseListaUnidade">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/FaseListaUnidade" message="tns:IService_FaseListaUnidade_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/FaseListaUnidadeResponse" message="tns:IService_FaseListaUnidade_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FaseUnidade">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/FaseUnidade" message="tns:IService_FaseUnidade_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/FaseUnidadeResponse" message="tns:IService_FaseUnidade_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FaseIncluir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/FaseIncluir" message="tns:IService_FaseIncluir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/FaseIncluirResponse" message="tns:IService_FaseIncluir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FaseAlterar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/FaseAlterar" message="tns:IService_FaseAlterar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/FaseAlterarResponse" message="tns:IService_FaseAlterar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FaseExculir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/FaseExculir" message="tns:IService_FaseExculir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/FaseExculirResponse" message="tns:IService_FaseExculir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/PeriodoId" message="tns:IService_PeriodoId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/PeriodoIdResponse" message="tns:IService_PeriodoId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoLista">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/PeriodoLista" message="tns:IService_PeriodoLista_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/PeriodoListaResponse" message="tns:IService_PeriodoLista_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoAlterar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/PeriodoAlterar" message="tns:IService_PeriodoAlterar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/PeriodoAlterarResponse" message="tns:IService_PeriodoAlterar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoIncluir">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/PeriodoIncluir" message="tns:IService_PeriodoIncluir_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/PeriodoIncluirResponse" message="tns:IService_PeriodoIncluir_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoDeletar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/PeriodoDeletar" message="tns:IService_PeriodoDeletar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/PeriodoDeletarResponse" message="tns:IService_PeriodoDeletar_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFacilityDivisions">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetFacilityDivisions" message="tns:IService_GetFacilityDivisions_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetFacilityDivisionsResponse" message="tns:IService_GetFacilityDivisions_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFacilityDivision">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetFacilityDivision" message="tns:IService_GetFacilityDivision_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetFacilityDivisionResponse" message="tns:IService_GetFacilityDivision_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateFacilityDivision">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/CreateFacilityDivision" message="tns:IService_CreateFacilityDivision_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/CreateFacilityDivisionResponse" message="tns:IService_CreateFacilityDivision_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFacilityDivision">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/UpdateFacilityDivision" message="tns:IService_UpdateFacilityDivision_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/UpdateFacilityDivisionResponse" message="tns:IService_UpdateFacilityDivision_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DeleteFacilityDivision">
+      <soap:operation soapAction="http://tempuri.org/IService/DeleteFacilityDivision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IncludeSpecialtyIntoDivision">
+      <soap:operation soapAction="http://tempuri.org/IService/IncludeSpecialtyIntoDivision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSpecialtyFromDivision">
+      <soap:operation soapAction="http://tempuri.org/IService/RemoveSpecialtyFromDivision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SpecialtiesFromDivision">
+      <soap:operation soapAction="http://tempuri.org/IService/SpecialtiesFromDivision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvailableFacilitiesForUser">
+      <soap:operation soapAction="http://tempuri.org/IService/GetAvailableFacilitiesForUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersFromFacility">
+      <soap:operation soapAction="http://tempuri.org/IService/GetUsersFromFacility" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersFromGroup">
+      <soap:operation soapAction="http://tempuri.org/IService/GetUsersFromGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertUserIntoFacility">
+      <soap:operation soapAction="http://tempuri.org/IService/InsertUserIntoFacility" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserFromFacility">
+      <soap:operation soapAction="http://tempuri.org/IService/RemoveUserFromFacility" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GravarGrupo">
+      <soap:operation soapAction="http://tempuri.org/IService/GravarGrupo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadGrupo">
+      <soap:operation soapAction="http://tempuri.org/IService/LoadGrupo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarGrupo">
+      <soap:operation soapAction="http://tempuri.org/IService/BuscarGrupo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscarUnidadeGrupo">
+      <soap:operation soapAction="http://tempuri.org/IService/BuscarUnidadeGrupo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GravarUnidadeGrupo">
+      <soap:operation soapAction="http://tempuri.org/IService/GravarUnidadeGrupo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcluirUnidadeGrupo">
+      <soap:operation soapAction="http://tempuri.org/IService/ExcluirUnidadeGrupo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExcluirGrupo">
+      <soap:operation soapAction="http://tempuri.org/IService/ExcluirGrupo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidarGrupoUnidadeDisponivel">
+      <soap:operation soapAction="http://tempuri.org/IService/ValidarGrupoUnidadeDisponivel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AccessKey">
+      <soap:operation soapAction="http://tempuri.org/IService/AccessKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateActivationKey">
+      <soap:operation soapAction="http://tempuri.org/IService/ValidateActivationKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Version">
+      <soap:operation soapAction="http://tempuri.org/IService/Version" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstratificacaoRisco">
+      <soap:operation soapAction="http://tempuri.org/IService/EstratificacaoRisco" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstratificacaoRiscoId">
+      <soap:operation soapAction="http://tempuri.org/IService/EstratificacaoRiscoId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Estratificacao">
+      <soap:operation soapAction="http://tempuri.org/IService/Estratificacao" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarUnidades">
+      <soap:operation soapAction="http://tempuri.org/IService/ListarUnidades" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Unidade">
+      <soap:operation soapAction="http://tempuri.org/IService/Unidade" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FilasUnidade">
+      <soap:operation soapAction="http://tempuri.org/IService/FilasUnidade" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PacientesNaFila">
+      <soap:operation soapAction="http://tempuri.org/IService/PacientesNaFila" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PacientePorSenha">
+      <soap:operation soapAction="http://tempuri.org/IService/PacientePorSenha" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetaFeedbackPendente">
+      <soap:operation soapAction="http://tempuri.org/IService/SetaFeedbackPendente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetaFeedbackOK">
+      <soap:operation soapAction="http://tempuri.org/IService/SetaFeedbackOK" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeEstruturaGrafico">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeEstruturaGrafico" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDadosGrafico">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeDadosGrafico" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstimativasEspecialidades">
+      <soap:operation soapAction="http://tempuri.org/IService/EstimativasEspecialidades" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListaUnidades">
+      <soap:operation soapAction="http://tempuri.org/IService/ListaUnidades" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeCd">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeCd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeId">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Grafico">
+      <soap:operation soapAction="http://tempuri.org/IService/Grafico" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DadosGrafico">
+      <soap:operation soapAction="http://tempuri.org/IService/DadosGrafico" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://tempuri.org/IService/Login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePassword">
+      <soap:operation soapAction="http://tempuri.org/IService/ChangePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDadosId">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeDadosId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDadosNome">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeDadosNome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDadosCd">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeDadosCd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeAtivar">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeAtivar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeDesativar">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeDesativar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeEspecialidade">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeEspecialidade" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeIncluir">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeIncluir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UnidadeAlterar">
+      <soap:operation soapAction="http://tempuri.org/IService/UnidadeAlterar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Regional">
+      <soap:operation soapAction="http://tempuri.org/IService/Regional" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegionalId">
+      <soap:operation soapAction="http://tempuri.org/IService/RegionalId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegionalNome">
+      <soap:operation soapAction="http://tempuri.org/IService/RegionalNome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegionalUF">
+      <soap:operation soapAction="http://tempuri.org/IService/RegionalUF" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Estado">
+      <soap:operation soapAction="http://tempuri.org/IService/Estado" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstadoNome">
+      <soap:operation soapAction="http://tempuri.org/IService/EstadoNome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EscalaRisco">
+      <soap:operation soapAction="http://tempuri.org/IService/EscalaRisco" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EscalaRiscoId">
+      <soap:operation soapAction="http://tempuri.org/IService/EscalaRiscoId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BaseWpd">
+      <soap:operation soapAction="http://tempuri.org/IService/BaseWpd" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BaseWpdId">
+      <soap:operation soapAction="http://tempuri.org/IService/BaseWpdId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeIncluir">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadeIncluir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeAlterar">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadeAlterar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeExcluir">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadeExcluir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeVerificar">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadeVerificar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeId">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadeId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeNome">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadeNome" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeGrafico">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadeGrafico" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNowSpecialties">
+      <soap:operation soapAction="http://tempuri.org/IService/GetNowSpecialties" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNowSpecialty">
+      <soap:operation soapAction="http://tempuri.org/IService/GetNowSpecialty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateNowSpecialty">
+      <soap:operation soapAction="http://tempuri.org/IService/CreateNowSpecialty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateNowSpecialty">
+      <soap:operation soapAction="http://tempuri.org/IService/UpdateNowSpecialty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveNowSpecialty">
+      <soap:operation soapAction="http://tempuri.org/IService/RemoveNowSpecialty" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeRemoverGrafico">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadeRemoverGrafico" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadeIncluirGrafico">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadeIncluirGrafico" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EspecialidadePorRisco">
+      <soap:operation soapAction="http://tempuri.org/IService/EspecialidadePorRisco" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoId">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidade">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoPorEspecialidade" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeCod">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoPorEspecialidadeCod" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeIdDados">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoPorEspecialidadeIdDados" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeId">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoPorEspecialidadeId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeIncluir">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoPorEspecialidadeIncluir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeAlterar">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoPorEspecialidadeAlterar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorEspecialidadeExcluir">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoPorEspecialidadeExcluir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorGraficoId">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoPorGraficoId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoPorGrafico">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoPorGrafico" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoGraficoIncluir">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoGraficoIncluir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoGraficoAlterar">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoGraficoAlterar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RiscoGraficoExcluir">
+      <soap:operation soapAction="http://tempuri.org/IService/RiscoGraficoExcluir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FaseListar">
+      <soap:operation soapAction="http://tempuri.org/IService/FaseListar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FaseId">
+      <soap:operation soapAction="http://tempuri.org/IService/FaseId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FaseListaUnidade">
+      <soap:operation soapAction="http://tempuri.org/IService/FaseListaUnidade" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FaseUnidade">
+      <soap:operation soapAction="http://tempuri.org/IService/FaseUnidade" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FaseIncluir">
+      <soap:operation soapAction="http://tempuri.org/IService/FaseIncluir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FaseAlterar">
+      <soap:operation soapAction="http://tempuri.org/IService/FaseAlterar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FaseExculir">
+      <soap:operation soapAction="http://tempuri.org/IService/FaseExculir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoId">
+      <soap:operation soapAction="http://tempuri.org/IService/PeriodoId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoLista">
+      <soap:operation soapAction="http://tempuri.org/IService/PeriodoLista" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoAlterar">
+      <soap:operation soapAction="http://tempuri.org/IService/PeriodoAlterar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoIncluir">
+      <soap:operation soapAction="http://tempuri.org/IService/PeriodoIncluir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PeriodoDeletar">
+      <soap:operation soapAction="http://tempuri.org/IService/PeriodoDeletar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFacilityDivisions">
+      <soap:operation soapAction="http://tempuri.org/IService/GetFacilityDivisions" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFacilityDivision">
+      <soap:operation soapAction="http://tempuri.org/IService/GetFacilityDivision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateFacilityDivision">
+      <soap:operation soapAction="http://tempuri.org/IService/CreateFacilityDivision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFacilityDivision">
+      <soap:operation soapAction="http://tempuri.org/IService/UpdateFacilityDivision" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Now">
+    <wsdl:port name="BasicHttpBinding_IService" binding="tns:BasicHttpBinding_IService">
+      <soap:address location="http://10.12.24.152/Amil.Now.WCF/Now.svc/soap" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

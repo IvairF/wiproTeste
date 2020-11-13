@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Amil.Now.DTO.Responses" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Amil.Now.DTO.Responses" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://10.12.24.152/Amil.Now.WCF/Now.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Amil.Framework.Enumerators" />
+  <xs:complexType name="ArrayOfUnidade">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Unidade" nillable="true" type="tns:Unidade" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUnidade" nillable="true" type="tns:ArrayOfUnidade" />
+  <xs:complexType name="Unidade">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cd_unidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dt_hr_atualizacao" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="id_base" type="xs:long" />
+      <xs:element minOccurs="0" name="id_escala_risco" type="xs:long" />
+      <xs:element minOccurs="0" name="id_unidade" type="xs:long" />
+      <xs:element minOccurs="0" name="nm_unidade" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Unidade" nillable="true" type="tns:Unidade" />
+  <xs:complexType name="ArrayOfUnidadeFaseSumario">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UnidadeFaseSumario" nillable="true" type="tns:UnidadeFaseSumario" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUnidadeFaseSumario" nillable="true" type="tns:ArrayOfUnidadeFaseSumario" />
+  <xs:complexType name="UnidadeFaseSumario">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fl_aguarda_feedback" type="xs:int" />
+      <xs:element minOccurs="0" name="id_fase" type="xs:long" />
+      <xs:element minOccurs="0" name="id_unidade_fase" type="xs:long" />
+      <xs:element minOccurs="0" name="nm_unidade_fase" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="qt_minutos_maior" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="qt_pacientes" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="st_quantidade" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="st_tempo" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadeFaseSumario" nillable="true" type="tns:UnidadeFaseSumario" />
+  <xs:complexType name="ArrayOfPacienteFase">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PacienteFase" nillable="true" type="tns:PacienteFase" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPacienteFase" nillable="true" type="tns:ArrayOfPacienteFase" />
+  <xs:complexType name="PacienteFase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cd_especialidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="especialidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="fl_feedback_pendente" type="xs:boolean" />
+      <xs:element minOccurs="0" name="id_paciente" type="xs:long" />
+      <xs:element minOccurs="0" name="id_risco" type="xs:int" />
+      <xs:element minOccurs="0" name="id_senha" type="xs:int" />
+      <xs:element minOccurs="0" name="nm_paciente" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="qt_minutos" type="xs:long" />
+      <xs:element minOccurs="0" name="st_minutos" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PacienteFase" nillable="true" type="tns:PacienteFase" />
+  <xs:complexType name="PacienteSenha">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="cd_espec_unidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cd_status_atual" type="xs:long" />
+      <xs:element minOccurs="0" name="dt_hr_chegada" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="dt_hr_feedback_solicitado" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="dt_hr_ultimo_feedback" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="especialidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="exames" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="fl_feedback_pendente" type="xs:boolean" />
+      <xs:element minOccurs="0" name="foto" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="hr_entrada_unidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="id_risco" type="xs:int" />
+      <xs:element minOccurs="0" name="id_senha" type="xs:int" />
+      <xs:element minOccurs="0" name="medicamentos" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="medico" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="nm_paciente" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="qt_minutos_fila" type="xs:int" />
+      <xs:element minOccurs="0" name="qt_minutos_total" type="xs:int" />
+      <xs:element minOccurs="0" name="st_minutos_fila" type="xs:int" />
+      <xs:element minOccurs="0" name="status_atual" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PacienteSenha" nillable="true" type="tns:PacienteSenha" />
+  <xs:complexType name="UnidadeEstruturaGrafico">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fases" nillable="true" type="tns:ArrayOfUnidadeEstruturaFase" />
+      <xs:element minOccurs="0" name="id_unidade" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="nm_unidade" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadeEstruturaGrafico" nillable="true" type="tns:UnidadeEstruturaGrafico" />
+  <xs:complexType name="ArrayOfUnidadeEstruturaFase">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UnidadeEstruturaFase" nillable="true" type="tns:UnidadeEstruturaFase" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUnidadeEstruturaFase" nillable="true" type="tns:ArrayOfUnidadeEstruturaFase" />
+  <xs:complexType name="UnidadeEstruturaFase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_unidade_fase" type="xs:long" />
+      <xs:element minOccurs="0" name="limites_por_risco" nillable="true" type="tns:ArrayOfUnidadeEstruturaLimiteRisco" />
+      <xs:element minOccurs="0" name="nm_unidade_fase" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="periodos" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="qt_minutos_maximo" type="xs:int" />
+      <xs:element minOccurs="0" name="qt_pacientes_maximo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadeEstruturaFase" nillable="true" type="tns:UnidadeEstruturaFase" />
+  <xs:complexType name="ArrayOfUnidadeEstruturaLimiteRisco">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UnidadeEstruturaLimiteRisco" nillable="true" type="tns:UnidadeEstruturaLimiteRisco" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUnidadeEstruturaLimiteRisco" nillable="true" type="tns:ArrayOfUnidadeEstruturaLimiteRisco" />
+  <xs:complexType name="UnidadeEstruturaLimiteRisco">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_risco" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="qt_minutos_maximo" type="xs:int" />
+      <xs:element minOccurs="0" name="qt_pacientes_maximo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadeEstruturaLimiteRisco" nillable="true" type="tns:UnidadeEstruturaLimiteRisco" />
+  <xs:complexType name="UnidadeDadosGrafico">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="dt_hr_atualizacao" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="fases" nillable="true" type="tns:ArrayOfUnidadeDadosGraficoFase" />
+      <xs:element minOccurs="0" name="fl_desatualizado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="id_unidade" nillable="true" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadeDadosGrafico" nillable="true" type="tns:UnidadeDadosGrafico" />
+  <xs:complexType name="ArrayOfUnidadeDadosGraficoFase">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UnidadeDadosGraficoFase" nillable="true" type="tns:UnidadeDadosGraficoFase" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUnidadeDadosGraficoFase" nillable="true" type="tns:ArrayOfUnidadeDadosGraficoFase" />
+  <xs:complexType name="UnidadeDadosGraficoFase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="dados_por_risco" nillable="true" type="tns:ArrayOfDadosRiscoFase" />
+      <xs:element minOccurs="0" name="id_unidade_fase" type="xs:long" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pacientes" nillable="true" type="q2:ArrayOfArrayOfint" />
+      <xs:element minOccurs="0" name="qt_minutos_estimativa" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="qt_pacientes" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadeDadosGraficoFase" nillable="true" type="tns:UnidadeDadosGraficoFase" />
+  <xs:complexType name="ArrayOfDadosRiscoFase">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DadosRiscoFase" nillable="true" type="tns:DadosRiscoFase" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDadosRiscoFase" nillable="true" type="tns:ArrayOfDadosRiscoFase" />
+  <xs:complexType name="DadosRiscoFase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id_risco" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="qt_minutos_estimativa" type="xs:int" />
+      <xs:element minOccurs="0" name="qt_minutos_maximo" type="xs:int" />
+      <xs:element minOccurs="0" name="qt_pacientes" type="xs:int" />
+      <xs:element minOccurs="0" name="qt_pacientes_maximo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DadosRiscoFase" nillable="true" type="tns:DadosRiscoFase" />
+  <xs:complexType name="LoginResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="mensagem" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="permissoes" nillable="true" type="q3:ArrayOfstring" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Amil.Framework.Enumerators" minOccurs="0" name="status" type="q4:AccountStatusType" />
+      <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LoginResponse" nillable="true" type="tns:LoginResponse" />
+</xs:schema>

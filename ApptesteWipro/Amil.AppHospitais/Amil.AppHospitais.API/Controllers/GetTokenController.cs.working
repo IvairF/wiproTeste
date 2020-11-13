@@ -1,0 +1,143 @@
+﻿using Amil.AppHospitais.DTO;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+
+namespace Amil.AppHospitais.Api.Controllers
+{
+    [EnableCors("*", "*", "*")]
+    public class GetTokenController : ApiController
+    {
+        [HttpPost]
+        public HttpResponseMessage Post([FromBody]LoginUsuarioDTO usuario)
+        {
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            var idGoogle = usuario.ID_GOOGLE;
+            var idFacebook = usuario.ID_FACEBOOK;
+
+            bool temRedeSocial = (string.IsNullOrWhiteSpace(idGoogle) || string.IsNullOrWhiteSpace(idFacebook));
+            //teste
+            //idGoogle = "1";
+            //idFacebook = "1971225543126582";
+
+            UsuarioDTO userDto = new UsuarioDTO();
+
+            //id do google preenchido
+            if (!string.IsNullOrWhiteSpace(idGoogle))
+            {
+                userDto = GetTokenFromGoogle(idGoogle);
+
+                //teste
+                //userDto = new UsuarioDTO();
+            }
+            
+            //Id do facebook preenchido
+            if (!string.IsNullOrWhiteSpace(idFacebook))
+            {
+                userDto = GetTokenFromFacebook(idFacebook);
+            }
+
+            //se passou rede social, mas, não encontrou, devolve o erro para que o app seja conduzido a tela de cadastro
+            if (temRedeSocial && userDto == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Id de rede social não encontrado.");
+            }
+
+
+            try
+            {
+                Dictionary<string, string> Details = null;
+
+                using (var client = new HttpClient())
+                {
+                    var user = new Dictionary<string, string>
+                    {
+                        {"Email", usuario.Email },
+                        {"Senha", usuario.Senha },
+                    };                   
+
+                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["LoginAmericas"]);
+                    
+                    //Se for Google ou Facebook, mudar o objeto passado para o resource
+                    if (userDto!=null)
+                    {
+                        //teste
+                        //userDto.Id = 509;
+                        //userDto.Interno = true;
+                        
+                        if (userDto.Id > 0)
+                        {
+                            user = new Dictionary<string, string>
+                            {
+                                {"Id", userDto.Id_Cadastro.ToString() },
+                                {"FlUsuarioInterno", userDto.Interno ? "true" : "false"},
+                            };
+                        }
+                    }
+
+                    var resp = client.PostAsync("GetToken", new FormUrlEncodedContent(user));
+                    resp.Wait(TimeSpan.FromSeconds(40));
+
+                    if (resp.IsCompleted)
+                    {
+                        Details = JsonConvert.DeserializeObject<Dictionary<string, string>>(resp.Result.Content.ReadAsStringAsync().Result);
+                        return Request.CreateResponse(HttpStatusCode.OK, Details);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, resp);
+                    }
+
+                }
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+            catch (ArgumentException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+            catch (FormatException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+            catch (TimeoutException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        /// <summary>
+        /// Pega o email para passar para o login e gerarToken
+        /// </summary>
+        /// <param name="idGoogle"></param>
+        private UsuarioDTO GetTokenFromFacebook(string idFacebook)
+        {
+            BLL.UsuarioBLL userBll = new BLL.UsuarioBLL();
+            return userBll.RecuperarUsuarioByFacebookId(idFacebook);
+        }
+
+        /// <summary>
+        /// Pega o email para passar para o login e gerarToken
+        /// </summary>
+        /// <param name="idGoogle"></param>
+        private UsuarioDTO GetTokenFromGoogle(string idGoogle)
+        {
+            BLL.UsuarioBLL userBll = new BLL.UsuarioBLL();
+            return userBll.RecuperarUsuarioByGoogleId(idGoogle);
+        }
+        
+    }
+}

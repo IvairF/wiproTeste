@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AlertaLoginMax50" xml:space="preserve">
+    <value>O campo 'Login' deve ter no máximo 50 caracteres.</value>
+  </data>
+  <data name="AlertaSenhaMax10" xml:space="preserve">
+    <value>O campo 'Senha' deve ter no máximo 10 caracteres.</value>
+  </data>
+  <data name="AlterarSenha" xml:space="preserve">
+    <value>Alterar senha</value>
+  </data>
+  <data name="AlteraSenha_Titulo" xml:space="preserve">
+    <value>Alteração de senha</value>
+  </data>
+  <data name="BomDia" xml:space="preserve">
+    <value>Bom Dia</value>
+  </data>
+  <data name="CampoObrigatorio" xml:space="preserve">
+    <value>Campo Obrigatório</value>
+  </data>
+  <data name="ConfirmacaoNovaSenha" xml:space="preserve">
+    <value>Confirmaçao da nova senha</value>
+  </data>
+  <data name="Confirmar" xml:space="preserve">
+    <value>Confirmar</value>
+  </data>
+  <data name="ControleSenha" xml:space="preserve">
+    <value>Senha deve conter Letras Maiúsculas, Minúsculas, Números, Caracteres Especiais e tamanho mínimo deve ser de 8 caracteres.</value>
+  </data>
+  <data name="CpfInvalido" xml:space="preserve">
+    <value>CPF inválido</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail cadastrado</value>
+  </data>
+  <data name="EmailNaoCadastrado" xml:space="preserve">
+    <value>E-mail não cadastrado!</value>
+  </data>
+  <data name="EmailsNaoConferem" xml:space="preserve">
+    <value>E-mails digitados não conferem!</value>
+  </data>
+  <data name="Entrar" xml:space="preserve">
+    <value>Entrar</value>
+  </data>
+  <data name="EsqueciMinhaSenha" xml:space="preserve">
+    <value>Esqueci minha senha</value>
+  </data>
+  <data name="EsqueciSenha_Mensagem" xml:space="preserve">
+    <value>Esqueci minha senha</value>
+  </data>
+  <data name="EsqueciSenha_Titulo" xml:space="preserve">
+    <value>Esqueci minha senha</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="LoginNaoEncontrado" xml:space="preserve">
+    <value>Login ou Senha inválidos</value>
+  </data>
+  <data name="Login_Titulo" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LogonAcesso" xml:space="preserve">
+    <value>Logon de acesso</value>
+  </data>
+  <data name="NaoFoiPossivelRealizarOperacao" xml:space="preserve">
+    <value>Não foi possível realizar esta operação. Tente novamente mais tarde!</value>
+  </data>
+  <data name="NomePortal" xml:space="preserve">
+    <value>Sistema de Configuração Americas</value>
+  </data>
+  <data name="NovaSenha" xml:space="preserve">
+    <value>Nova Senha</value>
+  </data>
+  <data name="Senha" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+  <data name="SenhaDigitadasNaoConferem" xml:space="preserve">
+    <value>Senhas digitadas não conferem!</value>
+  </data>
+  <data name="SenhaEnviada" xml:space="preserve">
+    <value>Nova senha enviada para</value>
+  </data>
+  <data name="Titulo_CadWeb" xml:space="preserve">
+    <value>Configurador WEB ASM</value>
+  </data>
+  <data name="UsuarioBloqueado" xml:space="preserve">
+    <value>Usuário bloqueado!</value>
+  </data>
+  <data name="UsuarioInativo" xml:space="preserve">
+    <value>Usuário inativo</value>
+  </data>
+  <data name="UsuarioSemPerfil" xml:space="preserve">
+    <value>Usuário sem perfil ao sistema</value>
+  </data>
+  <data name="UsuarioSenhaInvalidos" xml:space="preserve">
+    <value>Login ou Senha inválidos</value>
+  </data>
+  <data name="ValidarSenhaAntigaComNova" xml:space="preserve">
+    <value>Senha antiga não pode ser igual a senha nova</value>
+  </data>
+  <data name="Voltar" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="Acoes" xml:space="preserve">
+    <value>Ações</value>
+  </data>
+  <data name="Ativo" xml:space="preserve">
+    <value>Ativo</value>
+  </data>
+  <data name="CPF" xml:space="preserve">
+    <value>CPF</value>
+  </data>
+  <data name="DescricaoBloqueado" xml:space="preserve">
+    <value>Bloqueado</value>
+  </data>
+  <data name="Inativo" xml:space="preserve">
+    <value>Inativo</value>
+  </data>
+  <data name="Limpar" xml:space="preserve">
+    <value>Limpar</value>
+  </data>
+  <data name="Nome" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Pesquisa" xml:space="preserve">
+    <value>Pesquisa</value>
+  </data>
+  <data name="Pesquisar" xml:space="preserve">
+    <value>Pesquisar</value>
+  </data>
+  <data name="Selecione" xml:space="preserve">
+    <value>Selecione</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="TituloBotaoLimpar" xml:space="preserve">
+    <value>Limpar campos</value>
+  </data>
+  <data name="TituloBotaoNovo" xml:space="preserve">
+    <value>Inserir novo registro</value>
+  </data>
+  <data name="TituloBotaoPesquisar" xml:space="preserve">
+    <value>Pesquisar</value>
+  </data>
+  <data name="Todos" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="Usuario_Titulo" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="AlertaTelaPesquisaUsuariosCampos" xml:space="preserve">
+    <value>Preencha algum campo para realizar a pesquisa!</value>
+  </data>
+  <data name="MensagemConfirmacaoExclusao" xml:space="preserve">
+    <value>Deseja realmente excluir o registro?</value>
+  </data>
+  <data name="MensagemSucessoExclusao" xml:space="preserve">
+    <value>Registro excluído com sucesso!</value>
+  </data>
+  <data name="Cadastro_Usuarios" xml:space="preserve">
+    <value>Cadastro de Usuários</value>
+  </data>
+  <data name="AlertaConfirmacaoDiferente" xml:space="preserve">
+    <value>A Confirmação de login deve ser igual ao Login.</value>
+  </data>
+  <data name="AlertaNomeMax60" xml:space="preserve">
+    <value>O campo 'Nome' deve ter no máximo 60 caracteres.</value>
+  </data>
+  <data name="ConfirmarLogin" xml:space="preserve">
+    <value>Confirmar Login</value>
+  </data>
+  <data name="MensagemSucessoGravacao" xml:space="preserve">
+    <value>Registro gravado com sucesso!</value>
+  </data>
+  <data name="Salvar" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="TituloBotaoSalvar" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="TituloBotaoVoltar" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="TituloFormDadosUsuario" xml:space="preserve">
+    <value>Dados do Usuário</value>
+  </data>
+  <data name="DataNascimento" xml:space="preserve">
+    <value>Data de Nascimento</value>
+  </data>
+  <data name="Bloqueado" xml:space="preserve">
+    <value>Bloqueado</value>
+  </data>
+  <data name="AssociarPerfil" xml:space="preserve">
+    <value>Perfil Usuário</value>
+  </data>
+  <data name="Cancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="MensagemFiltroPerfildeviso" xml:space="preserve">
+    <value>Digite a descrição da Perfil que deseja buscar</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>String1</value>
+  </data>
+  <data name="TituloBotaoAnterior" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="TituloExcluirSelecao" xml:space="preserve">
+    <value>Excluir selecionados</value>
+  </data>
+  <data name="TituloExcluirSelecaoTodos" xml:space="preserve">
+    <value>Excluir todos selecionados</value>
+  </data>
+  <data name="TituloIncluirSelecao" xml:space="preserve">
+    <value>Incluir selecionados</value>
+  </data>
+  <data name="TituloSelecionarTodos" xml:space="preserve">
+    <value>Selecionar todos</value>
+  </data>
+  <data name="Codigo" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Perfil" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="Perfil_Titulo" xml:space="preserve">
+    <value>Cadastro de Perfil</value>
+  </data>
+  <data name="Sistema" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="TituloBotaoModuloPerfil" xml:space="preserve">
+    <value>Associar Módulos</value>
+  </data>
+  <data name="TituloFormDadosPerfil" xml:space="preserve">
+    <value>Dados do Perfil</value>
+  </data>
+  <data name="MensagemConfirmacaoExclusaoEditavel" xml:space="preserve">
+    <value>Deseja realmente excluir #?</value>
+  </data>
+  <data name="MensagemPreenchaNome" xml:space="preserve">
+    <value>Digite o nome do Perfil que deseja buscar</value>
+  </data>
+  <data name="MensagemPreenchaSistema" xml:space="preserve">
+    <value>Selecione um Sistema para efetuar a pesquisa.</value>
+  </data>
+  <data name="PesquisaPerfil" xml:space="preserve">
+    <value>Pesquisar Perfil</value>
+  </data>
+  <data name="AlertaPerfilMax100" xml:space="preserve">
+    <value>O campo 'Perfil' deve ter no máximo 100 caracteres.</value>
+  </data>
+  <data name="AlertaCodigoMax50" xml:space="preserve">
+    <value>O campo 'Codigo' deve ter no máximo 50 caracteres.</value>
+  </data>
+  <data name="SimboloExcluirSelecao" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="SimboloExcluirSelecaoTodos" xml:space="preserve">
+    <value>&lt;&lt;</value>
+  </data>
+  <data name="SimboloIncluirSelecao" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="SimboloSelecionarTodos" xml:space="preserve">
+    <value>&gt;&gt;</value>
+  </data>
+  <data name="UsuarioExterno" xml:space="preserve">
+    <value>Externo</value>
+  </data>
+  <data name="UsuarioInterno" xml:space="preserve">
+    <value>Interno</value>
+  </data>
+  <data name="UsuarioTipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="AcessoNegado" xml:space="preserve">
+    <value>Acesso Negado !</value>
+  </data>
+  <data name="ConfirmarEmail" xml:space="preserve">
+    <value>Confirmar E-mail</value>
+  </data>
+  <data name="MensagemNumeroConselho" xml:space="preserve">
+    <value>Preencha o campo Número Conselho para prosseguir</value>
+  </data>
+  <data name="MensagemTipoConselho" xml:space="preserve">
+    <value>Preencha o campo Tipo Conselho para prosseguir</value>
+  </data>
+  <data name="MensagemUF" xml:space="preserve">
+    <value>Preencha o campo UF para prosseguir</value>
+  </data>
+  <data name="UnidadesNow" xml:space="preserve">
+    <value>Unidades Now</value>
+  </data>
+  <data name="Base" xml:space="preserve">
+    <value>Base</value>
+  </data>
+  <data name="CodigoBase" xml:space="preserve">
+    <value>Código Base</value>
+  </data>
+  <data name="CodigoCorporativo" xml:space="preserve">
+    <value>Código Corporativo</value>
+  </data>
+  <data name="UF" xml:space="preserve">
+    <value>UF</value>
+  </data>
+  <data name="Descricao" xml:space="preserve">
+    <value>Descrição</value>
+  </data>
+  <data name="PesquisaEspecialidade" xml:space="preserve">
+    <value>Pesquisar Especialidade Now</value>
+  </data>
+  <data name="EscalaRisco" xml:space="preserve">
+    <value>Escala de Risco</value>
+  </data>
+  <data name="ListaUnidades" xml:space="preserve">
+    <value>Lista Unidades</value>
+  </data>
+  <data name="Regional" xml:space="preserve">
+    <value>Regional</value>
+  </data>
+  <data name="EspecialidadeNow" xml:space="preserve">
+    <value>Especialidade</value>
+  </data>
+  <data name="TituloFormDadosEspecialidadeNow" xml:space="preserve">
+    <value>Especialidade Now</value>
+  </data>
+  <data name="AlertaCodigoIntegracaoMax" xml:space="preserve">
+    <value>O campo 'Código de corporativo' deve ter no máximo 10 caracteres.</value>
+  </data>
+  <data name="TituloFormDadosUnidade" xml:space="preserve">
+    <value>Dados do Unidade</value>
+  </data>
+  <data name="UnidadeTitulo" xml:space="preserve">
+    <value>Cadastro de Unidade</value>
+  </data>
+  <data name="ListaUnidadesDivisao" xml:space="preserve">
+    <value>Lista de Divisões por Unidade</value>
+  </data>
+  <data name="ListaEspecialidades" xml:space="preserve">
+    <value>Lista Especialidades</value>
+  </data>
+  <data name="EspecialidadesNow" xml:space="preserve">
+    <value>Especialidades Now</value>
+  </data>
+  <data name="PesquisarPor" xml:space="preserve">
+    <value>Pesquisar por</value>
+  </data>
+  <data name="Sigla" xml:space="preserve">
+    <value>Sigla</value>
+  </data>
+  <data name="AlertaNome3Caracteres" xml:space="preserve">
+    <value>Digite ao menos 3 caracteres para efetuar a pesquisa.</value>
+  </data>
+  <data name="AlertaDivisao" xml:space="preserve">
+    <value>Digite o nome da divisão.</value>
+  </data>
+</root>

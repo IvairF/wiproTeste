@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <configSections>    
+    <section name="amilSecurity" type="Amil.Framework.Security.Configuration.AmilSecurityConfiguration, Amil.Framework.Security, Version=1.2.662.1, Culture=neutral,PublickKeyToken=dc4e389f-429e-4566-92a6-949ee788048d" requirePermission="false" xdt:Transform="Remove"/>
+  </configSections>
+  <amilSecurity xdt:Transform="Remove">
+    <pathManipulation whiteListMode="true" xdt:Transform="Remove">
+      <whiteList xdt:Transform="Remove">
+        <!--<add path="~/Upload" />
+        <add path="~/Upload/Temp1" recursivePermission="true"/>-->
+      </whiteList>
+    </pathManipulation>
+    <openRedirect whiteListMode="true" xdt:Transform="Remove">
+      <whiteList xdt:Transform="Remove">
+        <!--<add Url="http://www.amil.com.br" />>-->
+      </whiteList>
+    </openRedirect>
+    <logger
+      CefHeaderVersion="0"
+      CefHeaderDeviceVendor="Amil"
+      CefHeaderDeviceProduct="Amil.Framework.Security"
+      CefHeaderDeviceVersion="1"
+      CefHeaderSignature="100"
+      CefHeaderName="Siem.Logger"
+      CefHeaderSeverity="5"
+      CefHeaderSyslogServer=""
+      CefHeaderPort=""
+      CefHeaderProtocol="Tcp"
+      CefHeaderFacility="Local7"
+      CefHeaderSender="MyProgram"
+	  xdt:Transform="Remove"
+    />
+  </amilSecurity>
+</configuration>

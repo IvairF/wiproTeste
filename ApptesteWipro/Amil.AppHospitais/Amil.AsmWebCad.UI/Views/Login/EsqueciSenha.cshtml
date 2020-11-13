@@ -1,0 +1,62 @@
+﻿@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.EsqueciSenhaModel
+
+@{
+    ViewBag.Title = @Resource.EsqueciSenha_Titulo;
+    Layout = "~/Views/Shared/_LayoutSemMenu.cshtml";
+}
+
+<script>
+    if ('@ViewBag.Sucesso' == 'True') {
+        
+        var buttons = [{
+            text: "Fechar",
+            cssClass: 'btn btn-primary btn-outline',
+            click: function () {
+                AmilFramework.Common.OpenAjaxURL("\Login");
+            }
+        }];
+
+        AmilFramework.Alert.Create(3, "Login e senha enviados para o e-mail " + '@ViewBag.Email' , 400, buttons, "Aviso");
+    }
+
+    $(document).ready(function () {
+        $("#Cpf").mask("999.999.999-99");
+    });
+</script>
+
+<div class="panel-heading">
+    @Html.Label(Resource.EsqueciSenha_Mensagem)
+</div>
+<div class="panel-body">
+    <div class="body-content">
+        <div class="login" style="position: static;">
+            @using (Html.BeginForm("EsqueciSenha", "Login", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))//, token = @ViewBag.Token 
+            {
+                <div class="col-lg-12 height-70">
+                    <div class="label-text" text-transform="uppercase">
+                        @Html.Label(Resource.Email)
+                    </div>
+                    <div class="value-text">
+                        @Html.TextBoxFor(x => x.Email, new {@class = "form-control"})
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <p style="height: 35px;">
+                        <input type="submit" value="@Resource.Confirmar" class="btn btn-primary" style="margin-right: 130px; width:90px;" />
+                        <input type="button" value="@Resource.Voltar" class="btn btn-outline btn-primary"  style="margin-right: 5px; width:90px;" onclick="location.href='@Url.Action("Login", "Login")'" />
+                    </p>
+                </div>
+                <div class="col-lg-12">
+                    @if (ViewData.ModelState.Keys.Any(k => ViewData.ModelState[k].Errors.Count > 0))
+                    { 
+                        <div class="alert alert-danger">
+                            <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            @Html.ValidationSummary(true)
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

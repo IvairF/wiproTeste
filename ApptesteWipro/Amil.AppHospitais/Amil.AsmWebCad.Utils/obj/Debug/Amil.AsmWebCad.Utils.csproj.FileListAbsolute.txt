@@ -1,0 +1,14 @@
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\Amil.AsmWebCad.Utils.dll.config
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\Amil.AsmWebCad.Utils.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\Amil.AsmWebCad.Utils.pdb
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\Amil.Framework.Security.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\AntiXssLibrary.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\HtmlAgilityPackAmil.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\HtmlSanitizationLibrary.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\log4net.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\Newtonsoft.Json.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\bin\Debug\Newtonsoft.Json.xml
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\obj\Debug\Amil.AsmWebCad.Utils.csprojResolveAssemblyReference.cache
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\obj\Debug\Amil.AsmWebCad.Utils.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AsmWebCad.Utils\obj\Debug\Amil.AsmWebCad.Utils.pdb

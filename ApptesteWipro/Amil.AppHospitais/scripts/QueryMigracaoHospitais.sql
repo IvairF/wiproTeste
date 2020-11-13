@@ -1,0 +1,4422 @@
+--Criação de Usuario Owner Hospitais
+--Criação de Usuario Owner SGP
+--Criação de Usuario Owner Historicos
+--Criação de Usuario Owner AMESP
+
+--Criação de Usuario FILAZEROUSR
+--Criação de Usuario FILAZEROUSRH
+
+--Criação Estrutura Hospitais
+--drop user HOSPITAIS cascade ; 
+
+create user Hospitais
+  default tablespace TBSASM_DATA
+  temporary tablespace TEMP
+  profile DEFAULT
+  identified by "Hospitais#2018"
+  account lock;
+
+grant create any table to Hospitais;
+grant drop any table to Hospitais;
+grant unlimited tablespace to Hospitais; 
+
+/
+
+create user HospitaisUSR
+  default tablespace TBSASM_DATA
+  temporary tablespace TEMP
+  profile DEFAULT
+  identified by "HospitaisUSR#2018"
+  account lock;
+/
+grant create any table to HospitaisUSR;
+/
+grant drop any table to HospitaisUSR;
+/
+grant unlimited tablespace to HospitaisUSR; 
+/
+create user HospitaisUSRH
+  default tablespace TBSASM_DATA
+  temporary tablespace TEMP
+  profile DEFAULT
+  identified by "HospitaisUSRH#2018"
+  account lock;
+/
+grant create any table to HospitaisUSRH
+/
+grant drop any table to HospitaisUSRH
+/
+grant unlimited tablespace to HospitaisUSRH
+/
+
+-- Base Hospitais
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT count(*)
+	  INTO status
+	  FROM dba_tablespaces
+	 WHERE tablespace_name = 'TBSASM_DATA';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE 'CREATE TABLESPACE TBSASM_DATA';
+	END IF;
+END;
+/
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT count(*)
+	  INTO status
+	  FROM dba_tablespaces
+	 WHERE tablespace_name = 'TBSASM_INDEX';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE 'CREATE TABLESPACE TBSASM_INDEX';
+	END IF;
+END;
+/
+
+ALTER USER HOSPITAIS DEFAULT TABLESPACE TBSASM_DATA
+/
+ALTER USER HOSPITAIS QUOTA UNLIMITED ON TBSASM_DATA
+/
+ALTER USER HOSPITAIS QUOTA UNLIMITED ON TBSASM_INDEX
+/
+GRANT CREATE SESSION TO HOSPITAIS
+/
+
+ALTER USER FILAZEROUSR DEFAULT TABLESPACE TBSASM_DATA
+/
+ALTER USER FILAZEROUSR QUOTA UNLIMITED ON TBSASM_DATA
+/
+ALTER USER FILAZEROUSR QUOTA UNLIMITED ON TBSASM_INDEX
+/
+GRANT CREATE SESSION TO FILAZEROUSR
+/
+
+ALTER USER FILAZEROUSRH DEFAULT TABLESPACE TBSASM_DATA
+/
+ALTER USER FILAZEROUSRH QUOTA UNLIMITED ON TBSASM_DATA
+/
+ALTER USER FILAZEROUSRH QUOTA UNLIMITED ON TBSASM_INDEX
+/
+GRANT CREATE SESSION TO FILAZEROUSRH
+/
+
+
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT count(*)
+	  INTO status
+	  FROM dba_roles
+	 WHERE role = 'ASM_ROLE_ALL_OBJECTS';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE 'CREATE ROLE ASM_ROLE_ALL_OBJECTS';
+	END IF;
+END;
+/
+
+GRANT ASM_ROLE_ALL_OBJECTS TO FILAZEROUSR
+/
+GRANT ASM_ROLE_ALL_OBJECTS TO FILAZEROUSRH
+/
+GRANT ASM_ROLE_ALL_OBJECTS TO HOSPITAIS
+/
+ALTER SESSION SET CURRENT_SCHEMA= HOSPITAIS
+/
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_USUARIO 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_USUARIO';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_USUARIO ( '
+						||' ID_USUARIO NUMBER NOT NULL, '
+						||' ID_CADASTRO NUMBER NOT NULL, '
+						||' FL_INTERNO NUMBER(1) NOT NULL, '
+						||'  DT_CRIACAO DATE NOT NULL) ';
+	END IF;
+END;
+/
+
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_INTERNO'
+      AND UPPER(table_name)      = 'APPHOSP_USUARIO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_USUARIO ADD ' 
+                 || ' CONSTRAINT CK_FL_INTERNO CHECK ( FL_INTERNO in (0, 1))';
+      END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'PK_ID_USUARIO'
+      AND UPPER(table_name)      = 'APPHOSP_USUARIO'
+      AND UPPER(constraint_type) = 'P';
+   IF status = 0 THEN
+      SELECT COUNT (*)
+        INTO status
+        FROM all_indexes
+       WHERE UPPER(index_name) = 'IE_PK_ID_USUARIO' 
+	     AND UPPER(table_name) = 'APPHOSP_USUARIO';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_USUARIO ON HOSPITAIS.APPHOSP_USUARIO (ID_USUARIO) TABLESPACE TBSASM_INDEX';
+      END IF;
+      EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_USUARIO ADD '
+					 || ' CONSTRAINT PK_ID_USUARIO PRIMARY KEY (ID_USUARIO)';
+   END IF;
+END;
+/
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_USUARIO_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_USUARIO_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_USUARIO_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_USUARIO
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_USUARIO_SEQ.NEXTVAL 
+    INTO :NEW.ID_USUARIO
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_ANTECEDENTE_USUARIO 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_ANTECEDENTE_USUARIO';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_ANTECEDENTE_USUARIO ( '
+						||' ID_ANTECEDENTE_USUARIO NUMBER NOT NULL, '
+						||' ID_USUARIO NUMBER NOT NULL, '
+						||' DS_ANTECEDENTE_PARAMETRO VARCHAR2(100) NOT NULL, '
+						||' FL_ATIVO NUMBER(1) NOT NULL,'
+            ||' DT_CRIACAO DATE NOT NULL,'
+            ||' DT_EXCLUSAO DATE)' ;
+	END IF;
+END;
+/
+
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO'
+      AND UPPER(table_name)      = 'APPHOSP_ANTECEDENTE_USUARIO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_ANTECEDENTE_USUARIO ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_ANTECEDENTE_USUARIO'
+	   AND UPPER(table_name)      = 'APPHOSP_ANTECEDENTE_USUARIO'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_ANTECEDENTE_USUARIO' 
+		   AND UPPER(table_name) = 'APPHOSP_ANTECEDENTE_USUARIO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_ANTECEDENTE_USUARIO ON HOSPITAIS.APPHOSP_ANTECEDENTE_USUARIO ( ID_ANTECEDENTE_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_ANTECEDENTE_USUARIO ADD ('
+					   || ' CONSTRAINT PK_ID_ANTECEDENTE_USUARIO PRIMARY KEY (ID_ANTECEDENTE_USUARIO))';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_ANTECEDENTE_USUARIO'
+	   AND UPPER(table_name) 	  = 'APPHOSP_ANTECEDENTE_USUARIO'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_ANTECEDENTE_USUARIO'
+		   AND UPPER(table_name) = 'APPHOSP_ANTECEDENTE_USUARIO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_ANTECEDENTE_USUARIO ON HOSPITAIS.APPHOSP_ANTECEDENTE_USUARIO ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_ANTECEDENTE_USUARIO ADD'
+					   || ' CONSTRAINT FK_ANTECEDENTE_USUARIO'
+					   || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+ 	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_ANTECEDENTE_USER_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_ANTECEDENTE_USER_SEQ'
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_ANTECEDENTE_USER_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_ANTECEDENTE_USUARIO
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_ANTECEDENTE_USER_SEQ.NEXTVAL 
+    INTO :NEW.ID_ANTECEDENTE_USUARIO
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_CIRURGIA_USUARIO 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_CIRURGIA_USUARIO';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_CIRURGIA_USUARIO ( '
+						||' ID_CIRURGIA NUMBER NOT NULL, '
+						||' ID_USUARIO NUMBER NOT NULL, '
+						||' DS_CIRURGIA VARCHAR(100) NOT NULL, '
+						||' FL_ATIVO NUMBER(1) NOT NULL,'
+            ||' DT_CRIACAO DATE NOT NULL,'
+            ||' DT_EXCLUSAO DATE)' ;
+	END IF;
+END;
+/
+
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_1'
+      AND UPPER(table_name)      = 'APPHOSP_CIRURGIA_USUARIO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_CIRURGIA_USUARIO ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_1 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+ 
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_CIRURGIA'
+	   AND UPPER(table_name)      = 'APPHOSP_CIRURGIA_USUARIO'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_CIRURGIA' 
+		   AND UPPER(table_name) = 'APPHOSP_CIRURGIA_USUARIO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_CIRURGIA ON HOSPITAIS.APPHOSP_CIRURGIA_USUARIO ( ID_CIRURGIA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_CIRURGIA_USUARIO ADD ('
+					   || ' CONSTRAINT PK_ID_CIRURGIA PRIMARY KEY (ID_CIRURGIA))';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_CIRURGIA_USUARIO'
+	   AND UPPER(table_name) 	  = 'APPHOSP_CIRURGIA_USUARIO'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_CIRURGIA_USUARIO'
+		   AND UPPER(table_name) = 'APPHOSP_CIRURGIA_USUARIO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_CIRURGIA_USUARIO ON HOSPITAIS.APPHOSP_CIRURGIA_USUARIO ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_CIRURGIA_USUARIO ADD'
+					   || ' CONSTRAINT FK_CIRURGIA_USUARIO'
+					   || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+ 	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_CIRURGIA_USUARIO_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_CIRURGIA_USUARIO_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_CIRURGIA_USUARIO_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_CIRURGIA_USUARIO
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_CIRURGIA_USUARIO_SEQ.NEXTVAL 
+    INTO :NEW.ID_CIRURGIA
+    FROM DUAL;
+  END; 
+/  
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_CIRURGIA_DATA 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_CIRURGIA_DATA';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_CIRURGIA_DATA ( '
+						||' ID_CIRURGIA_DATA NUMBER NOT NULL, '
+						||' ID_CIRURGIA NUMBER NOT NULL, '
+						||' DATA_REALIZADA DATE NOT NULL, '
+						||' DT_CRIACAO DATE NOT NULL,'
+            ||' FL_ATIVO NUMBER(1) NOT NULL,'
+            ||' DT_EXCLUSAO DATE)' ;
+	END IF;
+END;
+/
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_2'
+      AND UPPER(table_name)      = 'APPHOSP_CIRURGIA_DATA'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_CIRURGIA_DATA ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_2 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_CIRURGIA_DATA'
+	   AND UPPER(table_name)      = 'APPHOSP_CIRURGIA_DATA'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_CIRURGIA_DATA' 
+		   AND UPPER(table_name) = 'APPHOSP_CIRURGIA_DATA';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_CIRURGIA_DATA ON HOSPITAIS.APPHOSP_CIRURGIA_DATA ( ID_CIRURGIA_DATA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_CIRURGIA_DATA ADD ('
+					   || ' CONSTRAINT PK_ID_CIRURGIA_DATA PRIMARY KEY (ID_CIRURGIA_DATA))';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_CIRURGIA_DATA'
+	   AND UPPER(table_name) 	  = 'APPHOSP_CIRURGIA_DATA'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_CIRURGIA_DATA'
+		   AND UPPER(table_name) = 'APPHOSP_CIRURGIA_DATA';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_CIRURGIA_DATA ON HOSPITAIS.APPHOSP_CIRURGIA_DATA ( ID_CIRURGIA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_CIRURGIA_DATA ADD'
+					   || ' CONSTRAINT FK_CIRURGIA_DATA'
+					   || ' FOREIGN KEY( ID_CIRURGIA )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_CIRURGIA_USUARIO ( ID_CIRURGIA )';
+	END IF;
+END;
+/
+ 	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_CIRURGIA_DATA_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_CIRURGIA_DATA_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_CIRURGIA_DATA_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_CIRURGIA_DATA
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_CIRURGIA_DATA_SEQ.NEXTVAL 
+    INTO :NEW.ID_CIRURGIA_DATA
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_ANT_FAMILIAR_USER 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_ANT_FAMILIAR_USER';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER ( '
+						||' ID_ANT_FAMILIAR_USER NUMBER NOT NULL, '
+						||' ID_USUARIO NUMBER NOT NULL, '
+						||' DS_PARENTESCO VARCHAR2(100) NOT NULL, '
+						||' FL_ATIVO NUMBER(1) NOT NULL,'
+            ||' DT_CRIACAO DATE NOT NULL,'
+            ||' DT_EXCLUSAO DATE)' ;
+	END IF;
+END;
+/
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_3'
+      AND UPPER(table_name)      = 'APPHOSP_ANT_FAMILIAR_USER'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_ANT_FAMILIAR_USER ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_3 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_ANT_FAMILIAR_USER'
+	   AND UPPER(table_name)      = 'APPHOSP_ANT_FAMILIAR_USER'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_ANT_FAMILIAR_USER' 
+		   AND UPPER(table_name) = 'APPHOSP_ANT_FAMILIAR_USER';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_ANT_FAMILIAR_USER ON HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER ( ID_ANT_FAMILIAR_USER ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER ADD ('
+					   || ' CONSTRAINT PK_ID_ANT_FAMILIAR_USER PRIMARY KEY (ID_ANT_FAMILIAR_USER))';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_ANT_FAMILIAR_USER'
+	   AND UPPER(table_name) 	  = 'APPHOSP_ANT_FAMILIAR_USER'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_ANT_FAMILIAR_USER'
+		   AND UPPER(table_name) = 'APPHOSP_ANT_FAMILIAR_USER';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_ANT_FAMILIAR_USER ON HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER ADD'
+					   || ' CONSTRAINT FK_ANT_FAMILIAR_USER'
+					   || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+ 	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_ANT_FAMILIAR_USER_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER_SEQ.NEXTVAL 
+    INTO :NEW.ID_ANT_FAMILIAR_USER
+    FROM DUAL;
+  END; 
+/  
+
+
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_ANTECEDENTE_FAMILIAR 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_ANTECEDENTE_FAMILIAR';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_ANTECEDENTE_FAMILIAR ( '
+                          ||'	ID_ANT_FAMILIAR NUMBER NOT NULL,'
+                          ||' ID_ANT_FAMILIAR_USER NUMBER NOT NULL,'
+                          ||' DS_ANTECEDENTE VARCHAR(100) NOT NULL,'
+                          ||' DT_CRIACAO DATE NOT NULL,'
+                          ||' FL_ATIVO NUMBER(1) NOT NULL,'
+                          ||'DT_EXCLUSAO DATE)';
+                                  
+            
+	END IF;
+END;
+/
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_XYZ'
+      AND UPPER(table_name)      = 'APPHOSP_ANTECEDENTE_FAMILIAR'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_ANTECEDENTE_FAMILIAR ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_XYZ CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_ANT_FAMILIAR'
+	   AND UPPER(table_name)      = 'APPHOSP_ANTECEDENTE_FAMILIAR'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_ANT_FAMILIAR' 
+		   AND UPPER(table_name) = 'APPHOSP_ANTECEDENTE_FAMILIAR';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_ANT_FAMILIAR ON HOSPITAIS.APPHOSP_ANTECEDENTE_FAMILIAR ( ID_ANT_FAMILIAR ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_ANTECEDENTE_FAMILIAR ADD ('
+					   || ' CONSTRAINT PK_ID_ANT_FAMILIAR PRIMARY KEY (ID_ANT_FAMILIAR))';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_ANT_FAMILIAR'
+	   AND UPPER(table_name) 	  = 'APPHOSP_ANTECEDENTE_FAMILIAR'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_ANT_FAMILIAR'
+		   AND UPPER(table_name) = 'APPHOSP_ANTECEDENTE_FAMILIAR';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_ANT_FAMILIAR ON HOSPITAIS.APPHOSP_ANTECEDENTE_FAMILIAR ( ID_ANT_FAMILIAR_USER ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_ANTECEDENTE_FAMILIAR ADD'
+					   || ' CONSTRAINT FK_ANT_FAMILIAR'
+					   || ' FOREIGN KEY( ID_ANT_FAMILIAR_USER )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_ANT_FAMILIAR_USER ( ID_ANT_FAMILIAR_USER )';
+	END IF;
+END;
+/
+ 	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_ANTEC_FAMILIAR_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_ANTEC_FAMILIAR_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER hospitais.APPHOSP_ANT_FAMILIAR_TRG 
+  BEFORE INSERT ON hospitais.APPHOSP_ANTECEDENTE_FAMILIAR
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_ANTEC_FAMILIAR_SEQ.NEXTVAL 
+  INTO :NEW.ID_ANT_FAMILIAR 
+  FROM DUAL;
+END; 
+/
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_ALERGIA_USUARIO 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_ALERGIA_USUARIO';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_ALERGIA_USUARIO ( '
+						||' ID_ALERGIA NUMBER NOT NULL, '
+						||' ID_USUARIO NUMBER NOT NULL, '
+						||' DS_NOME VARCHAR2(50) NOT NULL, '
+						||' DS_ALERGIA VARCHAR2(100),'
+            ||' FL_ATIVO NUMBER(1) NOT NULL,'
+            ||' DT_CRIACAO DATE NOT NULL,'
+            ||' DT_EXCLUSAO DATE)' ;
+	END IF;
+END;
+/
+
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_4'
+      AND UPPER(table_name)      = 'APPHOSP_ALERGIA_USUARIO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_ALERGIA_USUARIO ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_4 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_ALERGIA'
+	   AND UPPER(table_name)      = 'APPHOSP_ALERGIA_USUARIO'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_ALERGIA' 
+		   AND UPPER(table_name) = 'APPHOSP_ALERGIA_USUARIO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_ALERGIA ON HOSPITAIS.APPHOSP_ALERGIA_USUARIO ( ID_ALERGIA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_ALERGIA_USUARIO ADD ('
+					   || ' CONSTRAINT PK_ID_ALERGIA PRIMARY KEY (ID_ALERGIA))';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_ALERGIA_USUARIO'
+	   AND UPPER(table_name) 	  = 'APPHOSP_ALERGIA_USUARIO'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_ALERGIA_USUARIO'
+		   AND UPPER(table_name) = 'APPHOSP_ALERGIA_USUARIO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_ALERGIA_USUARIO ON HOSPITAIS.APPHOSP_ALERGIA_USUARIO ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_ALERGIA_USUARIO ADD'
+					   || ' CONSTRAINT FK_ALERGIA_USUARIO'
+					   || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+ 	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_ALERGIA_USUARIO_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_ALERGIA_USUARIO_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_ALERGIA_USUARIO_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_ALERGIA_USUARIO
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_ALERGIA_USUARIO_SEQ.NEXTVAL 
+    INTO :NEW.ID_ALERGIA
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_NECESSIDADE_ESP_ITEM 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_NECESSIDADE_ESP_ITEM';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_NECESSIDADE_ESP_ITEM ( '
+						||' ID_NECESSIDADE_ESPECIAL NUMBER NOT NULL, '
+						||' DS_NECESSIDADE VARCHAR2(100) NOT NULL, '
+						||' FL_ATIVO NUMBER(1) NOT NULL, '
+					  ||' DT_CRIACAO DATE NOT NULL,'
+            ||' DT_EXCLUSAO DATE)' ;
+	END IF;
+END;
+/
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_5'
+      AND UPPER(table_name)      = 'APPHOSP_NECESSIDADE_ESP_ITEM'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_NECESSIDADE_ESP_ITEM ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_5 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_NECESSIDADE_ESPECIAL'
+	   AND UPPER(table_name)      = 'APPHOSP_NECESSIDADE_ESP_ITEM'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_NECESSIDADE_ESPECIAL' 
+		   AND UPPER(table_name) = 'APPHOSP_NECESSIDADE_ESP_ITEM';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_NECESSIDADE_ESPECIAL ON HOSPITAIS.APPHOSP_NECESSIDADE_ESP_ITEM ( ID_NECESSIDADE_ESPECIAL ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_NECESSIDADE_ESP_ITEM ADD ('
+					   || ' CONSTRAINT PK_ID_NECESSIDADE_ESPECIAL PRIMARY KEY (ID_NECESSIDADE_ESPECIAL))';
+	END IF;
+END;
+/
+ 	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_NEC_ESP_ITEM_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_NEC_ESP_ITEM_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_NEC_ESP_ITEM_SEQ_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_NECESSIDADE_ESP_ITEM
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_NEC_ESP_ITEM_SEQ.NEXTVAL 
+    INTO :NEW.ID_NECESSIDADE_ESPECIAL
+    FROM DUAL;
+  END; 
+/  
+
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_NECESSIDADE_ESP_USER 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_NECESSIDADE_ESP_USER';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_NECESSIDADE_ESP_USER ( '
+						||' ID_NECESSIDADE_ESP_USUARIO NUMBER NOT NULL, '
+						||' ID_NECESSIDADE_ESPECIAL NUMBER NOT NULL, '
+						||' ID_USUARIO NUMBER NOT NULL, '
+						||' DT_CRIACAO DATE NOT NULL)';
+	END IF;
+END;
+/
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_NEC_ESP_USU'
+	   AND UPPER(table_name)      = 'APPHOSP_NECESSIDADE_ESP_USER'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_NEC_ESP_USU' 
+		   AND UPPER(table_name) = 'APPHOSP_NECESSIDADE_ESP_USER';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_NEC_ESP_USU ON HOSPITAIS.APPHOSP_NECESSIDADE_ESP_USER ( ID_NECESSIDADE_ESP_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_NECESSIDADE_ESP_USER ADD ('
+					   || ' CONSTRAINT PK_ID_NEC_ESP_USU PRIMARY KEY (ID_NECESSIDADE_ESP_USUARIO))';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_NECESSIDADE_ESP_USER'
+	   AND UPPER(table_name) 	  = 'APPHOSP_NECESSIDADE_ESP_USER'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_NECESSIDADE_ESP_USER'
+		   AND UPPER(table_name) = 'APPHOSP_NECESSIDADE_ESP_USER';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_NECESSIDADE_ESP_USER ON HOSPITAIS.APPHOSP_NECESSIDADE_ESP_USER ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_NECESSIDADE_ESP_USER ADD'
+					   || ' CONSTRAINT FK_NECESSIDADE_ESP_USER'
+					   || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_NECESSIDADE_ESP_ITEM'
+	   AND UPPER(table_name) 	  = 'APPHOSP_NECESSIDADE_ESP_USER'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_NECESSIDADE_ESP_ITEM'
+		   AND UPPER(table_name) = 'APPHOSP_NECESSIDADE_ESP_USER';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_NECESSIDADE_ESP_ITEM ON HOSPITAIS.APPHOSP_NECESSIDADE_ESP_USER ( ID_NECESSIDADE_ESPECIAL ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_NECESSIDADE_ESP_USER ADD'
+					   || ' CONSTRAINT FK_NECESSIDADE_ESP_ITEM'
+					   || ' FOREIGN KEY( ID_NECESSIDADE_ESPECIAL )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_NECESSIDADE_ESP_ITEM ( ID_NECESSIDADE_ESPECIAL )';
+	END IF;
+END;
+/
+
+ 	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_NEC_ESP_USER_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_NEC_ESP_USER_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_NEC_ESP_USER_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_NECESSIDADE_ESP_USER
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_NEC_ESP_USER_SEQ.NEXTVAL 
+    INTO :NEW.ID_NECESSIDADE_ESP_USUARIO
+    FROM DUAL;
+  END; 
+/  
+
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_MEDICAMENTO_DADOS 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_MEDICAMENTO_DADOS';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS ( '
+						 ||' ID_MEDICAMENTO_DADOS NUMBER NOT NULL,'
+             ||' ID_USUARIO NUMBER NOT NULL,'
+             ||' NM_MEDICAMENTO VARCHAR2(100) NOT NULL,'
+             ||' TP_MEDICAMENTO VARCHAR2(50) NOT NULL,'
+             ||' DOSE VARCHAR2(100) NOT NULL,'
+             ||' FL_DIARIO NUMBER(1) NOT NULL,'
+             ||' FL_CONTINUO NUMBER(1) NOT NULL,'
+             ||' DT_INICIO_MEDICAMENTO DATE NOT NULL,'
+             ||' DT_FINAL_MEDICAMENTO DATE,'
+             ||' INTERVALO_HORA NUMBER,'
+             ||' INTERVALO_DIAS NUMBER,'
+             ||' FL_ESTOQUE NUMBER(1) NOT NULL,'
+             ||' QNT_POR_CAIXA NUMBER,'
+             ||' QNT_CAIXAS NUMBER,'
+             ||' TEMPO_ADIAMENTO_ALARME NUMBER,'
+             ||' SOM_ALARME VARCHAR2(100),'
+             ||' FL_VIBRACAO_ALARME NUMBER(1) NOT NULL,'
+             ||' FL_TOQUE_ALARME NUMBER(1) NOT NULL,'
+             ||' FL_SUSPENSO NUMBER(1) NOT NULL,'
+             ||' FL_ATIVO NUMBER(1) NOT NULL,'
+             ||' DT_CRIACAO DATE NOT NULL,'
+             ||' DT_EXCLUSAO DATE,'
+             ||' SALDO_ESTOQUE NUMBER )';
+	END IF;
+END;
+/
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_CONTINUO'
+      AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_DADOS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_MEDICAMENTO_DADOS ADD ' 
+                 || ' CONSTRAINT CK_FL_CONTINUO CHECK ( FL_CONTINUO in (0, 1))';
+      END IF;
+END;
+/
+
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_DIARIO'
+      AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_DADOS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_MEDICAMENTO_DADOS ADD ' 
+                 || ' CONSTRAINT CK_FL_DIARIO CHECK ( FL_DIARIO in (0, 1))';
+      END IF;
+END;
+/
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ESTOQUE'
+      AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_DADOS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_MEDICAMENTO_DADOS ADD ' 
+                 || ' CONSTRAINT CK_FL_ESTOQUE CHECK ( FL_ESTOQUE in (0, 1))';
+      END IF;
+END;
+
+/
+ DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_VIBRACAO_ALARME'
+      AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_DADOS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_MEDICAMENTO_DADOS ADD ' 
+                 || ' CONSTRAINT CK_FL_VIBRACAO_ALARME CHECK ( FL_VIBRACAO_ALARME in (0, 1))';
+      END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_TOQUE_ALARME'
+      AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_DADOS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_MEDICAMENTO_DADOS ADD ' 
+                 || ' CONSTRAINT CK_FL_TOQUE_ALARME CHECK ( FL_TOQUE_ALARME in (0, 1))';
+      END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_SUSPENSO'
+      AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_DADOS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_MEDICAMENTO_DADOS ADD ' 
+                 || ' CONSTRAINT CK_FL_SUSPENSO CHECK ( FL_SUSPENSO in (0, 1))';
+      END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_6'
+      AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_DADOS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_MEDICAMENTO_DADOS ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_6 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_MEDICAMENTO_DADOS'
+	   AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_DADOS'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_MEDICAMENTO_DADOS' 
+		   AND UPPER(table_name) = 'APPHOSP_MEDICAMENTO_DADOS';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_MEDICAMENTO_DADOS ON HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS ( ID_MEDICAMENTO_DADOS ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS ADD ('
+					   || ' CONSTRAINT PK_ID_MEDICAMENTO_DADOS PRIMARY KEY (ID_MEDICAMENTO_DADOS))';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_MED_DADOS_USU'
+	   AND UPPER(table_name) 	  = 'APPHOSP_MEDICAMENTO_DADOS'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_MED_DADOS_USU'
+		   AND UPPER(table_name) = 'APPHOSP_MEDICAMENTO_DADOS';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_MED_DADOS_USU ON HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS ADD'
+					   || ' CONSTRAINT FK_MED_DADOS_USU'
+					   || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_MEDICAMENTO_DADOS_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS_SEQ.NEXTVAL 
+    INTO :NEW.ID_MEDICAMENTO_DADOS
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_HABITO_TABAGISMO 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_HABITO_TABAGISMO';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_HABITO_TABAGISMO ( '
+            ||' ID_HABITO_TABAGISMO NUMBER NOT NULL,'
+            ||' ID_USUARIO NUMBER NOT NULL,'
+            ||' FL_TABAGISMO NUMBER(1)NOT NULL,'
+            ||' DATA_TABAGISMO DATE,'
+            ||' QNT_CIGARROS NUMBER,'
+            ||' FL_ATIVO NUMBER(1) NOT NULL,'
+            ||' DT_CRIACAO DATE NOT NULL,'
+            ||' DT_EXCLUSAO DATE)';
+
+	END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_TABAGISMO'
+      AND UPPER(table_name)      = 'APPHOSP_HABITO_TABAGISMO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_HABITO_TABAGISMO ADD ' 
+                 || ' CONSTRAINT CK_FL_TABAGISMO CHECK ( FL_TABAGISMO in (0, 1))';
+      END IF;
+END;
+/
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_7'
+      AND UPPER(table_name)      = 'APPHOSP_HABITO_TABAGISMO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_HABITO_TABAGISMO ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_7 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_HAB_TABAGISMO'
+	   AND UPPER(table_name)      = 'APPHOSP_HABITO_TABAGISMO'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_HAB_TABAGISMO' 
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_TABAGISMO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_HAB_TABAGISMO ON HOSPITAIS.APPHOSP_HABITO_TABAGISMO ( ID_HABITO_TABAGISMO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_TABAGISMO ADD ('
+					   || ' CONSTRAINT PK_ID_HAB_TABAGISMO PRIMARY KEY (ID_HABITO_TABAGISMO))';
+	END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_HABITO_TABAGISMO'
+	   AND UPPER(table_name) 	  = 'APPHOSP_HABITO_TABAGISMO'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_HABITO_TABAGISMO'
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_TABAGISMO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_HABITO_TABAGISMO ON HOSPITAIS.APPHOSP_HABITO_TABAGISMO ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_TABAGISMO ADD'
+					   || ' CONSTRAINT FK_HABITO_TABAGISMO'
+					   || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_HABITO_TABAGISMO_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_HABITO_TABAGISMO_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_HABITO_TABAGISMO_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_HABITO_TABAGISMO
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_HABITO_TABAGISMO_SEQ.NEXTVAL 
+    INTO :NEW.ID_HABITO_TABAGISMO
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_HABITO_CONSUMO_BEBIDAS 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_HABITO_CONSUMO_BEBIDAS';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_HABITO_CONSUMO_BEBIDAS ( '
+            ||' ID_HABITO_BEBIDA NUMBER NOT NULL,'
+            ||' ID_USUARIO NUMBER NOT NULL,'
+            ||' FL_BEBIDA NUMBER(1) NOT NULL,'  
+            ||' DT_CRIACAO DATE NOT NULL)';
+
+
+	END IF;
+END;
+/
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_BEBIDA'
+      AND UPPER(table_name)      = 'APPHOSP_HABITO_CONSUMO_BEBIDAS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_HABITO_CONSUMO_BEBIDAS ADD ' 
+                 || ' CONSTRAINT CK_FL_BEBIDA CHECK ( FL_BEBIDA in (0, 1))';
+      END IF;
+END;
+/
+
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_HABITO_BEBIDA'
+	   AND UPPER(table_name)      = 'APPHOSP_HABITO_CONSUMO_BEBIDAS'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_HABITO_BEBIDA' 
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_CONSUMO_BEBIDAS';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_HABITO_BEBIDA ON HOSPITAIS.APPHOSP_HABITO_CONSUMO_BEBIDAS ( ID_HABITO_BEBIDA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_CONSUMO_BEBIDAS ADD ('
+					   || ' CONSTRAINT PK_ID_HABITO_BEBIDA PRIMARY KEY (ID_HABITO_BEBIDA))';
+	END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_HABITO_CONSUMO_BEBIDAS'
+	   AND UPPER(table_name) 	  = 'APPHOSP_HABITO_CONSUMO_BEBIDAS'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_HABITO_CONSUMO_BEBIDAS'
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_CONSUMO_BEBIDAS';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_HABITO_CONSUMO_BEBIDAS ON HOSPITAIS.APPHOSP_HABITO_CONSUMO_BEBIDAS ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_CONSUMO_BEBIDAS ADD'
+					   || ' CONSTRAINT FK_HABITO_CONSUMO_BEBIDAS'
+					   || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_HABITO_CONS_BEB_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_HABITO_CONS_BEB_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_HABITO_CONS_BEB_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_HABITO_CONSUMO_BEBIDAS
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_HABITO_CONS_BEB_SEQ.NEXTVAL 
+    INTO :NEW.ID_HABITO_BEBIDA
+    FROM DUAL;
+  END; 
+/  
+
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_HABITO_ITEM_BEBIDAS 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_HABITO_ITEM_BEBIDAS';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_HABITO_ITEM_BEBIDAS ( '
+           ||'ID_ITEM_BEBIDA NUMBER NOT NULL,'
+           ||'ID_HABITO_BEBIDA NUMBER NOT NULL,'
+           ||'DS_TIPO_BEBIDA VARCHAR2(100),'
+           ||'DS_FREQUENCIA VARCHAR2(100),'
+           ||'FL_ATIVO NUMBER(1) NOT NULL,'
+           ||'DT_CRIACAO DATE NOT NULL,'
+           ||'DT_EXCLUSAO DATE)';
+
+
+	END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_14'
+      AND UPPER(table_name)      = 'APPHOSP_HABITO_ITEM_BEBIDAS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_HABITO_ITEM_BEBIDAS ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_14 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+
+
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_ITEM_BEBIDA'
+	   AND UPPER(table_name)      = 'APPHOSP_HABITO_ITEM_BEBIDAS'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_ITEM_BEBIDA' 
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_ITEM_BEBIDAS';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_ITEM_BEBIDA ON HOSPITAIS.APPHOSP_HABITO_ITEM_BEBIDAS ( ID_ITEM_BEBIDA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_ITEM_BEBIDAS ADD ('
+					   || ' CONSTRAINT PK_ID_ITEM_BEBIDA PRIMARY KEY (ID_ITEM_BEBIDA))';
+	END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_HABITO_BEBIDAS'
+	   AND UPPER(table_name) 	  = 'APPHOSP_HABITO_ITEM_BEBIDAS'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_HABITO_BEBIDAS'
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_ITEM_BEBIDAS';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_HABITO_BEBIDAS ON HOSPITAIS.APPHOSP_HABITO_ITEM_BEBIDAS ( ID_HABITO_BEBIDA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_ITEM_BEBIDAS ADD'
+					   || ' CONSTRAINT FK_HABITO_BEBIDAS'
+					   || ' FOREIGN KEY( ID_HABITO_BEBIDA )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_HABITO_CONSUMO_BEBIDAS ( ID_HABITO_BEBIDA )';
+	END IF;
+END;
+/
+	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_HABITO_I_BEBIDAS_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_HABITO_I_BEBIDAS_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_HABITO_I_BEBIDAS_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_HABITO_ITEM_BEBIDAS
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_HABITO_I_BEBIDAS_SEQ.NEXTVAL 
+    INTO :NEW.ID_ITEM_BEBIDA
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_HABITO_ATIV_FISICA 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_HABITO_ATIV_FISICA';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA ( '
+            ||'ID_HABITO_ATIV_FISICA NUMBER NOT NULL,'
+            ||'ID_USUARIO NUMBER NOT NULL,'
+            ||'FL_ATIV_FISICA NUMBER(1) NOT NULL,'
+            ||'DT_CRIACAO DATE NOT NULL )';
+	END IF;
+END;
+/
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIV_FISICA'
+      AND UPPER(table_name)      = 'APPHOSP_HABITO_ATIV_FISICA'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_HABITO_ATIV_FISICA ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIV_FISICA CHECK ( FL_ATIV_FISICA in (0, 1))';
+      END IF;
+END;
+/
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_HABITO_ATIV_FISICA'
+	   AND UPPER(table_name)      = 'APPHOSP_HABITO_ATIV_FISICA'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_HABITO_ATIV_FISICA' 
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_ATIV_FISICA';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_HABITO_ATIV_FISICA ON HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA ( ID_HABITO_ATIV_FISICA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA ADD ('
+					   || ' CONSTRAINT PK_ID_HABITO_ATIV_FISICA PRIMARY KEY (ID_HABITO_ATIV_FISICA))';
+	END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_HABITO_ATIV_FISICA'
+	   AND UPPER(table_name) 	  = 'APPHOSP_HABITO_ATIV_FISICA'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_HABITO_ATIV_FISICA'
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_ATIV_FISICA';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_HABITO_ATIV_FISICA ON HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA ADD'
+					   || ' CONSTRAINT FK_HABITO_ATIV_FISICA'					          
+             || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_HABITO_ATIV_FISICA_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA_SEQ.NEXTVAL 
+    INTO :NEW.ID_HABITO_ATIV_FISICA
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_HABITO_ITEM_ATV_FISICA 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)  
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_HABITO_ITEM_ATV_FISICA';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_HABITO_ITEM_ATV_FISICA ( '
+            ||' ID_ITEM_ATIV_FISICA NUMBER NOT NULL,'
+            ||'ID_HABITO_ATIV_FISICA NUMBER NOT NULL,  '
+            ||'DS_TIPO_ATIVIDADE VARCHAR2(100),'
+            ||'DS_FREQUENCIA VARCHAR2(100),'
+            ||'FL_ATIVO NUMBER(1) NOT NULL,'
+            ||'DT_CRIACAO DATE NOT NULL,'
+            ||'DT_EXCLUSAO DATE )';
+	END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_15'
+      AND UPPER(table_name)      = 'APPHOSP_HABITO_ITEM_ATV_FISICA'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_HABITO_ITEM_ATV_FISICA ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_15 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_ITEM_ATIV_FISICA'
+	   AND UPPER(table_name)      = 'APPHOSP_HABITO_ITEM_ATV_FISICA'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_ITEM_ATIV_FISICA' 
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_ITEM_ATV_FISICA';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_ITEM_ATIV_FISICA ON HOSPITAIS.APPHOSP_HABITO_ITEM_ATV_FISICA ( ID_ITEM_ATIV_FISICA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_ITEM_ATV_FISICA ADD ('
+					   || ' CONSTRAINT PK_ID_ITEM_ATIV_FISICA PRIMARY KEY (ID_ITEM_ATIV_FISICA))';
+	END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_HABITO_ITEM_A_FISICA'
+	   AND UPPER(table_name) 	  = 'APPHOSP_HABITO_ITEM_ATV_FISICA'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_HABITO_ITEM_A_FISICA'
+		   AND UPPER(table_name) = 'APPHOSP_HABITO_ITEM_ATV_FISICA';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_HABITO_ITEM_A_FISICA ON HOSPITAIS.APPHOSP_HABITO_ITEM_ATV_FISICA ( ID_HABITO_ATIV_FISICA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_HABITO_ITEM_ATV_FISICA ADD'
+					   || ' CONSTRAINT FK_HABITO_ITEM_A_FISICA'					          
+             || ' FOREIGN KEY( ID_HABITO_ATIV_FISICA )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_HABITO_ATIV_FISICA ( ID_HABITO_ATIV_FISICA )';
+	END IF;
+END;
+/
+	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_HABITO_ITEM_A_FISI_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_HABITO_ITEM_A_FISI_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_HABITO_ITEM_A_FISI_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_HABITO_ITEM_ATV_FISICA
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_HABITO_ITEM_A_FISI_SEQ.NEXTVAL 
+    INTO :NEW.ID_ITEM_ATIV_FISICA
+    FROM DUAL;
+  END; 
+/  
+
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_DADOS_MONIT_ALTURA 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_DADOS_MONIT_ALTURA';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_DADOS_MONIT_ALTURA ( '
+            ||' ID_ALTURA NUMBER NOT NULL,'
+            ||'ID_USUARIO NUMBER NOT NULL,'
+            ||'VALOR NUMBER(1,2) NOT NULL,'
+            ||'DT_CRIACAO DATE NOT NULL)'  ;
+	END IF;
+END;
+/
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_ALTURA'
+	   AND UPPER(table_name)      = 'APPHOSP_DADOS_MONIT_ALTURA'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_ALTURA' 
+		   AND UPPER(table_name) = 'APPHOSP_DADOS_MONIT_ALTURA';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_ALTURA ON HOSPITAIS.APPHOSP_DADOS_MONIT_ALTURA ( ID_ALTURA ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_DADOS_MONIT_ALTURA ADD ('
+					   || ' CONSTRAINT PK_ID_ALTURA PRIMARY KEY (ID_ALTURA))';
+	END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_ALTURA_USUARIO'
+	   AND UPPER(table_name) 	  = 'APPHOSP_DADOS_MONIT_ALTURA'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_ALTURA_USUARIO'
+		   AND UPPER(table_name) = 'APPHOSP_DADOS_MONIT_ALTURA';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_ALTURA_USUARIO ON HOSPITAIS.APPHOSP_DADOS_MONIT_ALTURA ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_DADOS_MONIT_ALTURA ADD'
+					   || ' CONSTRAINT FK_ALTURA_USUARIO'					          
+             || ' FOREIGN KEY( ID_USUARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+	END IF;
+END;
+/
+	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_DADOS_MONIT_ALTURA_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_DADOS_MONIT_ALTURA_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_DADOS_MONIT_ALTURA_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_DADOS_MONIT_ALTURA
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_DADOS_MONIT_ALTURA_SEQ.NEXTVAL 
+    INTO :NEW.ID_ALTURA
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_MEDICAMENTO_HORARIO 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_MEDICAMENTO_HORARIO';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_MEDICAMENTO_HORARIO ( '
+            ||'  ID_MEDICAMENTO_HORARIO NUMBER NOT NULL,'
+            ||'ID_MEDICAMENTO_DADOS NUMBER NOT NULL,'
+            ||'HORARIO DATE NOT NULL,'
+            ||'FL_ATIVO NUMBER(1) NOT NULL,'
+            ||'DT_CRIACAO DATE NOT NULL,'
+            ||'DT_EXCLUSAO DATE)'  ;
+	END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_8'
+      AND UPPER(table_name)      = 'APPHOSP_HABITO_ITEM_ATV_FISICA'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_HABITO_ITEM_ATV_FISICA ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_8 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_MEDICAMENTO_HORARIO'
+	   AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_HORARIO'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_MEDICAMENTO_HORARIO' 
+		   AND UPPER(table_name) = 'APPHOSP_MEDICAMENTO_HORARIO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_MEDICAMENTO_HORARIO ON HOSPITAIS.APPHOSP_MEDICAMENTO_HORARIO ( ID_MEDICAMENTO_HORARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_MEDICAMENTO_HORARIO ADD ('
+					   || ' CONSTRAINT PK_ID_MEDICAMENTO_HORARIO PRIMARY KEY (ID_MEDICAMENTO_HORARIO))';
+	END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_MED_DADOS_HORARIO'
+	   AND UPPER(table_name) 	  = 'APPHOSP_MEDICAMENTO_HORARIO'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_MED_DADOS_HORARIO'
+		   AND UPPER(table_name) = 'APPHOSP_MEDICAMENTO_HORARIO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_MED_DADOS_HORARIO ON HOSPITAIS.APPHOSP_MEDICAMENTO_HORARIO ( ID_MEDICAMENTO_DADOS ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_MEDICAMENTO_HORARIO ADD'
+					   || ' CONSTRAINT FK_MED_DADOS_HORARIO'					          
+             || ' FOREIGN KEY( ID_MEDICAMENTO_DADOS )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_MEDICAMENTO_DADOS ( ID_MEDICAMENTO_DADOS )';
+	END IF;
+END;
+/
+	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_MEDIC_HORARIO_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_MEDIC_HORARIO_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_MEDIC_HORARIO_SEQ_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_MEDICAMENTO_HORARIO
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_MEDIC_HORARIO_SEQ.NEXTVAL 
+    INTO :NEW.ID_MEDICAMENTO_HORARIO
+    FROM DUAL;
+  END; 
+/  
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_MEDICAMENTO_HIST_USER 
+--------------------------------------------------------	  
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_MEDICAMENTO_HIST_USER';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE HOSPITAIS.APPHOSP_MEDICAMENTO_HIST_USER ( '
+            ||'   ID_MEDICAMENTO_HISTORICO NUMBER NOT NULL,'
+            ||' ID_MEDICAMENTO_HORARIO NUMBER NOT NULL,'
+            ||' FL_TOMOU NUMBER(1) NOT NULL,'
+            ||' DATA DATE NOT NULL)';
+ 
+	END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_TOMOU'
+      AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_HIST_USER'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_MEDICAMENTO_HIST_USER ADD ' 
+                 || ' CONSTRAINT CK_FL_TOMOU CHECK ( FL_TOMOU in (0, 1))';
+      END IF;
+END;
+/
+
+
+ DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'PK_ID_MEDICAMENTO_HISTORICO'
+	   AND UPPER(table_name)      = 'APPHOSP_MEDICAMENTO_HIST_USER'
+	   AND UPPER(constraint_type) = 'P';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_PK_ID_MEDICAMENTO_HISTORICO' 
+		   AND UPPER(table_name) = 'APPHOSP_MEDICAMENTO_HIST_USER';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_MEDICAMENTO_HISTORICO ON HOSPITAIS.APPHOSP_MEDICAMENTO_HIST_USER ( ID_MEDICAMENTO_HISTORICO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_MEDICAMENTO_HIST_USER ADD ('
+					   || ' CONSTRAINT PK_ID_MEDICAMENTO_HISTORICO PRIMARY KEY (ID_MEDICAMENTO_HISTORICO))';
+	END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (5);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_MEDIC_HIST_USER'
+	   AND UPPER(table_name) 	  = 'APPHOSP_MEDICAMENTO_HIST_USER'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_MEDIC_HIST_USER'
+		   AND UPPER(table_name) = 'APPHOSP_MEDICAMENTO_HIST_USER';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_MEDIC_HIST_USER ON HOSPITAIS.APPHOSP_MEDICAMENTO_HIST_USER ( ID_MEDICAMENTO_HORARIO ) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_MEDICAMENTO_HIST_USER ADD'
+					   || ' CONSTRAINT FK_MEDIC_HIST_USER'					          
+             || ' FOREIGN KEY( ID_MEDICAMENTO_HORARIO )'
+					   || ' REFERENCES HOSPITAIS.APPHOSP_MEDICAMENTO_HORARIO ( ID_MEDICAMENTO_HORARIO )';
+	END IF;
+END;
+/
+	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_MEDIC_HIST_USER_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_MEDIC_HIST_USER_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER HOSPITAIS.APPHOSP_MEDIC_HIST_USER_TRG
+    BEFORE INSERT ON HOSPITAIS.APPHOSP_MEDICAMENTO_HIST_USER
+    FOR EACH ROW
+  BEGIN
+    SELECT HOSPITAIS.APPHOSP_MEDIC_HIST_USER_SEQ.NEXTVAL 
+    INTO :NEW.ID_MEDICAMENTO_HISTORICO
+    FROM DUAL;
+  END; 
+/  
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_DADOS_MONIT_PARAM 
+--------------------------------------------------------	
+
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_DADOS_MONIT_PARAM';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE hospitais.APPHOSP_DADOS_MONIT_PARAM ( '
+                ||' ID_PARAMETRO NUMBER NOT NULL, '
+                ||' DS_PARAMETRO VARCHAR(100) NOT NULL,' 
+                ||' DS_UNIDADE_MEDIDA VARCHAR(100) NOT NULL,'
+                ||' DS_CAMPOS VARCHAR2(50 BYTE))'; 
+  END IF;
+END;  
+/
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'PK_ID_PARAMETRO'
+      AND UPPER(table_name)      = 'APPHOSP_DADOS_MONIT_PARAM'
+      AND UPPER(constraint_type) = 'P';
+   IF status = 0 THEN
+      SELECT COUNT (*)
+        INTO status
+        FROM all_indexes
+       WHERE UPPER(index_name) = 'IE_PK_ID_PARAMETRO' 
+	     AND UPPER(table_name) = 'APPHOSP_DADOS_MONIT_PARAM';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_PARAMETRO ON hospitais.APPHOSP_DADOS_MONIT_PARAM (ID_PARAMETRO) TABLESPACE TBSASM_INDEX';
+      END IF;
+      EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_DADOS_MONIT_PARAM ADD '
+					 || ' CONSTRAINT PK_ID_PARAMETRO PRIMARY KEY (ID_PARAMETRO)';
+   END IF;
+END;
+/
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_DADOS_MONIT_PARAM_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE hospitais.APPHOSP_DADOS_MONIT_PARAM_SEQ '
+            ||' MINVALUE 1 '
+            ||' MAXVALUE 999999999999999999999999999 '      
+            ||' START WITH 1 '
+            ||' INCREMENT BY 1 '
+            ||' CACHE 20 ';
+  END IF;
+END;  
+/   
+CREATE OR REPLACE TRIGGER hospitais.APPHOSP_DADOS_MONIT_PARAM_TRG 
+  BEFORE INSERT ON hospitais.APPHOSP_DADOS_MONIT_PARAM
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_DADOS_MONIT_PARAM_SEQ.NEXTVAL 
+  INTO :NEW.ID_PARAMETRO 
+  FROM DUAL;
+END; 
+/
+--------------------------------------------------------
+--  DDL for Table APPHOSP_DADOS_MONITORADOS 
+--------------------------------------------------------	
+
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_DADOS_MONITORADOS';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE hospitais.APPHOSP_DADOS_MONITORADOS ('
+            ||' ID_DADOS_MONITORADOS NUMBER NOT NULL, '
+            ||' ID_PARAMETRO NUMBER NOT NULL, '
+            ||' ID_USUARIO NUMBER NOT NULL, '
+            ||' VALOR VARCHAR(100) NOT NULL, '
+            ||' COMENTARIO VARCHAR(200), '
+            ||' DT_CRIACAO DATE NOT NULL, '
+            ||' FL_ATIVO NUMBER(1) DEFAULT 1 NOT NULL, '
+            ||' DT_EXCLUSAO DATE) ';
+  END IF;
+END;  
+/
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_X'
+      AND UPPER(table_name)      = 'APPHOSP_DADOS_MONITORADOS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_DADOS_MONITORADOS ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_X CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'PK_ID_DADOS_MONITORADOS'
+      AND UPPER(table_name)      = 'APPHOSP_DADOS_MONITORADOS'
+      AND UPPER(constraint_type) = 'P';
+   IF status = 0 THEN
+      SELECT COUNT (*)
+        INTO status
+        FROM all_indexes
+       WHERE UPPER(index_name) = 'IE_PK_ID_DADOS_MONITORADOS' 
+	     AND UPPER(table_name) = 'APPHOSP_DADOS_MONITORADOS';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_DADOS_MONITORADOS ON hospitais.APPHOSP_DADOS_MONITORADOS (ID_DADOS_MONITORADOS) TABLESPACE TBSASM_INDEX';
+      END IF;
+      EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_DADOS_MONITORADOS ADD '
+					 || ' CONSTRAINT PK_ID_DADOS_MONITORADOS PRIMARY KEY (ID_DADOS_MONITORADOS)';
+   END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_DADOS_MONIT_PARAM_VAL'
+	   AND UPPER(table_name) 	  = 'APPHOSP_DADOS_MONITORADOS'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_DADOS_MONIT_PARAM_VAL'
+		   AND UPPER(table_name) = 'APPHOSP_DADOS_MONITORADOS';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_DADOS_MONIT_PARAM_VAL ON hospitais.APPHOSP_DADOS_MONITORADOS (ID_PARAMETRO) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_DADOS_MONITORADOS '
+						||' ADD CONSTRAINT FK_DADOS_MONIT_PARAM_VAL FOREIGN KEY (ID_PARAMETRO) '
+						||' REFERENCES hospitais.APPHOSP_DADOS_MONIT_PARAM (ID_PARAMETRO)';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_DADOS_MONIT_USER'
+	   AND UPPER(table_name) 	  = 'APPHOSP_DADOS_MONITORADOS'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_DADOS_MONIT_USER'
+		   AND UPPER(table_name) = 'APPHOSP_DADOS_MONITORADOS';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_DADOS_MONIT_USER ON hospitais.APPHOSP_DADOS_MONITORADOS (ID_USUARIO) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_DADOS_MONITORADOS '
+						||' ADD CONSTRAINT FK_DADOS_MONIT_USER FOREIGN KEY (ID_USUARIO) '
+						||' REFERENCES hospitais.APPHOSP_USUARIO (ID_USUARIO)';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_DADOS_MONITORADOS_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE hospitais.APPHOSP_DADOS_MONITORADOS_SEQ '
+            ||' MINVALUE 1 '
+            ||' MAXVALUE 999999999999999999999999999 '      
+            ||' START WITH 1 '
+            ||' INCREMENT BY 1 '
+            ||' CACHE 20 ';
+  END IF;
+END;  
+/  
+  CREATE OR REPLACE TRIGGER hospitais.APPHOSP_DADOS_MONITORADOS_TRG 
+  BEFORE INSERT ON hospitais.APPHOSP_DADOS_MONITORADOS
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_DADOS_MONITORADOS_SEQ.NEXTVAL 
+  INTO :NEW.ID_DADOS_MONITORADOS 
+  FROM DUAL;
+END; 
+/
+
+
+
+--------------------------------------------------------
+--  Arquivo criado - Segunda-feira-Maio-28-2018   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table APPHOSP_UNIDADE
+--------------------------------------------------------
+
+  CREATE TABLE "HOSPITAIS"."APPHOSP_UNIDADE" 
+   (	"ID_APPHOSP_UNIDADE" NUMBER, 
+	"ID_UNIDADE_NOW" NUMBER, 
+	"DESCRICAO_UNIDADE_NOW" VARCHAR2(50 BYTE), 
+	"CODIGO_PRESTADOR" NUMBER, 
+	"FL_ATIVO" NUMBER(1,0), 
+	"DESCRICAO" VARCHAR2(50 BYTE), 
+	"CEP" NUMBER, 
+	"LOGRADOURO" VARCHAR2(100 BYTE), 
+	"NUMERO" VARCHAR2(10 BYTE), 
+	"COMPLEMENTO" VARCHAR2(50 BYTE), 
+	"BAIRRO" VARCHAR2(50 BYTE), 
+	"ID_CIDADE" NUMBER(5,0), 
+	"CIDADE" VARCHAR2(72 BYTE), 
+	"UF" VARCHAR2(2 BYTE), 
+	"TELEFONE" VARCHAR2(15 BYTE), 
+	"WEBSITE" VARCHAR2(100 BYTE), 
+	"OBSERVACAO" VARCHAR2(255 BYTE), 
+	"LATITUDE" FLOAT(126), 
+	"LONGITUDE" FLOAT(126), 
+	"FL_AMERICAS" NUMBER(1,0) DEFAULT 0, 
+	"FL_EXIBE_APP_AMS" NUMBER(1,0) DEFAULT 0, 
+	"FL_PRE_TRIAGEM" NUMBER(1,0), 
+	"FL_SENHA_QR_CODE" NUMBER(1,0), 
+	"FL_SENHA_BEACON" NUMBER(1,0), 
+	"FL_SENHA_GPS" NUMBER(1,0), 
+	"TEMPO_PRE_TRIAGEM" NUMBER, 
+	"RAIO_MAX_GPS" NUMBER, 
+	"COD_CORP_UNID" VARCHAR2(100 BYTE), 
+	"REL_UNID_NOW" VARCHAR2(100 BYTE), 
+	"SIST_ORIGEM" VARCHAR2(10 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA" ;
+
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."ID_APPHOSP_UNIDADE" IS 'Id unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."ID_UNIDADE_NOW" IS 'Id unidade now';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."DESCRICAO_UNIDADE_NOW" IS 'Descrição unidade now';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."CODIGO_PRESTADOR" IS 'Código do prestador ';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."FL_ATIVO" IS 'Status da unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."DESCRICAO" IS 'Descrição da unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."CEP" IS 'CEP da unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."LOGRADOURO" IS 'Logradouro da unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."NUMERO" IS 'Número da unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."COMPLEMENTO" IS 'Complemento da unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."BAIRRO" IS 'Bairro da unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."ID_CIDADE" IS 'Id da Cidade SisMed';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."CIDADE" IS 'Descrição da Cidade SisMed';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."UF" IS 'UF SisMed';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."TELEFONE" IS 'Telefone da Unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."WEBSITE" IS 'Site da unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."OBSERVACAO" IS 'Campo de Observação';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."LATITUDE" IS 'Latitude do endereço';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."LONGITUDE" IS 'Longitude do endereço';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."FL_AMERICAS" IS 'Flag para identificar se a unidade Ã© do grupo Americas';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_UNIDADE"."FL_EXIBE_APP_AMS" IS 'Flag para indicar se a unidade serÃ¡ demonstrada no aplicativo Americas (Sem Espera)';
+   COMMENT ON TABLE "HOSPITAIS"."APPHOSP_UNIDADE"  IS 'Unidades app hospitais';
+--------------------------------------------------------
+--  DDL for Index PK_APPHOSP_UNIDADE_ID
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOSPITAIS"."PK_APPHOSP_UNIDADE_ID" ON "HOSPITAIS"."APPHOSP_UNIDADE" ("ID_APPHOSP_UNIDADE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA" ;
+--------------------------------------------------------
+--  Constraints for Table APPHOSP_UNIDADE
+--------------------------------------------------------
+
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" ADD CONSTRAINT "APPHOSP_UNI_FL_EXIB_APP_AMS_CK" CHECK (fl_exibe_app_ams in (0, 1)) ENABLE;
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" ADD CONSTRAINT "APPHOSP_UNID_FL_AMERICAS_CK" CHECK (fl_americas in (0, 1)) ENABLE;
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" MODIFY ("UF" NOT NULL ENABLE);
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" MODIFY ("CIDADE" NOT NULL ENABLE);
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" MODIFY ("ID_CIDADE" NOT NULL ENABLE);
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" MODIFY ("BAIRRO" NOT NULL ENABLE);
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" MODIFY ("NUMERO" NOT NULL ENABLE);
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" MODIFY ("LOGRADOURO" NOT NULL ENABLE);
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" MODIFY ("CEP" NOT NULL ENABLE);
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" MODIFY ("DESCRICAO" NOT NULL ENABLE);
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" MODIFY ("FL_ATIVO" NOT NULL ENABLE);
+  ALTER TABLE "HOSPITAIS"."APPHOSP_UNIDADE" ADD CONSTRAINT "PK_APPHOSP_UNIDADE_ID" PRIMARY KEY ("ID_APPHOSP_UNIDADE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA"  ENABLE;
+/
+ CREATE SEQUENCE  "HOSPITAIS"."APPHOSP_UNIDADE_SQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 441 CACHE 20 NOORDER  NOCYCLE ;
+/
+--------------------------------------------------------
+--  DDL for Trigger APPHOSP_UNIDADE_TGI
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "HOSPITAIS"."APPHOSP_UNIDADE_TGI" 
+  before insert on hospitais.apphosp_unidade
+  for each row
+begin
+  SELECT hospitais.apphosp_unidade_sq.nextval INTO :new.id_apphosp_unidade FROM DUAL;
+end;
+/
+ALTER TRIGGER "HOSPITAIS"."APPHOSP_UNIDADE_TGI" ENABLE;
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_BEACONS 
+--------------------------------------------------------	
+
+
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_BEACONS';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE hospitais.APPHOSP_BEACONS (' 
+        ||' ID_BEACON NUMBER NOT NULL, '
+        ||' ID_UNIDADE NUMBER NOT NULL, '
+        ||' COD_BEACON VARCHAR2(100 BYTE) NOT NULL, '
+        ||' ATIVO NUMBER(1,0)) ';
+  END IF;
+END;  
+/
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_ATIVO'
+      AND UPPER(table_name)      = 'APPHOSP_BEACONS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_BEACONS ADD ' 
+                 || ' CONSTRAINT CK_ATIVO CHECK ( ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'PK_ID_BEACON'
+      AND UPPER(table_name)      = 'APPHOSP_BEACONS'
+      AND UPPER(constraint_type) = 'P';
+   IF status = 0 THEN
+      SELECT COUNT (*)
+        INTO status
+        FROM all_indexes
+       WHERE UPPER(index_name) = 'IE_PK_ID_BEACON' 
+	     AND UPPER(table_name) = 'APPHOSP_BEACONS';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_BEACON ON hospitais.APPHOSP_BEACONS (ID_BEACON) TABLESPACE TBSASM_INDEX';
+      END IF;
+      EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_BEACONS ADD '
+					 || ' CONSTRAINT PK_ID_BEACON PRIMARY KEY (ID_BEACON)';
+   END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_BEACON_UNIDADE'
+	   AND UPPER(table_name) 	  = 'APPHOSP_BEACONS'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_BEACON_UNIDADE'
+		   AND UPPER(table_name) = 'APPHOSP_BEACONS';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_BEACON_UNIDADE ON hospitais.APPHOSP_BEACONS (ID_UNIDADE) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_BEACONS '
+						||' ADD CONSTRAINT FK_BEACON_UNIDADE FOREIGN KEY (ID_UNIDADE) '
+						||' REFERENCES hospitais.APPHOSP_UNIDADE (ID_APPHOSP_UNIDADE)';
+	END IF;
+END;
+/
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_ATIVO'
+      AND UPPER(table_name)      = 'APPHOSP_BEACONS'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_BEACONS ADD ' 
+                 || ' CONSTRAINT CK_ATIVO CHECK ( ATIVO in (0, 1))';
+      END IF;
+END;
+/
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_BEACONS_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE hospitais.APPHOSP_BEACONS_SEQ '
+      ||' MINVALUE 1 '
+      ||' MAXVALUE 999999999999999999999999999 '      
+      ||' START WITH 1 '
+      ||' INCREMENT BY 1 '
+      ||' CACHE 20 ';
+  END IF;
+END;  
+/  
+CREATE OR REPLACE TRIGGER hospitais.APPHOSP_BEACONS_TRG
+  BEFORE INSERT ON hospitais.APPHOSP_BEACONS
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_BEACONS_SEQ.NEXTVAL
+  INTO :NEW.ID_BEACON
+  FROM DUAL;
+END;
+/
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_CONVENIO 
+--------------------------------------------------------	
+
+
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_CONVENIO';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE hospitais.APPHOSP_CONVENIO ('
+          ||' ID_CONVENIO NUMBER NOT NULL, '
+          ||' NM_CONVENIO VARCHAR2(100 BYTE) NOT NULL , '
+          ||' NM_ABREVIADO VARCHAR2(20 BYTE), '
+          ||' NU_REGISTRO_ANS NUMBER(6,0), '
+          ||' CD_CORPORATIVO NUMBER(7,0), '
+          ||' FL_ELEGIBILIDADE NUMBER(1,0), '
+          ||' FL_ATIVO NUMBER(1,0), '
+          ||' TIPO_CONVENIO NUMBER(1,0) NOT NULL)' ;
+  END IF;
+END;  
+/
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ELEGIBILIDADE'
+      AND UPPER(table_name)      = 'APPHOSP_CONVENIO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_CONVENIO ADD ' 
+                 || ' CONSTRAINT CK_FL_ELEGIBILIDADE CHECK ( FL_ELEGIBILIDADE in (0, 1))';
+      END IF;
+END;
+/
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_TIPO_CONVENIO'
+      AND UPPER(table_name)      = 'APPHOSP_CONVENIO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_CONVENIO ADD ' 
+                 || ' CONSTRAINT CK_TIPO_CONVENIO CHECK ( TIPO_CONVENIO in (0, 1, 2, 3))';
+      END IF;
+END;
+/
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_10'
+      AND UPPER(table_name)      = 'APPHOSP_CONVENIO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_CONVENIO ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_10 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'PK_ID_CONVENIO'
+      AND UPPER(table_name)      = 'APPHOSP_CONVENIO'
+      AND UPPER(constraint_type) = 'P';
+   IF status = 0 THEN
+      SELECT COUNT (*)
+        INTO status
+        FROM all_indexes
+       WHERE UPPER(index_name) = 'IE_PK_ID_CONVENIO' 
+	     AND UPPER(table_name) = 'APPHOSP_CONVENIO';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_CONVENIO ON hospitais.APPHOSP_CONVENIO (ID_CONVENIO) TABLESPACE TBSASM_INDEX';
+      END IF;
+      EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_CONVENIO ADD '
+					 || ' CONSTRAINT PK_ID_CONVENIO PRIMARY KEY (ID_CONVENIO)';
+   END IF;
+END;
+/
+
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_CONVENIO_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE hospitais.APPHOSP_CONVENIO_SEQ '
+      ||' MINVALUE 1 '
+      ||' MAXVALUE 999999999999999999999999999 '      
+      ||' START WITH 1 '
+      ||' INCREMENT BY 1 '
+      ||' CACHE 20 ';
+  END IF;
+END;  
+/  
+CREATE OR REPLACE TRIGGER hospitais.APPHOSP_CONVENIO_TRG 
+  BEFORE INSERT ON hospitais.APPHOSP_CONVENIO
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_CONVENIO_SEQ.NEXTVAL 
+  INTO :NEW.ID_CONVENIO
+  FROM DUAL;
+END;
+/
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_NOTIFICACAO 
+--------------------------------------------------------	
+
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_NOTIFICACAO';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE hospitais.APPHOSP_NOTIFICACAO'
+        ||' (ID_NOTIFICACAO NUMBER NOT NULL , '
+        ||' ID_USUARIO NUMBER, '
+        ||' MENSAGEM VARCHAR2(250 BYTE) NOT NULL , '
+        ||' DATA_CRIACAO DATE NOT NULL, '
+        ||' DATA_EXCLUSAO DATE, '
+        ||' FL_ATIVO NUMBER(1,0) NOT NULL) ';
+  END IF;
+END;  
+/
+
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_11'
+      AND UPPER(table_name)      = 'APPHOSP_NOTIFICACAO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_NOTIFICACAO ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_11 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'PK_ID_NOTIFICACAO'
+      AND UPPER(table_name)      = 'APPHOSP_NOTIFICACAO'
+      AND UPPER(constraint_type) = 'P';
+   IF status = 0 THEN
+      SELECT COUNT (*)
+        INTO status
+        FROM all_indexes
+       WHERE UPPER(index_name) = 'IE_PK_ID_NOTIFICACAO' 
+	     AND UPPER(table_name) = 'APPHOSP_NOTIFICACAO';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_NOTIFICACAO ON hospitais.APPHOSP_NOTIFICACAO (ID_NOTIFICACAO) TABLESPACE TBSASM_INDEX';
+      END IF;
+      EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_NOTIFICACAO ADD '
+					 || ' CONSTRAINT PK_ID_NOTIFICACAO PRIMARY KEY (ID_NOTIFICACAO)';
+   END IF;
+END;
+/ 
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_NOTIFICACAO_USUARIO'
+	   AND UPPER(table_name) 	  = 'APPHOSP_NOTIFICACAO'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_NOTIFICACAO_USUARIO'
+		   AND UPPER(table_name) = 'APPHOSP_NOTIFICACAO';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_NOTIFICACAO_USUARIO ON hospitais.APPHOSP_NOTIFICACAO (ID_USUARIO) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_NOTIFICACAO '
+						||' ADD CONSTRAINT FK_NOTIFICACAO_USUARIO FOREIGN KEY (ID_USUARIO) '
+						||' REFERENCES hospitais.APPHOSP_USUARIO (ID_USUARIO)';
+	END IF;
+END;
+/
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_XY'
+      AND UPPER(table_name)      = 'APPHOSP_NOTIFICACAO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_NOTIFICACAO ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_XY CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_NOTIFICACAO_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE hospitais.APPHOSP_NOTIFICACAO_SEQ'
+      ||' MINVALUE 1 '
+      ||' MAXVALUE 999999999999999999999999999 '      
+      ||' START WITH 1 '
+      ||' INCREMENT BY 1 '
+      ||' CACHE 20 ';
+  END IF;
+END;  
+/    
+CREATE OR REPLACE TRIGGER hospitais.APPHOSP_NOTIFICACAO_TRG 
+  BEFORE INSERT ON hospitais.APPHOSP_NOTIFICACAO
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_NOTIFICACAO_SEQ.NEXTVAL 
+  INTO :NEW.ID_NOTIFICACAO 
+  FROM DUAL;
+END; 
+/
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_PACIENTE 
+--------------------------------------------------------	
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_tables
+	 WHERE UPPER(table_name) = 'APPHOSP_PACIENTE';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE TABLE hospitais.APPHOSP_PACIENTE '
+      ||' (ID_PACIENTE NUMBER NOT NULL , '
+      ||' NM_PACIENTE VARCHAR2(100 BYTE), '
+      ||' NM_MATRICULA VARCHAR2(50 BYTE), '
+      ||' CPF VARCHAR2(11 BYTE), '
+      ||' DT_NASCIMENTO DATE, '
+      ||' NM_TELEFONE VARCHAR2(11 BYTE), '
+      ||' ID_CONVENIO NUMBER, '
+      ||' ID_USUARIO NUMBER NOT NULL , ' 
+      ||' DT_CRIACAO DATE NOT NULL , '
+      ||' FL_SEXO  varchar2(1)) ';
+  END IF;
+END;  
+/
+
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_SEXO'
+      AND UPPER(table_name)      = 'APPHOSP_PACIENTE'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_PACIENTE ADD ' 
+                 || ' CONSTRAINT CK_FL_SEXO CHECK ( FL_SEXO in (''F'', ''M''))';
+      END IF;
+END;
+/
+
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'PK_ID_PACIENTE'
+      AND UPPER(table_name)      = 'APPHOSP_PACIENTE'
+      AND UPPER(constraint_type) = 'P';
+   IF status = 0 THEN
+      SELECT COUNT (*)
+        INTO status
+        FROM all_indexes
+       WHERE UPPER(index_name) = 'IE_PK_ID_PACIENTE' 
+	     AND UPPER(table_name) = 'APPHOSP_PACIENTE';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_PACIENTE ON hospitais.APPHOSP_PACIENTE (ID_PACIENTE) TABLESPACE TBSASM_INDEX';
+      END IF;
+      EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_PACIENTE ADD '
+					 || ' CONSTRAINT PK_ID_PACIENTE PRIMARY KEY (ID_PACIENTE)';
+   END IF;
+END;
+/
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_PACIENTE_USUARIO'
+	   AND UPPER(table_name) 	  = 'APPHOSP_PACIENTE'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_PACIENTE_USUARIO'
+		   AND UPPER(table_name) = 'APPHOSP_PACIENTE';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_PACIENTE_USUARIO ON hospitais.APPHOSP_PACIENTE (ID_USUARIO) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_PACIENTE '
+						||' ADD CONSTRAINT FK_PACIENTE_USUARIO FOREIGN KEY (ID_USUARIO) '
+						||' REFERENCES hospitais.APPHOSP_USUARIO (ID_USUARIO)';
+	END IF;
+END;
+/
+DECLARE
+	status NUMBER (10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_constraints
+	 WHERE UPPER(constraint_name) = 'FK_PACIENTE_CONVENIO'
+	   AND UPPER(table_name) 	  = 'APPHOSP_PACIENTE'
+	   AND UPPER(constraint_type) = 'R';
+	IF status = 0 THEN
+		SELECT COUNT (*)
+		  INTO status
+		  FROM all_indexes
+		 WHERE UPPER(index_name) = 'IE_FK_PACIENTE_CONVENIO'
+		   AND UPPER(table_name) = 'APPHOSP_PACIENTE';
+		IF status = 0 THEN
+			EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_PACIENTE_CONVENIO ON hospitais.APPHOSP_PACIENTE (ID_CONVENIO) TABLESPACE TBSASM_INDEX';
+		END IF;
+		EXECUTE IMMEDIATE ' ALTER TABLE hospitais.APPHOSP_PACIENTE '
+						||' ADD CONSTRAINT FK_PACIENTE_CONVENIO FOREIGN KEY (ID_CONVENIO) '
+						||' REFERENCES hospitais.APPHOSP_CONVENIO (ID_CONVENIO)';
+	END IF;
+END;
+/
+
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_PACIENTE_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE hospitais.APPHOSP_PACIENTE_SEQ'
+      ||' MINVALUE 1 '
+      ||' MAXVALUE 999999999999999999999999999 '      
+      ||' START WITH 1 '
+      ||' INCREMENT BY 1 '
+      ||' CACHE 20 ';
+  END IF;
+END;  
+/
+
+CREATE OR REPLACE TRIGGER hospitais.APPHOSP_PACIENTE_TRG 
+  BEFORE INSERT ON hospitais.APPHOSP_PACIENTE
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_PACIENTE_SEQ.NEXTVAL 
+  INTO :NEW.ID_PACIENTE
+  FROM DUAL;
+END;
+/
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_tables
+   WHERE UPPER(table_name) = 'APPHOSP_PRETRIAGEM';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE ' 
+        CREATE TABLE HOSPITAIS.APPHOSP_PRETRIAGEM
+         (ID_PRETRIAGEM NUMBER NOT NULL, 
+          ID_USUARIO NUMBER NOT NULL , 
+          ID_PACIENTE NUMBER NOT NULL , 
+          NOME_PACIENTE VARCHAR2(250 BYTE) NOT NULL , 
+          ID_UNIDADE NUMBER NOT NULL, 
+          NOME_UNIDADE VARCHAR2(250 BYTE) NOT NULL, 
+          ID_CONVENIO NUMBER NOT NULL, 
+          NUMERO_CARTEIRINHA VARCHAR2(250 BYTE) NOT NULL , 
+          NUMERO_PRE_TRIAGEM VARCHAR2(250 BYTE) NOT NULL , 
+          NUMERO_SENHA_ATENDIMENTO VARCHAR2(250 BYTE), 
+          DATA_CRIACAO DATE NOT NULL, 
+          DATA_EXCLUSAO DATE, 
+          FL_PREFERENCIAL NUMBER(1,0) NOT NULL , 
+          FL_ATIVO NUMBER(1,0) NOT NULL , 
+          ID_ESPECIALIDADE NUMBER(38,0) NOT NULL , 
+          NOME_ESPECIALIDADE VARCHAR2(200 BYTE) NOT NULL   
+        ) ';
+  END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_PREFERENCIAL2'
+      AND UPPER(table_name)      = 'APPHOSP_PRETRIAGEM'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_PRETRIAGEM ADD ' 
+                 || ' CONSTRAINT CK_FL_PREFERENCIAL2 CHECK ( FL_PREFERENCIAL in (0, 1))';
+      END IF;
+END;
+/
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_12'
+      AND UPPER(table_name)      = 'APPHOSP_PRETRIAGEM'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.APPHOSP_PRETRIAGEM ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_12 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_constraints
+   WHERE UPPER(constraint_name) = 'PK_ID_PRETRIAGEM'
+     AND UPPER(table_name)      = 'APPHOSP_PRETRIAGEM'
+     AND UPPER(constraint_type) = 'P';
+  IF status = 0 THEN
+    SELECT COUNT (*)
+      INTO status
+      FROM all_indexes
+     WHERE UPPER(index_name) = 'IE_PK_ID_PRETRIAGEM' 
+       AND UPPER(table_name) = 'APPHOSP_PRETRIAGEM';
+    IF status = 0 THEN
+      EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_PRETRIAGEM ON HOSPITAIS.APPHOSP_PRETRIAGEM ( ID_PRETRIAGEM ) TABLESPACE TBSASM_INDEX';
+    END IF;
+    EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.APPHOSP_PRETRIAGEM ADD ('
+             || ' CONSTRAINT PK_ID_PRETRIAGEM PRIMARY KEY (ID_PRETRIAGEM))';
+  END IF;
+END;
+/
+--FK
+DECLARE
+  status NUMBER (5);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_constraints
+   WHERE UPPER(constraint_name) = 'FK_PRETRIAGEM_USUARIO'
+     AND UPPER(table_name)     = 'APPHOSP_PRETRIAGEM'
+     AND UPPER(constraint_type) = 'R';
+  IF status = 0 THEN
+    SELECT COUNT (*)
+      INTO status
+      FROM all_indexes
+     WHERE UPPER(index_name) = 'IE_FK_PRETRIAGEM_USUARIO'
+       AND UPPER(table_name) = 'APPHOSP_PRETRIAGEM';
+    IF status = 0 THEN
+      EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_PRETRIAGEM_USUARIO ON HOSPITAIS.APPHOSP_PRETRIAGEM ( ID_USUARIO ) TABLESPACE TBSASM_INDEX';
+    END IF;
+    EXECUTE IMMEDIATE 'ALTER TABLE HOSPITAIS.APPHOSP_PRETRIAGEM ADD CONSTRAINT FK_PRETRIAGEM_USUARIO FOREIGN KEY( ID_USUARIO ) REFERENCES HOSPITAIS.APPHOSP_USUARIO ( ID_USUARIO )';
+  END IF;
+END;
+/
+--SEQ
+DECLARE
+  status NUMBER(10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_sequences
+   WHERE UPPER(sequence_name) = 'APPHOSP_PRETRIAGEM_SEQ';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_PRETRIAGEM_SEQ '
+            ||' MINVALUE 1 '
+            ||' MAXVALUE 999999999999999999999999999 '
+            ||' START WITH 1 '
+            ||' INCREMENT BY 1 '
+            ||' CACHE 20';
+  END IF;
+END;
+/
+--TRIGGER
+CREATE OR REPLACE TRIGGER hospitais.APPHOSP_PRETRIAGEM_TRG
+  BEFORE INSERT ON hospitais.APPHOSP_PRETRIAGEM
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_PRETRIAGEM_SEQ.NEXTVAL 
+  INTO :NEW.ID_PRETRIAGEM 
+  FROM DUAL;
+END;
+/
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_PRETRIAGEM 
+--------------------------------------------------------	
+
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_tables
+   WHERE UPPER(table_name) = 'PAINELPS_CONFIG_ESPECIALIDADE';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE ' 
+      CREATE TABLE hospitais.PAINELPS_CONFIG_ESPECIALIDADE 
+         (ID_PAINELPS_CONFIG_ESPEC NUMBER NOT NULL , 
+          ID_CONFIGURACAO NUMBER NOT NULL , 
+          ID_APPHOSP_ESPEC_UNID NUMBER NOT NULL
+      ) ';
+  END IF;
+END;
+/
+
+--PK E INDEX
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_constraints
+   WHERE UPPER(constraint_name) = 'PK_ID_PAINELPS_CONFIG_ESPEC'
+     AND UPPER(table_name)      = 'PAINELPS_CONFIG_ESPECIALIDADE'
+     AND UPPER(constraint_type) = 'P';
+  IF status = 0 THEN
+    SELECT COUNT (*)
+      INTO status
+      FROM all_indexes
+     WHERE UPPER(index_name) = 'IE_PK_ID_PAINELPS_CONFIG_ESPEC' 
+       AND UPPER(table_name) = 'PAINELPS_CONFIG_ESPECIALIDADE';
+    IF status = 0 THEN
+      EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_PAINELPS_CONFIG_ESPEC ON HOSPITAIS.PAINELPS_CONFIG_ESPECIALIDADE ( ID_PAINELPS_CONFIG_ESPEC ) TABLESPACE TBSASM_INDEX';
+    END IF;
+    EXECUTE IMMEDIATE ' ALTER TABLE HOSPITAIS.PAINELPS_CONFIG_ESPECIALIDADE ADD(CONSTRAINT PK_ID_PAINELPS_CONFIG_ESPEC PRIMARY KEY (ID_PAINELPS_CONFIG_ESPEC))';
+  END IF;
+END;
+/
+--SEQ
+DECLARE
+  status NUMBER(10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_sequences
+   WHERE UPPER(sequence_name) = 'PAINELPS_CONFIG_ESPEC_SEQ';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE 'CREATE SEQUENCE hospitais.PAINELPS_CONFIG_ESPEC_SEQ
+                        MINVALUE 1
+                        MAXVALUE 999999999999999999999999999       
+                        START WITH 1
+                        INCREMENT BY 1
+                        CACHE 20';
+  END IF;
+END;
+/
+--TRIGGER
+CREATE OR REPLACE TRIGGER hospitais.PAINELPS_CONFIG_ESPEC_TRG
+  BEFORE INSERT ON hospitais.PAINELPS_CONFIG_ESPECIALIDADE
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.PAINELPS_CONFIG_ESPEC_SEQ.NEXTVAL
+  INTO :NEW.ID_PAINELPS_CONFIG_ESPEC
+  FROM DUAL;
+END;
+/
+
+
+--------------------------------------------------------
+--  DDL for Table PAINELPS_CONFIGURACAO 
+--------------------------------------------------------	
+
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_tables
+   WHERE UPPER(table_name) = 'PAINELPS_CONFIGURACAO';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE ' 
+      CREATE TABLE hospitais.PAINELPS_CONFIGURACAO 
+         (ID_CONFIGURACAO NUMBER NOT NULL , 
+          ID_APPHOSP_UNIDADE NUMBER NOT NULL , 
+          LOCAL VARCHAR2(20 BYTE), 
+          ORDENACAO NUMBER(1,0), 
+          TEMPO_REFRESH NUMBER(2,0), 
+          FL_ATIVO NUMBER(1,0)
+      ) ';
+  END IF;
+END;
+/
+
+DECLARE 
+  status NUMBER (10,0);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_constraints
+    WHERE UPPER(constraint_name) = 'CK_FL_ATIVO_13'
+      AND UPPER(table_name)      = 'PAINELPS_CONFIGURACAO'
+      AND UPPER(constraint_type) = 'C';
+      IF status = 0 THEN
+         EXECUTE IMMEDIATE 'ALTER TABLE hospitais.PAINELPS_CONFIGURACAO ADD ' 
+                 || ' CONSTRAINT CK_FL_ATIVO_13 CHECK ( FL_ATIVO in (0, 1))';
+      END IF;
+END;
+/
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_constraints
+   WHERE UPPER(constraint_name) = 'PK_ID_CONFIGURACAO'
+     AND UPPER(table_name)      = 'PAINELPS_CONFIGURACAO'
+     AND UPPER(constraint_type) = 'P';
+  IF status = 0 THEN
+    SELECT COUNT (*)
+      INTO status
+      FROM all_indexes
+     WHERE UPPER(index_name) = 'IE_PK_ID_CONFIGURACAO' 
+       AND UPPER(table_name) = 'PAINELPS_CONFIGURACAO';
+    IF status = 0 THEN
+      EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_CONFIGURACAO ON HOSPITAIS.PAINELPS_CONFIGURACAO ( ID_CONFIGURACAO ) TABLESPACE TBSASM_INDEX';
+    END IF;
+    EXECUTE IMMEDIATE 'ALTER TABLE HOSPITAIS.PAINELPS_CONFIGURACAO ADD(CONSTRAINT PK_ID_CONFIGURACAO PRIMARY KEY (ID_CONFIGURACAO))';
+  END IF;
+END;
+/
+--SEQ
+DECLARE
+  status NUMBER(10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_sequences
+   WHERE UPPER(sequence_name) = 'PAINELPS_CONFIGURACAO_SEQ';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE '
+      CREATE SEQUENCE hospitais.PAINELPS_CONFIGURACAO_SEQ
+      MINVALUE 1
+      MAXVALUE 999999999999999999999999999       
+      START WITH 1
+      INCREMENT BY 1
+      CACHE 20';
+  END IF;
+END;
+/
+--TRIGGER
+CREATE OR REPLACE TRIGGER hospitais.PAINELPS_CONFIGURACAO_TRG 
+  BEFORE INSERT ON hospitais.PAINELPS_CONFIGURACAO
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.PAINELPS_CONFIGURACAO_SEQ.NEXTVAL
+  INTO :NEW.ID_CONFIGURACAO
+  FROM DUAL;
+END;
+/
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_ESPEC_UNIDADE 
+--------------------------------------------------------	
+
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_tables
+   WHERE UPPER(table_name) = 'APPHOSP_ESPEC_UNIDADE';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE ' 
+      CREATE TABLE hospitais.APPHOSP_ESPEC_UNIDADE 
+       (ID_APPHOSP_ESPEC_UNID NUMBER NOT NULL, 
+        ID_APPHOSP_UNIDADE NUMBER, 
+        ID_APP_ESPECIALIDADE NUMBER, 
+        FL_BLOQUEAR_TEMPO NUMBER(1,0), 
+        FL_ESPECIALIDADE_NOW NUMBER(1,0)
+      ) ';
+  END IF;
+END;
+/
+--PK E INDEX
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_constraints
+   WHERE UPPER(constraint_name) = 'PK_ID_APPHOSP_ESPEC_UNID'
+     AND UPPER(table_name)      = 'APPHOSP_ESPEC_UNIDADE'
+     AND UPPER(constraint_type) = 'P';
+  IF status = 0 THEN
+    SELECT COUNT (*)
+      INTO status
+      FROM all_indexes
+     WHERE UPPER(index_name) = 'IE_PK_ID_APPHOSP_ESPEC_UNID' 
+       AND UPPER(table_name) = 'APPHOSP_ESPEC_UNIDADE';
+    IF status = 0 THEN
+      EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_APPHOSP_ESPEC_UNID ON HOSPITAIS.APPHOSP_ESPEC_UNIDADE ( ID_APPHOSP_ESPEC_UNID ) TABLESPACE TBSASM_INDEX';
+    END IF;
+    EXECUTE IMMEDIATE 'ALTER TABLE HOSPITAIS.APPHOSP_ESPEC_UNIDADE ADD(CONSTRAINT PK_ID_APPHOSP_ESPEC_UNID PRIMARY KEY (ID_APPHOSP_ESPEC_UNID))';
+  END IF;
+END;
+/
+--SEQ
+DECLARE
+  status NUMBER(10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_sequences
+   WHERE UPPER(sequence_name) = 'APPHOSP_ESPEC_UNIDADE_SEQ';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE '
+      CREATE SEQUENCE hospitais.APPHOSP_ESPEC_UNIDADE_SEQ
+        MINVALUE 1
+        MAXVALUE 999999999999999999999999999       
+        START WITH 1
+        INCREMENT BY 1
+        CACHE 20';
+  END IF;
+END;
+/
+--TRIGGER
+  CREATE OR REPLACE TRIGGER hospitais.APPHOSP_ESPEC_UNIDADE_TRG
+  BEFORE INSERT ON hospitais.APPHOSP_ESPEC_UNIDADE
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_ESPEC_UNIDADE_SEQ.NEXTVAL
+  INTO :NEW.id_apphosp_espec_unid
+  FROM DUAL;
+END; 
+/
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_ESPEC_UNIDADE 
+--------------------------------------------------------	
+
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_tables
+   WHERE UPPER(table_name) = 'APPHOSP_ESPECIALIDADE_CORP';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE ' 
+      CREATE TABLE hospitais.APPHOSP_ESPECIALIDADE_CORP
+       (ID_APPHOSP_ESPECIALIDADE NUMBER NOT NULL, 
+        CD_CORPORATIVO VARCHAR2(200 BYTE), 
+        DS_ESPECIALIDADE VARCHAR2(200 BYTE), 
+        ID_CHAVE NUMBER(5,0)
+      )';
+  END IF;
+END;
+/
+--PK E INDEX
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_constraints
+   WHERE UPPER(constraint_name) = 'PK_ID_APPHOSP_ESPECIALIDADE'
+     AND UPPER(table_name)      = 'APPHOSP_ESPECIALIDADE_CORP'
+     AND UPPER(constraint_type) = 'P';
+  IF status = 0 THEN
+    SELECT COUNT (*)
+      INTO status
+      FROM all_indexes
+     WHERE UPPER(index_name) = 'IE_PK_ID_APPHOSP_ESPECIALIDADE' 
+       AND UPPER(table_name) = 'APPHOSP_ESPECIALIDADE_CORP';
+    IF status = 0 THEN
+      EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_APPHOSP_ESPECIALIDADE ON HOSPITAIS.APPHOSP_ESPECIALIDADE_CORP ( ID_APPHOSP_ESPECIALIDADE ) TABLESPACE TBSASM_INDEX';
+    END IF;
+    EXECUTE IMMEDIATE 'ALTER TABLE HOSPITAIS.APPHOSP_ESPECIALIDADE_CORP ADD(CONSTRAINT PK_ID_APPHOSP_ESPECIALIDADE PRIMARY KEY (ID_APPHOSP_ESPECIALIDADE))';
+  END IF;
+END;
+/
+--SEQ
+DECLARE
+  status NUMBER(10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_sequences
+   WHERE UPPER(sequence_name) = 'APPHOSP_ESPECIALIDADE_CORP_SEQ';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE '
+      CREATE SEQUENCE hospitais.APPHOSP_ESPECIALIDADE_CORP_SEQ
+        MINVALUE 1
+        MAXVALUE 999999999999999999999999999       
+        START WITH 1
+        INCREMENT BY 1
+        CACHE 20';
+  END IF;
+END;
+/
+--TRIGGER
+CREATE OR REPLACE TRIGGER hospitais.APPHOSP_ESPECIALIDADE_CORP_TRG
+  BEFORE INSERT ON hospitais.APPHOSP_ESPECIALIDADE_CORP
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_ESPECIALIDADE_CORP_SEQ.NEXTVAL
+  INTO :NEW.ID_APPHOSP_ESPECIALIDADE
+  FROM DUAL;
+END; 
+/
+
+
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_ESPECIALIDADE_CORP_TMP 
+--------------------------------------------------------	
+
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_tables
+   WHERE UPPER(table_name) = 'APPHOSP_ESPECIALIDADE_CORP_TMP';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE ' 
+      CREATE TABLE hospitais.APPHOSP_ESPECIALIDADE_CORP_TMP
+       (ID_APP_ESPECIALIDADE NUMBER NOT NULL , 
+        CD_CORPORATIVO VARCHAR2(200 BYTE), 
+        DS_ESPECIALIDADE VARCHAR2(200 BYTE), 
+        ID_CHAVE NUMBER(5,0)
+       )';
+  END IF;
+END;
+/
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_UNIDADE
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'FL_PRE_TRIAGEM' AND UPPER(table_name) = 'APPHOSP_UNIDADE';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE  ADD FL_PRE_TRIAGEM  NUMBER(1,0)  NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_UNIDADE
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'FL_SENHA_QR_CODE' AND UPPER(table_name) = 'APPHOSP_UNIDADE';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE  ADD FL_SENHA_QR_CODE NUMBER(1,0)  NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_UNIDADE
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'FL_SENHA_BEACON' AND UPPER(table_name) = 'APPHOSP_UNIDADE';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE  ADD FL_SENHA_BEACON NUMBER(1,0)  NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_UNIDADE
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'FL_SENHA_GPS' AND UPPER(table_name) = 'APPHOSP_UNIDADE';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE  ADD FL_SENHA_GPS NUMBER(1,0)  NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_UNIDADE
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'TEMPO_PRE_TRIAGEM' AND UPPER(table_name) = 'APPHOSP_UNIDADE';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ADD TEMPO_PRE_TRIAGEM NUMBER NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_UNIDADE
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'RAIO_MAX_GPS' AND UPPER(table_name) = 'APPHOSP_UNIDADE';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE  ADD RAIO_MAX_GPS NUMBER NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_UNIDADE
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'COD_CORP_UNID' AND UPPER(table_name) = 'APPHOSP_UNIDADE';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE  ADD COD_CORP_UNID varchar2(100 BYTE) NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_UNIDADE
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'REL_UNID_NOW' AND UPPER(table_name) = 'APPHOSP_UNIDADE';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE  ADD  REL_UNID_NOW VARCHAR2(100 BYTE) NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_UNIDADE
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'SIST_ORIGEM' AND UPPER(table_name) = 'APPHOSP_UNIDADE';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE  ADD  SIST_ORIGEM VARCHAR2(10 BYTE) NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_UNIDADE ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+update HOSPITAIS.APPHOSP_UNIDADE
+set FL_PRE_TRIAGEM=1, FL_SENHA_QR_CODE=1,
+FL_SENHA_BEACON=1,FL_SENHA_GPS=1,
+TEMPO_PRE_TRIAGEM=10,RAIO_MAX_GPS=200,
+SIST_ORIGEM='SisHosp'
+/
+commit
+/
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_CONFIGURACAO
+--------------------------------------------------------
+
+  CREATE TABLE "HOSPITAIS"."APPHOSP_CONFIGURACAO" 
+   (	"ID_APPHOSP_CONFIGURACAO" NUMBER, 
+	"FL_INDISPONIVEL" NUMBER(1,0) DEFAULT 0, 
+	"RAIO_LOCALIZACAO" NUMBER(3,0), 
+	"FL_VISUALIZACAO" NUMBER(1,0) DEFAULT 1, 
+	"VISUALIZACAO_TEMPO" NUMBER, 
+	"MSG_INDISPONIBILIDADE" VARCHAR2(255 BYTE) DEFAULT 'Mensagem Indisponibilidade', 
+	"MSG_ABERTURA" VARCHAR2(255 BYTE) DEFAULT 'Mensagem Abertura', 
+	"MSG_INFORMACAO" VARCHAR2(255 BYTE) DEFAULT 'Mensagem Informação', 
+	"UNIDADE_TEMPO" VARCHAR2(1 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA" ;
+
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_CONFIGURACAO"."FL_INDISPONIVEL" IS 'Habilitar indisponibilidade do aplicativo';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_CONFIGURACAO"."RAIO_LOCALIZACAO" IS 'Habilitar raio (circunferência) para localização das unidades no mapa';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_CONFIGURACAO"."FL_VISUALIZACAO" IS 'Bloquear a visualização da estimativa do tempo de espera no aplicativo';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_CONFIGURACAO"."VISUALIZACAO_TEMPO" IS 'lista com as opções: 0 -minutos, 1 -horas';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_CONFIGURACAO"."MSG_INDISPONIBILIDADE" IS 'incluirá o aviso sobre a indisponibilidade do aplicativo';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_CONFIGURACAO"."MSG_ABERTURA" IS 'incluir aviso de abertura no aplicativo';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_CONFIGURACAO"."MSG_INFORMACAO" IS 'incluir aviso no Menu de informações';
+   COMMENT ON TABLE "HOSPITAIS"."APPHOSP_CONFIGURACAO"  IS 'Configuração app hospitais';
+--------------------------------------------------------
+--  Constraints for Table APPHOSP_CONFIGURACAO
+--------------------------------------------------------
+
+  ALTER TABLE "HOSPITAIS"."APPHOSP_CONFIGURACAO" MODIFY ("ID_APPHOSP_CONFIGURACAO" NOT NULL ENABLE);
+/
+   CREATE SEQUENCE  "HOSPITAIS"."APPHOSP_CONFIGURACAO_SQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+/
+
+
+--------------------------------------------------------
+--  DDL for Trigger APPHOSP_CONFIGURACAO_TGI
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "HOSPITAIS"."APPHOSP_CONFIGURACAO_TGI" 
+  before insert on hospitais.apphosp_configuracao
+  for each row
+begin
+  SELECT hospitais.apphosp_configuracao_sq.nextval INTO :new.id_apphosp_configuracao FROM DUAL;
+end;
+/
+ALTER TRIGGER "HOSPITAIS"."APPHOSP_CONFIGURACAO_TGI" ENABLE;
+
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_IMAGENS
+--------------------------------------------------------
+
+  CREATE TABLE "HOSPITAIS"."APPHOSP_IMAGENS" 
+   (	"ID_APPHOSP_IMAGENS" NUMBER, 
+	"ID_APPHOSP_UNIDADE" NUMBER, 
+	"IMAGEM" BLOB
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA" 
+ LOB ("IMAGEM") STORE AS BASICFILE (
+  TABLESPACE "TBSASM_DATA" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
+
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_IMAGENS"."ID_APPHOSP_IMAGENS" IS 'Id imagem';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_IMAGENS"."ID_APPHOSP_UNIDADE" IS 'Id Unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_IMAGENS"."IMAGEM" IS 'Imagem';
+   COMMENT ON TABLE "HOSPITAIS"."APPHOSP_IMAGENS"  IS 'Imagens da unidade app hospitais';
+--------------------------------------------------------
+--  DDL for Index PK_APPHOSP_IMAGENS_ID
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "HOSPITAIS"."PK_APPHOSP_IMAGENS_ID" ON "HOSPITAIS"."APPHOSP_IMAGENS" ("ID_APPHOSP_IMAGENS") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA" ;
+--------------------------------------------------------
+--  Constraints for Table APPHOSP_IMAGENS
+--------------------------------------------------------
+
+  ALTER TABLE "HOSPITAIS"."APPHOSP_IMAGENS" ADD CONSTRAINT "PK_APPHOSP_IMAGENS_ID" PRIMARY KEY ("ID_APPHOSP_IMAGENS")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA"  ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table APPHOSP_IMAGENS
+--------------------------------------------------------
+
+  ALTER TABLE "HOSPITAIS"."APPHOSP_IMAGENS" ADD CONSTRAINT "FK_APPHOSP_IMAGENS_UNI" FOREIGN KEY ("ID_APPHOSP_UNIDADE")
+	  REFERENCES "HOSPITAIS"."APPHOSP_UNIDADE" ("ID_APPHOSP_UNIDADE") ON DELETE CASCADE ENABLE;
+--------------------------------------------------------
+--  DDL for Trigger APPHOSP_IMAGENS_TGI
+--------------------------------------------------------
+
+/
+ CREATE SEQUENCE  "HOSPITAIS"."APPHOSP_IMAGENS_SQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 701 CACHE 20 NOORDER  NOCYCLE ;
+
+/
+
+
+  CREATE OR REPLACE TRIGGER "HOSPITAIS"."APPHOSP_IMAGENS_TGI" 
+  before insert on hospitais.apphosp_imagens
+  for each row
+begin
+  SELECT hospitais.apphosp_imagens_sq.nextval INTO :new.id_apphosp_imagens FROM DUAL;
+end;
+/
+ALTER TRIGGER "HOSPITAIS"."APPHOSP_IMAGENS_TGI" ENABLE;
+/
+   CREATE SEQUENCE  "HOSPITAIS"."APPHOSP_IMAGENS_UNI_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+/
+
+--------------------------------------------------------
+--  DDL for Trigger APPHOSP_IMAGENS_UNI_TRG
+--------------------------------------------------------
+
+  CREATE OR REPLACE TRIGGER "HOSPITAIS"."APPHOSP_IMAGENS_UNI_TRG" 
+  BEFORE INSERT ON hospitais.APPHOSP_IMAGENS
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_IMAGENS_UNI_SEQ.NEXTVAL
+  INTO :NEW.id_apphosp_imagens
+  FROM DUAL;
+END;
+/
+ALTER TRIGGER "HOSPITAIS"."APPHOSP_IMAGENS_UNI_TRG" ENABLE;
+
+
+
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_APLICATIVO
+--------------------------------------------------------
+
+  CREATE TABLE "HOSPITAIS"."APPHOSP_APLICATIVO" 
+   (	"ID_APLICATIVO" NUMBER, 
+	"SISTEMA" VARCHAR2(50 BYTE), 
+	"URL_LOJA" VARCHAR2(255 BYTE), 
+	"VERSAO_MINIMA" VARCHAR2(6 BYTE), 
+	"VERSAO_ATUAL" VARCHAR2(6 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA" ;
+
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_APLICATIVO"."ID_APLICATIVO" IS 'Id da tabela';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_APLICATIVO"."SISTEMA" IS 'Nome Sistema';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_APLICATIVO"."URL_LOJA" IS 'Url da loja';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_APLICATIVO"."VERSAO_MINIMA" IS 'Versão mínima';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_APLICATIVO"."VERSAO_ATUAL" IS 'Versão atual';
+   COMMENT ON TABLE "HOSPITAIS"."APPHOSP_APLICATIVO"  IS 'Aplicativo hospitais';
+--------------------------------------------------------
+--  DDL for Trigger APPHOSP_APLICATIVO_TGI
+--------------------------------------------------------
+/
+
+   CREATE SEQUENCE  "HOSPITAIS"."APPHOSP_APLICATIVO_SQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 21 CACHE 20 NOORDER  NOCYCLE ;
+
+/
+
+
+
+  CREATE OR REPLACE TRIGGER "HOSPITAIS"."APPHOSP_APLICATIVO_TGI" 
+  before insert on hospitais.apphosp_aplicativo
+  for each row
+begin
+  SELECT hospitais.apphosp_aplicativo_sq.nextval INTO :new.ID_APLICATIVO FROM DUAL;
+end;
+/
+ALTER TRIGGER "HOSPITAIS"."APPHOSP_APLICATIVO_TGI" ENABLE;
+
+/
+
+
+  CREATE TABLE "HOSPITAIS"."APPHOSP_ESPECIALIDADE" 
+   (	"ID_APPHOSP_ESPECIALIDADE" NUMBER, 
+	"ID_APPHOSP_UNIDADE" NUMBER, 
+	"ID_ESPECIALIDADE_CHAVE" NUMBER(5,0), 
+	"DESCRICAO" VARCHAR2(50 BYTE), 
+	"FL_BLOQUEAR_TEMPO" NUMBER(1,0), 
+	"FL_ESPECIALIDADE_NOW" NUMBER(1,0), 
+	 CONSTRAINT "PK_APPHOSP_ESPECIALIDADE_ID" PRIMARY KEY ("ID_APPHOSP_ESPECIALIDADE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA"  ENABLE, 
+	 CONSTRAINT "FK_APPHOSP_ESPECIALIDADE_UNI" FOREIGN KEY ("ID_APPHOSP_UNIDADE")
+	  REFERENCES "HOSPITAIS"."APPHOSP_UNIDADE" ("ID_APPHOSP_UNIDADE") ON DELETE CASCADE ENABLE
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TBSASM_DATA" ;
+
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_ESPECIALIDADE"."ID_APPHOSP_ESPECIALIDADE" IS 'Id Especialidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_ESPECIALIDADE"."ID_APPHOSP_UNIDADE" IS 'Id unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_ESPECIALIDADE"."ID_ESPECIALIDADE_CHAVE" IS 'Id Especialidade (Id_chave) ';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_ESPECIALIDADE"."DESCRICAO" IS 'Descrição da unidade';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_ESPECIALIDADE"."FL_BLOQUEAR_TEMPO" IS 'Exibe ou não o tempo de atendimento';
+   COMMENT ON COLUMN "HOSPITAIS"."APPHOSP_ESPECIALIDADE"."FL_ESPECIALIDADE_NOW" IS 'Se é uma especialidade do now';
+   COMMENT ON TABLE "HOSPITAIS"."APPHOSP_ESPECIALIDADE"  IS 'Especialidades da unidade app hospitais';
+
+
+/
+CREATE SEQUENCE  "HOSPITAIS"."APPHOSP_ESPECIALIDADE_SQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1601 CACHE 20 NOORDER  NOCYCLE ;
+/
+
+  CREATE OR REPLACE TRIGGER "HOSPITAIS"."APPHOSP_ESPECIALIDADE_TGI" 
+  before insert on hospitais.apphosp_especialidade
+  for each row
+begin
+  SELECT hospitais.apphosp_especialidade_sq.nextval INTO :new.id_apphosp_especialidade FROM DUAL;
+end;
+/
+ALTER TRIGGER "HOSPITAIS"."APPHOSP_ESPECIALIDADE_TGI" ENABLE;
+
+
+
+/
+CREATE ROLE AMERICAS_ROLE
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_USUARIO TO AMERICAS_ROLE
+/
+create or replace synonym USUARIO for hospitais.APPHOSP_USUARIO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_CIRURGIA_USUARIO TO AMERICAS_ROLE
+/
+create or replace synonym CIRURGIA_USUARIO for hospitais.APPHOSP_CIRURGIA_USUARIO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_DADOS_MONIT_PARAM TO AMERICAS_ROLE
+/
+create or replace synonym DADOS_MONIT_PARAM for hospitais.APPHOSP_DADOS_MONIT_PARAM
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_ANTECEDENTE_USUARIO TO AMERICAS_ROLE
+/
+create or replace synonym ANTECEDENTE_USUARIO for hospitais.APPHOSP_ANTECEDENTE_USUARIO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_CIRURGIA_DATA TO AMERICAS_ROLE
+/
+create or replace synonym CIRURGIA_DATA for hospitais.APPHOSP_CIRURGIA_DATA
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_ANT_FAMILIAR_USER TO AMERICAS_ROLE
+/
+create or replace synonym ANT_FAMILIAR_USER for hospitais.APPHOSP_ANT_FAMILIAR_USER
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_ALERGIA_USUARIO TO AMERICAS_ROLE
+/
+create or replace synonym ALERGIA_USUARIO for hospitais.APPHOSP_ALERGIA_USUARIO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_NECESSIDADE_ESP_ITEM TO AMERICAS_ROLE
+/
+create or replace synonym NECESSIDADE_ESP_ITEM for hospitais.APPHOSP_NECESSIDADE_ESP_ITEM
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_NECESSIDADE_ESP_USER TO AMERICAS_ROLE
+/
+create or replace synonym NECESSIDADE_ESP_USER for hospitais.APPHOSP_NECESSIDADE_ESP_USER
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_MEDICAMENTO_DADOS TO AMERICAS_ROLE
+/
+create or replace synonym MEDICAMENTO_DADOS for hospitais.APPHOSP_MEDICAMENTO_DADOS
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_HABITO_TABAGISMO TO AMERICAS_ROLE
+/
+create or replace synonym HABITO_TABAGISMO for hospitais.APPHOSP_HABITO_TABAGISMO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_HABITO_CONSUMO_BEBIDAS TO AMERICAS_ROLE
+/
+create or replace synonym HABITO_CONSUMO_BEBIDAS for hospitais.APPHOSP_HABITO_CONSUMO_BEBIDAS
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_HABITO_ATIV_FISICA TO AMERICAS_ROLE
+/
+create or replace synonym HABITO_ATIV_FISICA for hospitais.APPHOSP_HABITO_ATIV_FISICA
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_HABITO_ITEM_BEBIDAS TO AMERICAS_ROLE
+/
+create or replace synonym HABITO_ITEM_BEBIDAS for hospitais.APPHOSP_HABITO_ITEM_BEBIDAS
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_HABITO_ITEM_ATV_FISICA TO AMERICAS_ROLE
+/
+create or replace synonym HABITO_ITEM_ATV_FISICA for hospitais.APPHOSP_HABITO_ITEM_ATV_FISICA
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_DADOS_MONIT_ALTURA TO AMERICAS_ROLE
+/
+create or replace synonym DADOS_MONIT_ALTURA for hospitais.APPHOSP_DADOS_MONIT_ALTURA
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_MEDICAMENTO_HORARIO TO AMERICAS_ROLE
+/
+create or replace synonym MEDICAMENTO_HORARIO for hospitais.APPHOSP_MEDICAMENTO_HORARIO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_MEDICAMENTO_HIST_USER TO AMERICAS_ROLE
+/
+create or replace synonym MEDICAMENTO_HIST_USER for hospitais.APPHOSP_MEDICAMENTO_HIST_USER
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_DADOS_MONITORADOS TO AMERICAS_ROLE
+/
+create or replace synonym DADOS_MONITORADOS for hospitais.APPHOSP_DADOS_MONITORADOS
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_BEACONS TO AMERICAS_ROLE
+/
+create or replace synonym BEACONS for hospitais.APPHOSP_BEACONS
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_CONVENIO TO AMERICAS_ROLE
+/
+create or replace synonym CONVENIO for hospitais.APPHOSP_CONVENIO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_ESPEC_UNIDADE TO AMERICAS_ROLE
+/
+create or replace synonym ESPEC_UNIDADE for hospitais.APPHOSP_ESPEC_UNIDADE
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.PAINELPS_CONFIG_ESPECIALIDADE TO AMERICAS_ROLE
+/
+create or replace synonym CONFIG_ESPECIALIDADE for hospitais.PAINELPS_CONFIG_ESPECIALIDADE
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.PAINELPS_CONFIGURACAO TO AMERICAS_ROLE
+/
+create or replace synonym PS_CONFIGURACAO for hospitais.PAINELPS_CONFIGURACAO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_PRETRIAGEM TO AMERICAS_ROLE
+/
+create or replace synonym PRETRIAGEM for hospitais.APPHOSP_PRETRIAGEM
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_PACIENTE TO AMERICAS_ROLE
+/
+create or replace synonym PACIENTE for hospitais.APPHOSP_PACIENTE
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_NOTIFICACAO TO AMERICAS_ROLE
+/
+create or replace synonym NOTIFICACAO for hospitais.APPHOSP_NOTIFICACAO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_ESPECIALIDADE_CORP_TMP TO AMERICAS_ROLE
+/
+create or replace synonym ESPECIALIDADE_CORP_TMP for hospitais.APPHOSP_ESPECIALIDADE_CORP_TMP
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_ESPECIALIDADE_CORP TO AMERICAS_ROLE
+/
+create or replace synonym ESPECIALIDADE_CORP for hospitais.APPHOSP_ESPECIALIDADE_CORP
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_ESPEC_UNIDADE TO AMERICAS_ROLE
+/
+create or replace synonym ESPEC_UNIDADE for hospitais.APPHOSP_ESPEC_UNIDADE
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_CONFIGURACAO TO AMERICAS_ROLE
+/
+create or replace synonym CONFIGURACAO for hospitais.APPHOSP_CONFIGURACAO
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_UNIDADE TO AMERICAS_ROLE
+/
+create or replace synonym UNIDADE for hospitais.APPHOSP_UNIDADE
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_ESPECIALIDADE TO AMERICAS_ROLE
+/
+create or replace synonym ESPECIALIDADE for hospitais.APPHOSP_ESPECIALIDADE
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_ANTECEDENTE_FAMILIAR TO AMERICAS_ROLE
+/
+create or replace synonym ANTECEDENTE_FAMILIAR for hospitais.APPHOSP_ANTECEDENTE_FAMILIAR
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_IMAGENS TO AMERICAS_ROLE
+/
+create or replace synonym IMAGENS for hospitais.APPHOSP_IMAGENS
+/
+GRANT SELECT, INSERT, UPDATE, DELETE ON hospitais.APPHOSP_APLICATIVO TO AMERICAS_ROLE
+/
+create or replace synonym APLICATIVO for hospitais.APPHOSP_APLICATIVO
+/
+GRANT AMERICAS_ROLE TO FILAZEROUSRH
+/
+
+-------------------------------------------------------------
+-- Adicionar colunas APPHOSP_CONFIGURACAO
+-------------------------------------------------------------
+DECLARE
+   status   NUMBER (5);
+BEGIN
+   SELECT COUNT (*)
+     INTO status
+     FROM all_tab_columns
+    WHERE UPPER(column_name) = 'UNIDADE_TEMPO' AND UPPER(table_name) = 'APPHOSP_CONFIGURACAO';
+
+   IF status = 0
+   THEN
+
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_CONFIGURACAO DISABLE ALL TRIGGERS';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_CONFIGURACAO  ADD  UNIDADE_TEMPO VARCHAR2(1 BYTE) NULL ';
+      EXECUTE IMMEDIATE 'ALTER TABLE APPHOSP_CONFIGURACAO ENABLE ALL TRIGGERS';
+
+   END IF;
+END;
+/
+
+
+
+
+--------------------------------------------------------
+--  DDL for Table APPHOSP_IMAGENS 
+--------------------------------------------------------	
+
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_tables
+   WHERE UPPER(table_name) = 'APPHOSP_IMAGENS';
+  IF status = 0 THEN
+    EXECUTE IMMEDIATE ' 
+      CREATE TABLE hospitais.APPHOSP_IMAGENS
+       (id_apphosp_imagens NUMBER not null,
+        id_apphosp_unidade NUMBER,
+        imagem             BLOB  )';
+  END IF;
+END;
+/
+--PK E INDEX
+DECLARE
+  status NUMBER (10,0);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_constraints
+   WHERE UPPER(constraint_name) = 'PK_ID_APPHOSP_IMAGENS'
+     AND UPPER(table_name)      = 'APPHOSP_IMAGENS'
+     AND UPPER(constraint_type) = 'P';
+  IF status = 0 THEN
+    SELECT COUNT (*)
+      INTO status
+      FROM all_indexes
+     WHERE UPPER(index_name) = 'IE_PK_ID_APPHOSP_IMAGENS' 
+       AND UPPER(table_name) = 'APPHOSP_IMAGENS';
+    IF status = 0 THEN
+      EXECUTE IMMEDIATE 'CREATE UNIQUE INDEX IE_PK_ID_APPHOSP_IMAGENS ON HOSPITAIS.APPHOSP_IMAGENS ( ID_APPHOSP_IMAGENS ) TABLESPACE TBSASM_INDEX';
+    END IF;
+    EXECUTE IMMEDIATE 'ALTER TABLE HOSPITAIS.APPHOSP_IMAGENS ADD(CONSTRAINT PK_ID_APPHOSP_IMAGENS PRIMARY KEY (ID_APPHOSP_IMAGENS))';
+  END IF;
+END;
+/
+DECLARE
+  status NUMBER (5);
+BEGIN
+  SELECT COUNT (*)
+    INTO status
+    FROM all_constraints
+   WHERE UPPER(constraint_name) = 'FK_APPHOSP_IMAGENS_UNI'
+     AND UPPER(table_name)     = 'APPHOSP_IMAGENS'
+     AND UPPER(constraint_type) = 'R';
+  IF status = 0 THEN
+    SELECT COUNT (*)
+      INTO status
+      FROM all_indexes
+     WHERE UPPER(index_name) = 'IE_FK_APPHOSP_IMAGENS_UNI'
+       AND UPPER(table_name) = 'APPHOSP_IMAGENS';
+    IF status = 0 THEN
+      EXECUTE IMMEDIATE 'CREATE INDEX IE_FK_APPHOSP_IMAGENS_UNI ON HOSPITAIS.APPHOSP_IMAGENS ( ID_APPHOSP_UNIDADE ) TABLESPACE TBSASM_INDEX';
+    END IF;
+    EXECUTE IMMEDIATE 'ALTER TABLE HOSPITAIS.APPHOSP_IMAGENS ADD CONSTRAINT FK_APPHOSP_IMAGENS_UNI FOREIGN KEY( ID_APPHOSP_UNIDADE ) REFERENCES HOSPITAIS.APPHOSP_UNIDADE ( ID_APPHOSP_UNIDADE )';
+  END IF;
+END;
+/
+ 	
+DECLARE
+	status NUMBER(10,0);
+BEGIN
+	SELECT COUNT (*)
+	  INTO status
+	  FROM all_sequences
+	 WHERE UPPER(sequence_name) = 'APPHOSP_IMAGENS_UNI_SEQ';
+	IF status = 0 THEN
+		EXECUTE IMMEDIATE ' CREATE SEQUENCE HOSPITAIS.APPHOSP_IMAGENS_UNI_SEQ '
+						||' MINVALUE 1 '
+						||' MAXVALUE 999999999999999999999999999 '
+						||' START WITH 1 '
+						||' INCREMENT BY 1 '
+						||' CACHE 20';
+	END IF;
+END;
+/
+
+CREATE OR REPLACE TRIGGER hospitais.APPHOSP_IMAGENS_UNI_TRG 
+  BEFORE INSERT ON hospitais.APPHOSP_IMAGENS
+  FOR EACH ROW
+BEGIN
+  SELECT hospitais.APPHOSP_IMAGENS_UNI_SEQ.NEXTVAL 
+  INTO :NEW.id_apphosp_imagens 
+  FROM DUAL;
+END; 
+/
+CREATE OR REPLACE FORCE VIEW HOSPITAIS.APPHOSP_ESPECIALIDADE_VIEW (ID_APPHOSP_ESPECIALIDADE, ID_APPHOSP_UNIDADE, ID_ESPECIALIDADE_CHAVE, DESCRICAO, CD_CORPORATIVO, FL_BLOQUEAR_TEMPO, FL_ESPECIALIDADE_NOW) AS 
+  select a.id_apphosp_espec_unid as ID_APPHOSP_ESPECIALIDADE,
+       a.id_apphosp_unidade as ID_APPHOSP_UNIDADE,
+       b.id_chave as ID_ESPECIALIDADE_CHAVE,
+       b.ds_especialidade as DESCRICAO,
+       b.cd_corporativo,
+       0 as FL_BLOQUEAR_TEMPO,
+       1 as FL_ESPECIALIDADE_NOW
+from hospitais.apphosp_espec_unidade a
+inner join hospitais.apphosp_especialidade_corp b on b.id_apphosp_especialidade = a.id_app_especialidade
+
+/
+GRANT SELECT ON hospitais.APPHOSP_ESPECIALIDADE_VIEW TO AMERICAS_ROLE

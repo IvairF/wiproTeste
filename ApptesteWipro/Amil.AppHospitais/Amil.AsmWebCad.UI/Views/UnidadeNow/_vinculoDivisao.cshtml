@@ -1,0 +1,32 @@
+﻿@using Amil.AsmWebCad.UI.Resources;
+
+<div id="DivisaoModal" class="modal fade in" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                Incuir Divisão da Unidade
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="modal-body">
+                <form class="form-horizontal" onsubmit="return false;" id="frmCursoProfissional">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <label class="control-label" id="lblNumeroConselho">Divisão</label>
+                            @Html.TextBox("Divisao", "", new { @class = "form-control sonumero", @maxlength = 15 })
+                        </div>
+                    </div>
+                    <br />
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" title="@Resource.TituloBotaoSalvar" onclick="ManutencaoUnidade.IncluirDivisao();">Incluir</button>
+                    <button type="reset" class="btn btn-outline btn-primary" onclick="ManutencaoUnidade.Cancelar();" title="@Resource.Cancelar">@Resource.Cancelar</button>
+                </div>
+            </div> 
+
+        </div>
+    </div>
+</div>
+
+
+

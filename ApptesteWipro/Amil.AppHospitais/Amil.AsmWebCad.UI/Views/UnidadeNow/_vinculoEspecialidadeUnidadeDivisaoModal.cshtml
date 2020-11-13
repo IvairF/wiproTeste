@@ -1,0 +1,24 @@
+﻿@model Amil.AsmWebCad.UI.Models.EspecialidadeNowModel
+@using Amil.AsmWebCad.UI.Resources;
+
+<div class="form-group" style="height: 350px;">
+    <div class="col-md-5" style="margin-top: 12px;">
+        Especialidades por Unidade
+        @Html.DropDownList(a => a.Descricao, (MultiSelectList)ViewBag.ListaEspecilidadesUnidade, (object)new { @class = "form-control", @size = "20", @multiple = "true", @style = "width: 216px; height: 302px;" })
+        
+    </div>
+    <div class="col-md-2">
+        <div style="margin-top: 100px;">
+            <center>
+                <button type="button" id="btnSelecionarTodos" title="@Resource.TituloSelecionarTodos" onclick="AssociarPerfil.ControlarSelecao('#ListaPerfisTodos option', '#ListaPerfisSelecionados');">@Resource.SimboloSelecionarTodos</button><br /><br />
+                <button type="button" id="btnIncluirSelecao" title="@Resource.TituloIncluirSelecao" onclick="AssociarPerfil.ControlarSelecao('#ListaPerfisTodos option:selected', '#ListaPerfisSelecionados');">@Resource.SimboloIncluirSelecao</button><br /><br />
+                <button type="button" id="btnExcluirSelecao" title="@Resource.TituloExcluirSelecao" onclick="AssociarPerfil.ControlarSelecao('#ListaPerfisSelecionados option:selected', '#ListaPerfisTodos');">@Resource.SimboloExcluirSelecao</button><br /><br />
+                <button type="button" id="btnExcluirSelecaoTodos" title="@Resource.TituloExcluirSelecaoTodos" onclick="AssociarPerfil.ControlarSelecao('#ListaPerfisSelecionados option', '#ListaPerfisTodos');">@Resource.SimboloExcluirSelecaoTodos</button>
+            </center>
+        </div>
+    </div>
+    <div class="col-md-5" style="margin-top: 12px;">
+        Especialidades por divisão</br>
+        @Html.DropDownList("ListaEspecilidadesDivisao", (MultiSelectList)ViewBag.ListaEspecilidadesDivisao, (object)new { @class = "form-control", @size = "20", @multiple = "true", @style = "width: 216px; height: 302px;" })
+    </div>
+</div>

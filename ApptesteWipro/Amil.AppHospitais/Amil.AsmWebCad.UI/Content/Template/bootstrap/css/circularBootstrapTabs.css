@@ -1,0 +1,201 @@
+﻿@import url(//fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
+/* written by riliwan balogun http://www.facebook.com/riliwan.rabo*/
+.board {
+    padding-left: 13px;
+    padding-right: 13px;
+    background: #fff;
+}
+
+.board .nav-tabs {
+    position: relative;
+    margin-bottom: 0;
+    box-sizing: border-box;
+}
+
+.board > div.board-inner {
+    /*background: #fafafa url(http://subtlepatterns.com/patterns/geometry2.png);*/
+    /*background-size: 30%;*/
+}
+
+p.narrow {
+    width: 60%;
+    margin: 10px auto;
+}
+
+.liner {
+    height: 2px;
+    background: #ddd;
+    position: absolute;
+    /*width: 98%;*/
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #555555;
+    cursor: default;
+    /* background-color: #ffffff; */
+    border: 0;
+    border-bottom-color: transparent;
+}
+
+span.round-tabs {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    border-radius: 100px;
+    background: white;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    font-size: 23px;
+}
+
+span.round-tabs {
+    color: #a5a5a5;
+    border: 2px solid #a5a5a5;
+}
+
+li.active span.round-tabs {
+    background: #a382df !important;
+    border: 2px solid #441893;
+    color: #fff;
+}
+
+li.active span.round-tabs.red {
+    background: #CD5C5C !important;
+    border: 2px solid #A52A2A;
+    color: #fff;
+}
+
+span.round-tabs.green {
+    color: #32a543;
+    border: 2px solid #32a543;
+}
+
+span.round-tabs.green:hover {
+    color: #fff;
+    border: 2px solid #ff3333;
+    background-color: #32a543;
+}
+span.round-tabs.red {
+    color: #ff3333;
+    border: 2px solid #ff3333;
+}
+span.round-tabs.red:hover {
+    color: #fff;
+    border: 2px solid #A52A2A;
+    background-color: #CD5C5C;
+}
+.nav-tabs > li.active > a span.round-tabs {
+    background: #0092ba;
+}
+
+.nav-tabs > li {
+    width: 8.3%;
+}
+
+li:after {
+    content: " ";
+    position: absolute;
+    left: 39%;
+    opacity: 0;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 5px solid transparent;
+    border-bottom-color: #ddd;
+    transition: 0.1s ease-in-out;
+}
+
+.circularBoostrap > li.active:after {
+    content: " ";
+    position: absolute;
+    left: 39%;
+    opacity: 1;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 10px solid transparent;
+    border-bottom-color: #ddd;
+}
+
+.nav-tabs > li a {
+    width: 50px;
+    height: 50px;
+    margin: 20px auto;
+    border-radius: 100%;
+    padding: 0;
+}
+
+.nav-tabs > li a:hover {
+    background: transparent;
+}
+
+.tab-content {
+}
+
+.tab-pane {
+    position: relative;
+    padding-top: 20px;
+}
+
+.tab-content .head {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
+.btn-outline-rounded {
+    padding: 10px 40px;
+    margin: 20px 0;
+    border: 2px solid transparent;
+    border-radius: 25px;
+}
+
+.btn.green {
+    background-color: #5cb85c;
+    color: #ffffff;
+}
+
+
+
+@media( max-width : 585px ) {
+    .board;
+
+{
+    width: 90%;
+    height: auto !important;
+}
+
+span.round-tabs {
+    font-size: 16px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.tab-content .head {
+    font-size: 20px;
+}
+
+.nav-tabs > li a {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+}
+
+li.active:after {
+    content: " ";
+    position: absolute;
+    left: 35%;
+}
+
+.btn-outline-rounded {
+    padding: 12px 20px;
+}
+

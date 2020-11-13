@@ -1,0 +1,52 @@
+﻿@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.UsuarioModel
+
+<div class="panel-body" style="padding-top: 38px;">
+    
+    <div class="row">
+        @Html.LabelFor(a => a.Nome, new {id="" })
+        @Html.Label(Resource.Nome, (object) new {@class = "col-lg-2 control-label"})
+    </div>
+    <div style="width: 90%; margin-left: 5%">
+        <div class="form-group">
+            <div class="col-md-5">
+                <label style="font-family: Arial; font-size: 13px; font-style: italic">@Resource.MensagemFiltroPerfildeviso</label><br/>
+                <input type="text" id="txtPesquisaUnidadesTodas" class="form-control" Obrigatorio="false" onkeyup="ManutencaoAviso.FiltraCaixaDeSelecao('txtPesquisaUnidadesTodas', 'ListaUnidadesTodas')"/>
+            </div>
+            <div class="col-md-2">
+                &nbsp;
+            </div>
+            <div class="col-md-5">
+                <label style="font-family: Arial; font-size: 13px; font-style: italic">@Resource.MensagemFiltroPerfildeviso</label><br/>
+                <input type="text" id="txtPesquisaUnidadesSelecionadas" class="form-control" Obrigatorio="false" onkeyup="ManutencaoAviso.FiltraCaixaDeSelecao('txtPesquisaUnidadesSelecionadas', 'ListaUnidadesSelecionadas')"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-5" style="margin-top: 12px;">
+                @Html.DropDownList("ListaUnidadesTodas", (MultiSelectList) ViewBag.ListaUnidadesTodas, (object) new {@class = "form-control", @size = "20", @multiple = "true", @style = "width: 416px; height: 342px;"})
+            </div>
+            <div class="col-md-2">
+                <div style="margin-top: 60%;">
+                    <center>
+                        <button type="button" id="btnSelecionarTodos" title="@Resource.TituloSelecionarTodos" onclick="ManutencaoAviso.ControlarSelecao('#ListaUnidadesTodas option', '#ListaUnidadesSelecionadas');">@Resource.SimboloSelecionarTodos</button><br/><br/>
+                        <button type="button" id="btnIncluirSelecao" title="@Resource.TituloIncluirSelecao" onclick="ManutencaoAviso.ControlarSelecao('#ListaUnidadesTodas option:selected', '#ListaUnidadesSelecionadas');">@Resource.SimboloIncluirSelecao</button><br/><br/>
+                        <button type="button" id="btnExcluirSelecao" title="@Resource.TituloExcluirSelecao" onclick="ManutencaoAviso.ControlarSelecao('#ListaUnidadesSelecionadas option:selected', '#ListaUnidadesTodas');">@Resource.SimboloExcluirSelecao</button><br/><br/>
+                        <button type="button" id="btnExcluirSelecaoTodos" title="@Resource.TituloExcluirSelecaoTodos" onclick="ManutencaoAviso.ControlarSelecao('#ListaUnidadesSelecionadas option', '#ListaUnidadesTodas');">@Resource.SimboloExcluirSelecaoTodos</button>
+                    </center>
+                </div>
+            </div>
+            0,
+            <div class="col-md-5" style="margin-top: 12px;">
+                @Html.DropDownList("ListaUnidadesSelecionadas", (MultiSelectList) ViewBag.ListaUnidadesSelecionadas, (object) new {@class = "form-control", @size = "20", @multiple = "true", @style = "width: 416px; height: 342px;"})
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <span>&nbsp;</span>
+    </div>
+    <div class="col-lg-12" style="margin-right: 6px;">
+        <button class="btn btn-primary nextBtn pull-right" id="btnProximo" onclick="ManutencaoAviso.PesquisarEspecialidades();">@Resource.TituloBotaoProximo</button>
+        <button class="btn btn-outline btn-primary prevBtn" id="btnAnterior">@Resource.TituloBotaoAnterior</button>
+        <button class="btn btn-outline btn-primary" onclick="ManutencaoAviso.Cancelar();">@Resource.Cancelar</button>
+    </div>
+</div>

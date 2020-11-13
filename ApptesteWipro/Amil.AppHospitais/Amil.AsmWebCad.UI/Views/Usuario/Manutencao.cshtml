@@ -1,0 +1,275 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.UsuarioModel
+@{
+    ViewBag.Title = Resource.Usuario_Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section SectionHead{
+    @Scripts.Render("~/bundles/usuario")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Usuario.Urls.PesquisaUsuario = '@Url.Action("Pesquisa", "usuario")';
+            Usuario.Urls.ManutencaoUsuario = '@Url.Action("Manutencao", "usuario")';
+            Usuario.Urls.AdicionarPerfis = '@Url.Action("AdicionarPerfis", "usuario")';
+            Usuario.Urls.PesquisarConselho = '@Url.Action("ConselhoUsuario")';
+            Usuario.Urls.ExclusaoConselho = '@Url.Action("ExclusaoConselhoUsuario")';
+            Usuario.Urls.InclusaoConselho = '@Url.Action("InclusaoConselhoUsuario")';
+
+            Usuario.Titulo = '@Resource.Usuario_Titulo';
+            Usuario.Mensagens.MensagemTipoConselho = '@Resource.MensagemTipoConselho';
+            Usuario.Mensagens.MensagemNumeroConselho = '@Resource.MensagemNumeroConselho';
+            Usuario.Mensagens.MensagemUF = '@Resource.MensagemUF';
+            ManutencaoUsuario.Mensagens.SucessoExclusao = '@Resource.MensagemSucessoExclusao';
+            ManutencaoUsuario.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusaoEditavel';
+            ManutencaoUsuario.Mensagens.SucessoGravacao = '@Resource.MensagemSucessoGravacao';
+            ManutencaoUsuario.Inicializar();
+
+            $("#CPF").mask("999.999.999-99");
+
+            $('#DataNascimento').keypress(function () {
+            return false;
+            });
+
+            $('#DataNascimento').keydown(function () {
+                var tecla = window.event.keyCode;
+
+                if (tecla!=9) 
+                return false;
+            });
+
+            $("#Nome").on("input", function () {
+                var regexp = /[^a-zA-ZÀ-ú. ]/g;
+
+                if (this.value.match(regexp)) {
+                    $(this).val(this.value.replace(regexp, ''));
+                }
+
+                $(this).val(this.value.toLowerCase().replace(/(^| )(\w)/g, function (s) { return s.toUpperCase() }));
+                $(this).val(this.value.replace(/( )+/g, ' '));
+               
+            });
+
+            $('.sonumero').on("input", function () {
+                $(this).val(this.value.replace(/\D/g, ''));
+
+            });
+
+            $(".email").on("input", function () {
+                $(this).val(this.value.toLowerCase());
+                var regexp = /[^a-z0-9.@@_\-]/g;
+
+                if (this.value.match(regexp)) {
+                    $(this).val(this.value.replace(regexp, ''));
+                }
+            });
+
+
+        });
+    </script>
+}
+@using (Html.BeginForm("frmManutencaoUsuario", "Usuario", FormMethod.Post, new {id="frmManutencaoUsuario", @class="form-horizontal", role="form", onsubmit = "return false;" }))
+{
+ 
+    <div>
+        <div class="panel-full">
+            @Html.ValidationSummary(true)
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @Resource.TituloFormDadosUsuario
+                    <div class="pull-right" data-toggle="collapse" data-target="#insereGrupo">
+                        <button type="button" class="btn btn-default btn-xs" data-toggle="button">
+                            <i class="fa fa-minus-square"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body collapse in" id="insereGrupo">
+                    <div class="form-group">
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.HiddenFor(a => a.Tipo)
+                       <div class="row">
+                            <div class="col-lg-5">
+                                @Html.Label(Resource.Nome, (object)new { @class = "control-label" })
+                                @Html.TextBoxFor(a => a.Nome, (object)new { @class = "form-control", @maxlength = 60 })
+                                @Html.ValidationMessageFor(a => a.Nome) 
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label(Resource.CPF, (object) new {@class = "control-label"})
+                                @if (Model.Id == 0)
+                                {
+                                    @Html.TextBoxFor(a => a.CPF, (object) new {@class = "form-control"})
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(a => a.CPF, (object) new {@class = "form-control", @disabled = "disabled"})
+                                }
+                                @Html.ValidationMessageFor(a => a.CPF)
+                            </div>
+                            <div class="col-lg-2">
+                                @Html.Label(Resource.DataNascimento, (object)new { @class = "control-label" })
+                                <div class="input-group datepicker dataCalendar" id="dtData">
+                                    @Html.TextBoxFor(a => a.DataNascimento, (object)new { @class = "form-control", dataMask = "99/99/9999", data_val_date = "O campo Data de Nascimento deve ser uma data válida."})      
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>                            
+                                </div>   
+                                <div> 
+                                    @Html.ValidationMessageFor(a =>a.DataNascimento)
+                                </div>                    
+                            </div>
+                        </div> 
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-5">
+                                @Html.Label(Resource.Login, (object)new { @class = "control-label" })
+                                @if (Model.Id == 0)
+                                {
+                                    @Html.TextBoxFor(a => a.Login, (object) new {@class = "form-control email", @maxlength = 50})
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(a => a.Login, (object) new {@class = "form-control email", @maxlength = 50, @disabled = "disabled"})
+  
+                                }
+                                @Html.ValidationMessageFor(a => a.Login)
+                            </div>
+                            <div class="col-lg-2">
+                                @Html.Label(Resource.Status, (object)new { @class = "control-label" })
+                                @if (Model.Id == 0) {
+                                    Model.Status="A"; 
+                                    @Html.DropDownListFor(a => a.Status, (SelectList)ViewBag.StatusUsuarioBag, @Resource.Selecione, (object)new { @class = "form-control", @disabled = "disabled"})
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(a => a.Status, (SelectList)ViewBag.StatusUsuarioBag, @Resource.Selecione, (object)new { @class = "form-control" })
+                                }                           
+                                @Html.ValidationMessageFor(a => a.Status)
+                            </div>
+
+                        </div>
+                        @if (Model.Id == 0)
+                        {
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    @Html.Label(Resource.ConfirmarEmail, (object)new { @class = "control-label" })
+                                    @Html.TextBoxFor(a => a.ConfirmaLogin, (object)new { @class = "form-control email", @maxlength = 50,  onpaste="return false" })
+                                    @Html.ValidationMessageFor(a => a.ConfirmaLogin)
+                                </div>
+                            </div>
+                            
+                        }
+                        <br />
+                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                             <button type="button" class="btn btn-primary" id="btnAssociarPerfil"  title="@Resource.AssociarPerfil" style="float: left !important;" data-toggle="modal" data-target="#perfilModal">
+                                @Resource.AssociarPerfil
+                            </button>
+                            <button type="button" class="btn btn-primary" id="btnSalvar" title="@Resource.TituloBotaoSalvar">@Resource.Salvar</button>
+                            <button type="reset" class="btn btn-outline btn-primary" id="btnVoltar" title="@Resource.TituloBotaoVoltar">@Resource.Voltar</button>
+                        </div>
+                    </div>              
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+  
+}
+
+<div class="panel panel-primary" id="boxConselho">
+    <div class="panel-heading">
+        Conselho Profissional
+        <div class="pull-right" data-toggle="collapse" data-target="#insereConselho">
+            <button type="button" class="btn btn-default btn-xs" data-toggle="button">
+                <i class="fa fa-minus-square"></i>
+            </button>
+        </div>
+    </div>
+    <div class="panel-body collapse in" id="insereConselho">
+            <div class="panel-full">
+                <button type="button" class="btn btn-primary" id="btnNovoConselho"  title="Incluir Novo" style="float: left !important; margin-bottom:10px;" onclick="UsuarioConselho.IncluirModal();">
+                Incluir
+                </button>
+                
+                <div id="dttConselho" class="dataTables_wrapper form-inline">
+                    <table id="grvConselho" style="cursor: pointer" data-dtid="idConselho" class="table table-striped table-bordered dataTable">
+                        <thead>
+                            <tr>
+                                <th data-dtcolumn="Documento" data-column-class="align-mid width-10">Documento</th>
+                                <th data-dtcolumn="Conselho">Conselho</th>
+                                <th data-dtcolumn="Estado" data-column-class="align-mid width-10">UF</th>
+                                <th data-dtaction="Acoes" data-column-class="align-mid width-10">@Resource.Acoes</th>
+                                <th data-dtcolumn="Id" data-column-class="hide" ></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+         </div>
+</div>
+
+
+<div class="modal fade" id="perfilModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="perfisLabel">Perfis do Usuário</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="salvarEspecialidades" data-dismiss="modal" onclick="javascript: AssociarPerfil.AdicionarPerfis();">Salvar</button>
+                <button type="button" class="btn btn-primary btn-outline" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $('#perfilModal').on('show.bs.modal', function (event) {
+        var modal = $(this);
+        $.ajax({
+            url: '@Url.Action("CarregarPerfis")',
+            type: "POST",
+            data: {
+                Id: $("#Id").val(),
+                Email: $('#Login').val()
+            },
+            success: function (partialView) {
+                AssociarPerfil.email = "teste";
+                modal.find(".modal-body").html(partialView);
+            }
+        });
+    });
+
+@*    $('#conselhoModal').on('show.bs.modal', function (event) {
+        var modal = $(this);
+        $.ajax({
+            url: '@Url.Action("IncluirNovoConselho")',
+            type: "POST",
+            data: {
+                Id: $("#Id").val(),
+                FlgInterno: $("Tipo").val() == 'Externo' ? 0 : 1
+            },
+            success: function (partialView, model) {
+                modal.find("#body-conselho").html(partialView);
+            }
+        });
+     });*@
+
+    
+</script>
+
+@Html.Partial("_vinculoConselho")

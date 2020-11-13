@@ -1,0 +1,892 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Amil.Now.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Amil.Now.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="NOW_UNIDADE_DIVISAO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_UNIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_DIVISAO" type="xs:long" />
+      <xs:element minOccurs="0" name="NM_DIVISAO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NOW_ESPECIALIDADE_DIVISAO" nillable="true" type="tns:ArrayOfNOW_ESPECIALIDADE_DIVISAO" />
+      <xs:element minOccurs="0" name="NOW_FASE_SUMARIO" nillable="true" type="tns:ArrayOfNOW_FASE_SUMARIO" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE" nillable="true" type="tns:NOW_UNIDADE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_UNIDADE_DIVISAO" nillable="true" type="tns:NOW_UNIDADE_DIVISAO" />
+  <xs:complexType name="ArrayOfNOW_ESPECIALIDADE_DIVISAO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_ESPECIALIDADE_DIVISAO" nillable="true" type="tns:NOW_ESPECIALIDADE_DIVISAO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_ESPECIALIDADE_DIVISAO" nillable="true" type="tns:ArrayOfNOW_ESPECIALIDADE_DIVISAO" />
+  <xs:complexType name="NOW_ESPECIALIDADE_DIVISAO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_ESPECIALIDADE_DIVISAO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_DIVISAO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_ESPECIALIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_DIVISAO" nillable="true" type="tns:NOW_UNIDADE_DIVISAO" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_ESPECIALIDADE" nillable="true" type="tns:NOW_UNIDADE_ESPECIALIDADE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_ESPECIALIDADE_DIVISAO" nillable="true" type="tns:NOW_ESPECIALIDADE_DIVISAO" />
+  <xs:complexType name="NOW_UNIDADE_ESPECIALIDADE">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CD_ESPEC_UNIDADE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_CHAVE_ESPECIALIDADE" type="xs:int" />
+      <xs:element minOccurs="0" name="ID_UNIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_ESPECIALIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="NOW_ESPECIALIDADE_DIVISAO" nillable="true" type="tns:ArrayOfNOW_ESPECIALIDADE_DIVISAO" />
+      <xs:element minOccurs="0" name="NOW_TEMPO_ESPEC_RISCO" nillable="true" type="tns:ArrayOfNOW_TEMPO_ESPEC_RISCO" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_FASE_ESPEC" nillable="true" type="tns:ArrayOfNOW_UNIDADE_FASE_ESPEC" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_UNIDADE_ESPECIALIDADE" nillable="true" type="tns:NOW_UNIDADE_ESPECIALIDADE" />
+  <xs:complexType name="ArrayOfNOW_TEMPO_ESPEC_RISCO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_TEMPO_ESPEC_RISCO" nillable="true" type="tns:NOW_TEMPO_ESPEC_RISCO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_TEMPO_ESPEC_RISCO" nillable="true" type="tns:ArrayOfNOW_TEMPO_ESPEC_RISCO" />
+  <xs:complexType name="NOW_TEMPO_ESPEC_RISCO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CM_ESTRATIFICACAO_RISCO" nillable="true" type="tns:CM_ESTRATIFICACAO_RISCO" />
+      <xs:element minOccurs="0" name="ID_RISCO" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_TEMPO_ESPEC_RISCO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_ESPECIALIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="QT_MINUTOS_ESTIMATIVA" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="QT_MINUTOS_MAXIMO" type="xs:short" />
+      <xs:element minOccurs="0" name="QT_PACIENTES_MAXIMO" nillable="true" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_TEMPO_ESPEC_RISCO" nillable="true" type="tns:NOW_TEMPO_ESPEC_RISCO" />
+  <xs:complexType name="CM_ESTRATIFICACAO_RISCO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CD_RISCO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CM_ESCALA_RISCO" nillable="true" type="tns:CM_ESCALA_RISCO" />
+      <xs:element minOccurs="0" name="ID_ESCALA_RISCO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_RISCO" type="xs:long" />
+      <xs:element minOccurs="0" name="NM_RISCO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NR_RISCO" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CM_ESTRATIFICACAO_RISCO" nillable="true" type="tns:CM_ESTRATIFICACAO_RISCO" />
+  <xs:complexType name="CM_ESCALA_RISCO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CM_ESTRATIFICACAO_RISCO" nillable="true" type="tns:ArrayOfCM_ESTRATIFICACAO_RISCO" />
+      <xs:element minOccurs="0" name="ID_ESCALA_RISCO" type="xs:long" />
+      <xs:element minOccurs="0" name="NM_ESCALA_RISCO" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CM_ESCALA_RISCO" nillable="true" type="tns:CM_ESCALA_RISCO" />
+  <xs:complexType name="ArrayOfCM_ESTRATIFICACAO_RISCO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CM_ESTRATIFICACAO_RISCO" nillable="true" type="tns:CM_ESTRATIFICACAO_RISCO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCM_ESTRATIFICACAO_RISCO" nillable="true" type="tns:ArrayOfCM_ESTRATIFICACAO_RISCO" />
+  <xs:complexType name="ArrayOfNOW_UNIDADE_FASE_ESPEC">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_UNIDADE_FASE_ESPEC" nillable="true" type="tns:NOW_UNIDADE_FASE_ESPEC" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_UNIDADE_FASE_ESPEC" nillable="true" type="tns:ArrayOfNOW_UNIDADE_FASE_ESPEC" />
+  <xs:complexType name="NOW_UNIDADE_FASE_ESPEC">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_UNIDADE_ESPECIALIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_FASE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_FASE_ESPEC" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_UNIDADE_FASE_ESPEC" nillable="true" type="tns:NOW_UNIDADE_FASE_ESPEC" />
+  <xs:complexType name="ArrayOfNOW_FASE_SUMARIO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_FASE_SUMARIO" nillable="true" type="tns:NOW_FASE_SUMARIO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_FASE_SUMARIO" nillable="true" type="tns:ArrayOfNOW_FASE_SUMARIO" />
+  <xs:complexType name="NOW_FASE_SUMARIO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FL_AGUARDA_FEEDBACK" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_FASE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_FASE_SUMARIO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_DIVISAO" type="xs:long" />
+      <xs:element minOccurs="0" name="NOW_FASE" nillable="true" type="tns:NOW_FASE" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_DIVISAO" nillable="true" type="tns:NOW_UNIDADE_DIVISAO" />
+      <xs:element minOccurs="0" name="QT_MINUTOS_MAIOR" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="QT_PACIENTES" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="ST_QUANTIDADE" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="ST_TEMPO" nillable="true" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_FASE_SUMARIO" nillable="true" type="tns:NOW_FASE_SUMARIO" />
+  <xs:complexType name="NOW_FASE">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_FASE" type="xs:long" />
+      <xs:element minOccurs="0" name="NM_FASE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NOW_FASE_SUMARIO" nillable="true" type="tns:ArrayOfNOW_FASE_SUMARIO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_FASE" nillable="true" type="tns:NOW_FASE" />
+  <xs:complexType name="NOW_UNIDADE">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CD_UNIDADE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CM_BASE_DADOS_WPD" nillable="true" type="tns:CM_BASE_DADOS_WPD" />
+      <xs:element minOccurs="0" name="CM_ESCALA_RISCO" nillable="true" type="tns:CM_ESCALA_RISCO" />
+      <xs:element minOccurs="0" name="CM_REGIONAL" nillable="true" type="tns:CM_REGIONAL" />
+      <xs:element minOccurs="0" name="DT_HR_ATUALIZACAO" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DT_HR_FIM_ATUALIZACAO" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FL_ATIVA" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_BASE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_ESCALA_RISCO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_REGIONAL" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="NM_UNIDADE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NOW_FEEDBACK_PACIENTE" nillable="true" type="tns:ArrayOfNOW_FEEDBACK_PACIENTE" />
+      <xs:element minOccurs="0" name="NOW_GRUPO_UNIDADE" nillable="true" type="tns:ArrayOfNOW_GRUPO_UNIDADE" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_DIVISAO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_DIVISAO" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_ESPECIALIDADE" nillable="true" type="tns:ArrayOfNOW_UNIDADE_ESPECIALIDADE" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_FASE" nillable="true" type="tns:ArrayOfNOW_UNIDADE_FASE" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_USUARIO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_USUARIO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_UNIDADE" nillable="true" type="tns:NOW_UNIDADE" />
+  <xs:complexType name="CM_BASE_DADOS_WPD">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ALIAS" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FL_ESPECIALIDADE_TOTALCARE" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_BASE_DADOS" type="xs:long" />
+      <xs:element minOccurs="0" name="NOME" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CM_BASE_DADOS_WPD" nillable="true" type="tns:CM_BASE_DADOS_WPD" />
+  <xs:complexType name="CM_REGIONAL">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CM_FILIAL_UF" nillable="true" type="tns:CM_FILIAL_UF" />
+      <xs:element minOccurs="0" name="FL_ATIVO" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_FILIAL_UF" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_REGIONAL" type="xs:long" />
+      <xs:element minOccurs="0" name="NM_REGIONAL" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CM_REGIONAL" nillable="true" type="tns:CM_REGIONAL" />
+  <xs:complexType name="CM_FILIAL_UF">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CM_FILIAL" nillable="true" type="tns:CM_FILIAL" />
+      <xs:element minOccurs="0" name="ESTADOS" nillable="true" type="tns:ESTADOS" />
+      <xs:element minOccurs="0" name="FL_AGENDA_ONLINE_RECEITA" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FL_ATIVO" type="xs:short" />
+      <xs:element minOccurs="0" name="FL_DATA_GUIA_TISS" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FL_ENVIA_RETORNO_WPD" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="FL_EXIBE_ENCAIXE" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FL_FLUXO_FRANQUEADOS" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="FL_HAB_MSG_TOTAL_CARE" type="xs:short" />
+      <xs:element minOccurs="0" name="FL_IMPRIME_PRONTUARIO" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FL_MSG_TOTEM" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="IDADE_CRIANCA" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_FILIAL" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_FILIAL_UF" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_FUSO_HORARIO" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_UF" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MSG_DIVUG_PAT" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CM_FILIAL_UF" nillable="true" type="tns:CM_FILIAL_UF" />
+  <xs:complexType name="CM_FILIAL">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CM_FILIAL_UF" nillable="true" type="tns:ArrayOfCM_FILIAL_UF" />
+      <xs:element minOccurs="0" name="FL_ATIVO" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_FILIAL" type="xs:long" />
+      <xs:element minOccurs="0" name="NM_FILIAL" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CM_FILIAL" nillable="true" type="tns:CM_FILIAL" />
+  <xs:complexType name="ArrayOfCM_FILIAL_UF">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CM_FILIAL_UF" nillable="true" type="tns:CM_FILIAL_UF" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCM_FILIAL_UF" nillable="true" type="tns:ArrayOfCM_FILIAL_UF" />
+  <xs:complexType name="ESTADOS">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CD_CEP_INICIO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CD_CEP_TERMINO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DESCRICAO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_REGIAO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_UF" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ESTADOS" nillable="true" type="tns:ESTADOS" />
+  <xs:complexType name="ArrayOfNOW_FEEDBACK_PACIENTE">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_FEEDBACK_PACIENTE" nillable="true" type="tns:NOW_FEEDBACK_PACIENTE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_FEEDBACK_PACIENTE" nillable="true" type="tns:ArrayOfNOW_FEEDBACK_PACIENTE" />
+  <xs:complexType name="NOW_FEEDBACK_PACIENTE">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DH_FEEDBACK" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DH_SOLICITACAO" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ID_FEEDBACK_PACIENTE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_SENHA" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE" nillable="true" type="tns:NOW_UNIDADE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_FEEDBACK_PACIENTE" nillable="true" type="tns:NOW_FEEDBACK_PACIENTE" />
+  <xs:complexType name="ArrayOfNOW_GRUPO_UNIDADE">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_GRUPO_UNIDADE" nillable="true" type="tns:NOW_GRUPO_UNIDADE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_GRUPO_UNIDADE" nillable="true" type="tns:ArrayOfNOW_GRUPO_UNIDADE" />
+  <xs:complexType name="NOW_GRUPO_UNIDADE">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_GRUPO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_GRUPO_UNIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="NOW_GRUPO" nillable="true" type="tns:NOW_GRUPO" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE" nillable="true" type="tns:NOW_UNIDADE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_GRUPO_UNIDADE" nillable="true" type="tns:NOW_GRUPO_UNIDADE" />
+  <xs:complexType name="NOW_GRUPO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_GRUPO" type="xs:long" />
+      <xs:element minOccurs="0" name="NOME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NOW_GRUPO_UNIDADE" nillable="true" type="tns:ArrayOfNOW_GRUPO_UNIDADE" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_USUARIO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_USUARIO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_GRUPO" nillable="true" type="tns:NOW_GRUPO" />
+  <xs:complexType name="ArrayOfNOW_UNIDADE_USUARIO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_UNIDADE_USUARIO" nillable="true" type="tns:NOW_UNIDADE_USUARIO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_UNIDADE_USUARIO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_USUARIO" />
+  <xs:complexType name="NOW_UNIDADE_USUARIO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ACESSO_LOGIN" nillable="true" type="tns:ACESSO_LOGIN" />
+      <xs:element minOccurs="0" name="ID_GRUPO" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_USUARIO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_USUARIO" type="xs:int" />
+      <xs:element minOccurs="0" name="NOW_GRUPO" nillable="true" type="tns:NOW_GRUPO" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE" nillable="true" type="tns:NOW_UNIDADE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_UNIDADE_USUARIO" nillable="true" type="tns:NOW_UNIDADE_USUARIO" />
+  <xs:complexType name="ACESSO_LOGIN">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CPF" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="DATA_HORA_ULTIMA_TENTATIVA" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DATA_ULTIMO_ACESSO" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DT_ULTIMA_TROCA_SENHA" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DT_VALIDADE_SENHA" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EMAIL_EXTERNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EMAIL_INTERNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FL_SENHA_CRIPTO" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_DEPTO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_UNIDADE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_USUARIO" type="xs:int" />
+      <xs:element minOccurs="0" name="INI_CONFIG" nillable="true" type="tns:ArrayOfINI_CONFIG" />
+      <xs:element minOccurs="0" name="NAT_LOG_UTILIZACAO" nillable="true" type="tns:ArrayOfNAT_LOG_UTILIZACAO" />
+      <xs:element minOccurs="0" name="NOME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NOME_COMPLETO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_USUARIO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_USUARIO" />
+      <xs:element minOccurs="0" name="QTD_TENTATIVA" type="xs:short" />
+      <xs:element minOccurs="0" name="TROCAR_SENHA" type="xs:short" />
+      <xs:element minOccurs="0" name="TX_SENHA" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="USUARIO_INATIVO" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ACESSO_LOGIN" nillable="true" type="tns:ACESSO_LOGIN" />
+  <xs:complexType name="ArrayOfINI_CONFIG">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="INI_CONFIG" nillable="true" type="tns:INI_CONFIG" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfINI_CONFIG" nillable="true" type="tns:ArrayOfINI_CONFIG" />
+  <xs:complexType name="INI_CONFIG">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CHAVE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CONTEUDO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CONTEUDO_XML" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_CHAVE" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_SISTEMA" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_UNIDADE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_USUARIO" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="INI_CONFIG" nillable="true" type="tns:INI_CONFIG" />
+  <xs:complexType name="ArrayOfNAT_LOG_UTILIZACAO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NAT_LOG_UTILIZACAO" nillable="true" type="tns:NAT_LOG_UTILIZACAO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNAT_LOG_UTILIZACAO" nillable="true" type="tns:ArrayOfNAT_LOG_UTILIZACAO" />
+  <xs:complexType name="NAT_LOG_UTILIZACAO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ACESSO_LOGIN" nillable="true" type="tns:ACESSO_LOGIN" />
+      <xs:element minOccurs="0" name="DATA_HORA" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ID_MODULO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_ROTINA" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_SISTEMA" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID_USUARIO" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NAT_LOG_UTILIZACAO" nillable="true" type="tns:NAT_LOG_UTILIZACAO" />
+  <xs:complexType name="ArrayOfNOW_UNIDADE_DIVISAO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_UNIDADE_DIVISAO" nillable="true" type="tns:NOW_UNIDADE_DIVISAO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_UNIDADE_DIVISAO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_DIVISAO" />
+  <xs:complexType name="ArrayOfNOW_UNIDADE_ESPECIALIDADE">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_UNIDADE_ESPECIALIDADE" nillable="true" type="tns:NOW_UNIDADE_ESPECIALIDADE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_UNIDADE_ESPECIALIDADE" nillable="true" type="tns:ArrayOfNOW_UNIDADE_ESPECIALIDADE" />
+  <xs:complexType name="ArrayOfNOW_UNIDADE_FASE">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_UNIDADE_FASE" nillable="true" type="tns:NOW_UNIDADE_FASE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_UNIDADE_FASE" nillable="true" type="tns:ArrayOfNOW_UNIDADE_FASE" />
+  <xs:complexType name="NOW_UNIDADE_FASE">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_FASE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_FASE" type="xs:long" />
+      <xs:element minOccurs="0" name="NM_UNIDADE_FASE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NOW_FASE" nillable="true" type="tns:NOW_FASE" />
+      <xs:element minOccurs="0" name="NOW_TEMPO_FASE_RISCO" nillable="true" type="tns:ArrayOfNOW_TEMPO_FASE_RISCO" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_FASE_ESPEC" nillable="true" type="tns:ArrayOfNOW_UNIDADE_FASE_ESPEC" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_FASE_PERIODO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_FASE_PERIODO" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_FASE_SUMARIO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_FASE_SUMARIO" />
+      <xs:element minOccurs="0" name="NR_ORDEM" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="QT_MINUTOS_MAXIMO" type="xs:short" />
+      <xs:element minOccurs="0" name="QT_PACIENTES_MAXIMO" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_UNIDADE_FASE" nillable="true" type="tns:NOW_UNIDADE_FASE" />
+  <xs:complexType name="ArrayOfNOW_TEMPO_FASE_RISCO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_TEMPO_FASE_RISCO" nillable="true" type="tns:NOW_TEMPO_FASE_RISCO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_TEMPO_FASE_RISCO" nillable="true" type="tns:ArrayOfNOW_TEMPO_FASE_RISCO" />
+  <xs:complexType name="NOW_TEMPO_FASE_RISCO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CM_ESTRATIFICACAO_RISCO" nillable="true" type="tns:CM_ESTRATIFICACAO_RISCO" />
+      <xs:element minOccurs="0" name="ID_RISCO" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_TEMPO_FASE_RISCO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_FASE" type="xs:long" />
+      <xs:element minOccurs="0" name="QT_MINUTOS_ESTIMATIVA" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="QT_MINUTOS_MAXIMO" type="xs:short" />
+      <xs:element minOccurs="0" name="QT_PACIENTES_MAXIMO" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_TEMPO_FASE_RISCO" nillable="true" type="tns:NOW_TEMPO_FASE_RISCO" />
+  <xs:complexType name="ArrayOfNOW_UNIDADE_FASE_PERIODO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_UNIDADE_FASE_PERIODO" nillable="true" type="tns:NOW_UNIDADE_FASE_PERIODO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_UNIDADE_FASE_PERIODO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_FASE_PERIODO" />
+  <xs:complexType name="NOW_UNIDADE_FASE_PERIODO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_UNIDADE_FASE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_FASE_PERIODO" type="xs:long" />
+      <xs:element minOccurs="0" name="NOW_CONTAGEM_PACIENTES" nillable="true" type="tns:ArrayOfNOW_CONTAGEM_PACIENTES" />
+      <xs:element minOccurs="0" name="QT_MINUTOS_INFERIOR" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_UNIDADE_FASE_PERIODO" nillable="true" type="tns:NOW_UNIDADE_FASE_PERIODO" />
+  <xs:complexType name="ArrayOfNOW_CONTAGEM_PACIENTES">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_CONTAGEM_PACIENTES" nillable="true" type="tns:NOW_CONTAGEM_PACIENTES" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_CONTAGEM_PACIENTES" nillable="true" type="tns:ArrayOfNOW_CONTAGEM_PACIENTES" />
+  <xs:complexType name="NOW_CONTAGEM_PACIENTES">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CM_ESTRATIFICACAO_RISCO" nillable="true" type="tns:CM_ESTRATIFICACAO_RISCO" />
+      <xs:element minOccurs="0" name="ID_CONTAGEM_PACIENTES" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_RISCO" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_FASE_PERIODO" type="xs:long" />
+      <xs:element minOccurs="0" name="QT_PACIENTES" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_CONTAGEM_PACIENTES" nillable="true" type="tns:NOW_CONTAGEM_PACIENTES" />
+  <xs:complexType name="ArrayOfNOW_UNIDADE_FASE_SUMARIO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_UNIDADE_FASE_SUMARIO" nillable="true" type="tns:NOW_UNIDADE_FASE_SUMARIO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_UNIDADE_FASE_SUMARIO" nillable="true" type="tns:ArrayOfNOW_UNIDADE_FASE_SUMARIO" />
+  <xs:complexType name="NOW_UNIDADE_FASE_SUMARIO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FL_AGUARDA_FEEDBACK" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_FASE" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_FASE_SUMARIO" type="xs:long" />
+      <xs:element minOccurs="0" name="NOW_UNIDADE_FASE" nillable="true" type="tns:NOW_UNIDADE_FASE" />
+      <xs:element minOccurs="0" name="QT_MINUTOS_MAIOR" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="QT_PACIENTES" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="ST_QUANTIDADE" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="ST_TEMPO" nillable="true" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_UNIDADE_FASE_SUMARIO" nillable="true" type="tns:NOW_UNIDADE_FASE_SUMARIO" />
+  <xs:complexType name="ArrayOfEspecialidadeDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EspecialidadeDTO" nillable="true" type="tns:EspecialidadeDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEspecialidadeDTO" nillable="true" type="tns:ArrayOfEspecialidadeDTO" />
+  <xs:complexType name="EspecialidadeDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NOW_UNIDADE_ESPECIALIDADE">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ESPECIALIDADE" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="EspecialidadeDTO" nillable="true" type="tns:EspecialidadeDTO" />
+  <xs:complexType name="ArrayOfUnidadeDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UnidadeDTO" nillable="true" type="tns:UnidadeDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUnidadeDTO" nillable="true" type="tns:ArrayOfUnidadeDTO" />
+  <xs:complexType name="UnidadeDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="baseId" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="cdUnity" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="dtHrAtualizacao" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="fase" nillable="true" type="tns:ArrayOfFaseDTO">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="idEscalaRisco" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="idUnity" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="nmUnity" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnidadeDTO" nillable="true" type="tns:UnidadeDTO" />
+  <xs:complexType name="ArrayOfFaseDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FaseDTO" nillable="true" type="tns:FaseDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFaseDTO" nillable="true" type="tns:ArrayOfFaseDTO" />
+  <xs:complexType name="FaseDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fasePeriodo" nillable="true" type="tns:ArrayOfFasePeriodoDTO" />
+      <xs:element minOccurs="0" name="idFase" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="idUnidadeFase" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="nmUnidadeFase" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="qtMinutosEstimativa" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="qtMinutosMaximo" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="qtPacienteMaxFaseRisco" nillable="true" type="tns:ArrayOfQtPacienteMaxFaseRisco" />
+      <xs:element minOccurs="0" name="qtPacientesMaximo" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="risco" nillable="true" type="tns:ArrayOfRiscoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FaseDTO" nillable="true" type="tns:FaseDTO" />
+  <xs:complexType name="ArrayOfFasePeriodoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FasePeriodoDTO" nillable="true" type="tns:FasePeriodoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFasePeriodoDTO" nillable="true" type="tns:ArrayOfFasePeriodoDTO" />
+  <xs:complexType name="FasePeriodoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idFasePeriodo" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="qtMinutosInferior" type="xs:short" />
+      <xs:element minOccurs="0" name="qtPacientes" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FasePeriodoDTO" nillable="true" type="tns:FasePeriodoDTO" />
+  <xs:complexType name="ArrayOfQtPacienteMaxFaseRisco">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="QtPacienteMaxFaseRisco" nillable="true" type="tns:QtPacienteMaxFaseRisco" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfQtPacienteMaxFaseRisco" nillable="true" type="tns:ArrayOfQtPacienteMaxFaseRisco" />
+  <xs:complexType name="QtPacienteMaxFaseRisco">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idRisco" nillable="true" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="qtMinutosMaximo" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="qtPacientesMaximo" type="xs:int">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="QtPacienteMaxFaseRisco" nillable="true" type="tns:QtPacienteMaxFaseRisco" />
+  <xs:complexType name="ArrayOfRiscoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RiscoDTO" nillable="true" type="tns:RiscoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRiscoDTO" nillable="true" type="tns:ArrayOfRiscoDTO" />
+  <xs:complexType name="RiscoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fasePeriodo" nillable="true" type="tns:ArrayOfFasePeriodoDTO">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="idRisco" nillable="true" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="qtMinutosEstimativa" nillable="true" type="xs:short" />
+      <xs:element minOccurs="0" name="qtMinutosMaximo" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RiscoDTO" nillable="true" type="tns:RiscoDTO" />
+  <xs:complexType name="ArrayOfUsuarioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UsuarioDTO" nillable="true" type="tns:UsuarioDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUsuarioDTO" nillable="true" type="tns:ArrayOfUsuarioDTO" />
+  <xs:complexType name="UsuarioDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_GRUPO" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_UNIDADE_USUARIO" type="xs:long" />
+      <xs:element minOccurs="0" name="ID_USUARIO" type="xs:int" />
+      <xs:element minOccurs="0" name="NM_UNIDADE_GRUPO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NM_USUARIO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TIPO_ACESSO" type="tns:TipoAcesso" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsuarioDTO" nillable="true" type="tns:UsuarioDTO" />
+  <xs:simpleType name="TipoAcesso">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unidade" />
+      <xs:enumeration value="Grupo" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TipoAcesso" nillable="true" type="tns:TipoAcesso" />
+  <xs:complexType name="GrupoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GroupId" type="xs:int" />
+      <xs:element minOccurs="0" name="Unities" nillable="true" type="tns:ArrayOfUnidadeDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GrupoDTO" nillable="true" type="tns:GrupoDTO" />
+  <xs:complexType name="ArrayOfGrupoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GrupoDTO" nillable="true" type="tns:GrupoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGrupoDTO" nillable="true" type="tns:ArrayOfGrupoDTO" />
+  <xs:complexType name="AccessKeyDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="dtValidate" nillable="true" type="xs:dateTime">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="flValidKey" type="xs:short" />
+      <xs:element minOccurs="0" name="idUser" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="key" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="message" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="system" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="versusKey" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AccessKeyDTO" nillable="true" type="tns:AccessKeyDTO" />
+  <xs:complexType name="VersionDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="flMensagem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="flUltimaVersao" type="xs:short" />
+      <xs:element minOccurs="0" name="flValida" type="xs:short" />
+      <xs:element minOccurs="0" name="urlAtualizacao" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VersionDTO" nillable="true" type="tns:VersionDTO" />
+  <xs:complexType name="ArrayOfEstratificacaoRiscoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EstratificacaoRiscoDTO" nillable="true" type="tns:EstratificacaoRiscoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEstratificacaoRiscoDTO" nillable="true" type="tns:ArrayOfEstratificacaoRiscoDTO" />
+  <xs:complexType name="EstratificacaoRiscoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="idEscalaRisco" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="idRisco" type="xs:long">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="nmEscalaRisco" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="nmRisco" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element minOccurs="0" name="nrRisco" type="xs:short">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EstratificacaoRiscoDTO" nillable="true" type="tns:EstratificacaoRiscoDTO" />
+  <xs:complexType name="ArrayOfEspecialidadePorRiscoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EspecialidadePorRiscoDTO" nillable="true" type="tns:EspecialidadePorRiscoDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEspecialidadePorRiscoDTO" nillable="true" type="tns:ArrayOfEspecialidadePorRiscoDTO" />
+  <xs:complexType name="EspecialidadePorRiscoDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="especialidade" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="idEspecialidade" type="xs:int" />
+      <xs:element minOccurs="0" name="maximos" nillable="true" type="tns:ArrayOfRiscoDTO">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EspecialidadePorRiscoDTO" nillable="true" type="tns:EspecialidadePorRiscoDTO" />
+  <xs:complexType name="ArrayOfNOW_UNIDADE">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_UNIDADE" nillable="true" type="tns:NOW_UNIDADE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_UNIDADE" nillable="true" type="tns:ArrayOfNOW_UNIDADE" />
+  <xs:complexType name="ArrayOfCM_REGIONAL">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CM_REGIONAL" nillable="true" type="tns:CM_REGIONAL" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCM_REGIONAL" nillable="true" type="tns:ArrayOfCM_REGIONAL" />
+  <xs:complexType name="ArrayOfESTADOS">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ESTADOS" nillable="true" type="tns:ESTADOS" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfESTADOS" nillable="true" type="tns:ArrayOfESTADOS" />
+  <xs:complexType name="ArrayOfCM_ESCALA_RISCO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CM_ESCALA_RISCO" nillable="true" type="tns:CM_ESCALA_RISCO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCM_ESCALA_RISCO" nillable="true" type="tns:ArrayOfCM_ESCALA_RISCO" />
+  <xs:complexType name="ArrayOfCM_BASE_DADOS_WPD">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CM_BASE_DADOS_WPD" nillable="true" type="tns:CM_BASE_DADOS_WPD" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCM_BASE_DADOS_WPD" nillable="true" type="tns:ArrayOfCM_BASE_DADOS_WPD" />
+  <xs:complexType name="ArrayOfNowSpecialtyDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NowSpecialtyDTO" nillable="true" type="tns:NowSpecialtyDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNowSpecialtyDTO" nillable="true" type="tns:ArrayOfNowSpecialtyDTO" />
+  <xs:complexType name="NowSpecialtyDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Acronym" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SisHospSpecialtyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Specialty" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SpecialtyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SpecialtyId" type="xs:int" />
+      <xs:element minOccurs="0" name="SpecialtyKeyId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NowSpecialtyDTO" nillable="true" type="tns:NowSpecialtyDTO" />
+  <xs:complexType name="NOW_ESPECIALIDADES">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ID_CHAVE_ESPECIALIDADE" type="xs:int" />
+      <xs:element minOccurs="0" name="ID_ESPECIALIDADE" type="xs:long" />
+      <xs:element minOccurs="0" name="SG_ESPECIALIDADE" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NOW_ESPECIALIDADES" nillable="true" type="tns:NOW_ESPECIALIDADES" />
+  <xs:complexType name="ArrayOfRiscoEspecialidadeDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RiscoEspecialidadeDTO" nillable="true" type="tns:RiscoEspecialidadeDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRiscoEspecialidadeDTO" nillable="true" type="tns:ArrayOfRiscoEspecialidadeDTO" />
+  <xs:complexType name="RiscoEspecialidadeDTO">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:NOW_UNIDADE">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ESPECIALIDADE" nillable="true" type="tns:NOW_UNIDADE_ESPECIALIDADE" />
+          <xs:element minOccurs="0" name="ID_UNIDADE_ESPECIALIDADE" type="xs:long" />
+          <xs:element minOccurs="0" name="NM_ESPECIALIDADE" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RiscoEspecialidadeDTO" nillable="true" type="tns:RiscoEspecialidadeDTO" />
+  <xs:complexType name="ArrayOfNOW_FASE">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="NOW_FASE" nillable="true" type="tns:NOW_FASE" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNOW_FASE" nillable="true" type="tns:ArrayOfNOW_FASE" />
+</xs:schema>

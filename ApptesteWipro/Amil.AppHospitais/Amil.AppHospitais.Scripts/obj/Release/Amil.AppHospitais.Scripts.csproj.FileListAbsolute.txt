@@ -1,0 +1,4 @@
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Scripts\bin\Release\Amil.AppHospitais.Scripts.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Scripts\bin\Release\Amil.AppHospitais.Scripts.pdb
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Scripts\obj\Release\Amil.AppHospitais.Scripts.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Scripts\obj\Release\Amil.AppHospitais.Scripts.pdb

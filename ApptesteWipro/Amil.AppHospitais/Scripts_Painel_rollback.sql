@@ -1,0 +1,4 @@
+drop table hospitais.PAINELPS_CONFIGURACAO;
+drop sequence hospitais.PAINELPS_CONFIGURACAO_SEQ;
+drop table hospitais.PAINELPS_ESPECIALIDADE_CONFIG;
+drop sequence hospitais.ID_PAINELPS_ESPEC_CONFIG_SEQ;

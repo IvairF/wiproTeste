@@ -1,0 +1,168 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+table {
+    color: #702077;
+    font-size: 60px;
+    float:none;
+    margin:0 auto;
+}
+
+table tr {
+    border-bottom-color: #b7d477;
+}
+
+footer {
+    position: fixed;
+    height: 25px;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-top: 120px;
+
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input[type="text"],
+input[type="password"] {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.navbar {
+    background-color: #702077;
+    padding-left: 10%;
+    color: #fff;
+    height: 150px;
+    width: 100%;
+}
+
+.display-1 {
+    font-size: 100px;
+}
+
+.borderless td, .borderless th {
+    border: none !important;
+}
+
+.borderbottom {
+    border-bottom: 3px solid #b7d477;
+}
+
+.hrbottom {
+    height: 5px;
+    color: #5a9bd5;
+    background-color: #5a9bd5;
+    border: none;
+}
+
+tr .tempo {
+    text-align: right;
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+    .display-1 {
+        font-size: 80px;
+    }
+
+    table {
+        font-size: 50px;
+    }
+
+    .navbar {
+        height: 130px;
+    }
+
+    .body-content {
+        margin-top: 100px;
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+    .display-1 {
+        font-size: 70px;
+    }
+
+    table {
+        font-size: 40px;
+    }
+
+    .navbar {
+        height: 110px;
+    }
+
+    .body-content {
+        margin-top: 80px;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    .display-1 {
+        font-size: 60px;
+    }
+
+    table {
+        font-size: 35px;
+    }
+
+    .navbar {
+        height: 100px;
+    }
+
+    .body-content {
+        margin-top: 70px;
+    }
+}
+
+/* Extra Small Devices, Phones */ 
+@media only screen and (max-width : 480px) {
+    .display-1 {
+        font-size: 50px;
+    }
+
+    table {
+        font-size: 30px;
+    }
+
+    .navbar {
+        height: 90px;
+    }
+
+    .body-content {
+        margin-top: 60px;
+    }
+}

@@ -1,0 +1,87 @@
+﻿@model Amil.AsmWebCad.UI.Models.PesquisaPainelConfigViewModel
+
+@{
+    ViewBag.Title = "HOME >> Painel de Filas do PS >> Configuração";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel-full">
+    <div class="BoxConteudoPagina Box98">
+        <div class="LinhaTitulo">
+            @Html.Label("Titulo", "Pesquisa Painel")
+          
+        </div>
+        <div class="LinhaSeparacao"></div>
+
+        <div class="BoxFull">
+            
+            @using (Ajax.BeginForm("Filter", "ConfigPainel", new AjaxOptions
+            {
+                HttpMethod = "POST",
+                UpdateTargetId = "content",
+                InsertionMode = InsertionMode.Replace
+            }, new { id = "FormPesquisa" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group height-40">
+                    @Html.LabelFor(i => i.Codigo, new { @class = "col-md-3 col-sm-3 col-lg-3 col-xs-3 control-label" })
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6">
+                        @Html.TextBoxFor(i => i.Codigo, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group height-40">
+                    @Html.LabelFor(i => i.Unidades, new { @class = "col-md-3 col-sm-3 col-lg-3 col-xs-3 control-label" })
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6">
+                        @Html.DropDownListFor(i => i.IdUnidade, Model.Unidades, "Selecione", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group height-40">
+                    @Html.LabelFor(i => i.Status, new { @class = "col-md-3 col-sm-3 col-lg-3 col-xs-3 control-label" })
+                    <div class="col-md-4 col-sm-4 col-lg-3 col-xs-3">
+                        @{
+                            List<SelectListItem> listStatus = new List<SelectListItem>();
+                            listStatus.Add(new SelectListItem { Text = "Ativo", Value = "1" }); 
+                            listStatus.Add(new SelectListItem { Text = "Inativo", Value = "0" });                         
+                        }
+                        @Html.DropDownListFor(i => i.Status, listStatus, "Selecione", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group height-40">
+                    <div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
+                        <div class="clearfix">
+                            <span class="pull-right">
+                                <input type="submit" class="btn btn-primary" value="Pesquisar" />
+                                <button type="reset" class="btn btn-primary btn-outline"  onclick="limparPesquisa()">Limpar</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col col-lg-1">
+                <a href="@Url.Action("Edit")" class="btn btn-primary glyphicon glyphicon-plus"></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                <div id="content">
+                    @Html.Action("GridPaineis")
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section scripts{  
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")  
+}
+<script type="text/javascript">
+    function limparPesquisa() {
+        $("#Codigo").val(null);
+        $("#Status").val(null);
+        $("#IdUnidade").val(null);
+        $("#FormPesquisa").submit();
+    }
+</script>

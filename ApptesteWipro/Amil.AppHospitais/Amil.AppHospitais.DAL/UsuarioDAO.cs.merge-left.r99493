@@ -1,0 +1,67 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Amil.AppHospitais.DTO;
+using Amil.AppHospitais.Model;
+using System;
+using System.Data.Entity;
+
+namespace Amil.AppHospitais.DAL
+{
+    public class UsuarioDAO : BaseDAO
+    {
+
+        /// <summary>
+        /// Acesso à base e recuperar usuário.
+        /// </summary>
+        /// <param name="idCadastro">Identificador do cadastro do usuário no AMS.</param>
+        /// <returns>DTO do usuário do app.</returns>
+        public UsuarioDTO Recuperar(int idCadastro, bool interno)
+        {
+            return (from a in Context.Usuarios
+                    where a.Id_Cadastro.Equals(idCadastro)
+                    && a.Interno == interno
+                    select new UsuarioDTO
+                    {
+                        Id = a.Id,
+                        Id_Cadastro = a.Id_Cadastro
+                    }).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Acesso à base e recuperar usuário.
+        /// </summary>
+        /// <param name="idCadastro">Identificador do cadastro do usuário no AMS.</param>
+        /// <returns>DTO do usuário do app.</returns>
+        public int RecuperarIdCadastro(int idUsuario)
+        {
+           var User = (from a in Context.Usuarios
+                    where a.Id.Equals(idUsuario)                   
+                    select new UsuarioDTO
+                    {
+                        Id = a.Id_Cadastro
+                        
+                    }).FirstOrDefault();
+
+           return User.Id;
+        }
+
+        /// <summary>
+        /// Persiste o cadastro na base.
+        /// </summary>
+        /// <param name="usuario">DTO do objeto a ser persistido na base.</param>/param>
+        /// <returns>Identificador do registro persistido.</returns>
+        public int Gravar(UsuarioDTO usuario)
+        {
+            Usuario model = new Usuario()
+            {
+                Id_Cadastro = usuario.Id_Cadastro,
+                Interno = usuario.Interno,
+                DataCriacao = DateTime.Now
+            };
+            Context.Usuarios.Add(model);
+            Context.SaveChanges();
+
+            return model.Id;
+        }
+    }
+}

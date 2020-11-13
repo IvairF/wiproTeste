@@ -1,0 +1,30 @@
+﻿@model Amil.PainelPS.UI.Models.PainelViewModel
+
+@{int tempoRefresh = @Model.TempoRefresh * 60000;}
+
+<div>
+    @if (Model != null && Model.Especialidade != null)
+    {    
+    <table class="table borderless">
+        <tbody>
+            @foreach(var item in Model.Especialidade)
+            {
+                <tr class="borderbottom">
+                    <td class="col-md-10 col-sm-10 col-lg-10 col-xs-10">@item.Nome</td>
+                    <td class="col-md-2 col-sm-2 col-lg-2 col-xs-2 tempo">@item.tempoEspera min.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>
+
+<script type="text/javascript">
+    setInterval(function () { atualizar(); }, parseInt('@tempoRefresh'));
+    
+    //essa função recarrega a página atual
+    function atualizar() {
+        window.location.href = window.location.href;
+    };
+
+</script>

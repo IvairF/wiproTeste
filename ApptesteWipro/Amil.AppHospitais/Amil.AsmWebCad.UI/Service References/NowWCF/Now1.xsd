@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Amil.Framework.Enumerators" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Amil.Framework.Enumerators" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="AccountStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="UserBlocked" />
+      <xs:enumeration value="UserInactivate" />
+      <xs:enumeration value="InvalidUserNameOrPassword" />
+      <xs:enumeration value="UserNeedChangePassword" />
+      <xs:enumeration value="LoginSuccess" />
+      <xs:enumeration value="PasswordNoMatchPolicy" />
+      <xs:enumeration value="PasswordChangedSuccess" />
+      <xs:enumeration value="FillNewAndConfirmPassword" />
+      <xs:enumeration value="NewAndConfirmPasswordNeedMath" />
+      <xs:enumeration value="FillUserNameAndPassword" />
+      <xs:enumeration value="UnknownDomain" />
+      <xs:enumeration value="PasswordExpired" />
+      <xs:enumeration value="NoPermissions" />
+      <xs:enumeration value="ServiceLoginException" />
+      <xs:enumeration value="ValidPassword" />
+      <xs:enumeration value="QuantidadeCaracteresInvalido" />
+      <xs:enumeration value="FaltaCaracterEspecial" />
+      <xs:enumeration value="FaltaLetraMaiscula" />
+      <xs:enumeration value="FaltaLetraMinuscula" />
+      <xs:enumeration value="SenhaAntigaIgualNova" />
+      <xs:enumeration value="SenhaIgualHistorico" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="AccountStatusType" nillable="true" type="tns:AccountStatusType" />
+</xs:schema>

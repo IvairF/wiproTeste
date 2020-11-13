@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "HOME >> Aplicativo Hospitais >> Convênios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel-full">
+    <div class="BoxConteudoPagina Box98 FloatEsquerdo">
+        <!--<div class="BoxFull SitePath">
+            <asp:HyperLink ID="hplSiteMapHome" CssClass="SiteMap" runat="server" EnableViewState="False" NavigateUrl="Menu.aspx">Home</asp:HyperLink>
+            <asp:Label ID="Label33" runat="server" EnableViewState="False" Text=" >> "></asp:Label>
+            <asp:Label ID="Label34" CssClass="SitePathAtual" runat="server" EnableViewState="False" Text="Lista de Unidades"></asp:Label>
+        </div>
+       -->
+        <div class="LinhaTitulo">
+            @Html.Label("Titulo", "Lista de Convênios")
+          
+        </div>
+        <div class="LinhaSeparacao"></div>
+
+        <div class="BoxFull">
+            <div class="BoxFiltro FloatEsquerdo" style="min-height: 25px; padding-bottom: 10px; padding-top: 10px; width: 100%; padding: 5px;">
+                <div class="Box20-100 FloatEsquerdo" style="line-height: 24px; padding-left: 10px;">
+                    @Html.Label("Pesquisar por:")
+                </div>
+                <div class="Box18-115 FloatEsquerdo">
+                    @{
+                        List<SelectListItem> listItems = new List<SelectListItem>();
+                        listItems.Add(new SelectListItem { Text = "Descrição", Value = "0" });
+                        listItems.Add(new SelectListItem { Text = "Código", Value = "1" });                          
+                    }
+
+                    @Html.DropDownList("Pesquisa", listItems, new { @class = "form-control", id = "tipoPesquisa" })
+
+                </div>
+
+                <div class="input-group col-md-9">
+                    <input type="text" name="edtPesquisar" id="edtPesquisar" class="  search-query form-control" placeholder="Search" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">
+                            <span class=" glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+
+                    <span class="col-md-2 FloatEsquerdo">
+                        @Html.Label("Status:", new { @class = "Box20-100 FloatEsquerdo" } )
+                    </span>
+
+                    <span class="col-md-5">
+                        @Html.DropDownList("Status", new List<SelectListItem>
+                                                    {
+                                                        new SelectListItem{ Text="Todos",   Value = "2" },
+                                                        new SelectListItem{ Text="Ativo",   Value = "1" },
+                                                        new SelectListItem{ Text="Inativo", Value = "0" }
+                                                    },
+                            new { @class = " form-control ", id = "vlStatus" }
+                        )
+                    </span>    
+                    
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-lg-1">
+                <a href="@Url.Action("Edit")" class="btn btn-primary">Incluir</a>
+            </div>
+        </div>
+        <div class="">
+            @Html.Action("GridConvenios")
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    var tipoPesquisa = '';
+
+    $(function () {
+
+        //Evento campo de pesquisa
+        $("#edtPesquisar").on("keyup", function () {
+            tipoPesquisa = $("#tipoPesquisa").val();
+            var search = $(this).val().toUpperCase();
+            var status = $("#vlStatus").val();
+            var rows = $("#convenioGrid tbody tr");
+
+            var trataRetStatus = TrataEnumStatus(status);
+
+            //Pesquisa codigo
+            if (tipoPesquisa == 1) {
+                $.each(rows, function () {
+                    var td = $(this).children("td")[0];
+                    var tdStatus = $(this).children("td")[2];
+                    var codigo = $(td).text().toUpperCase();
+                    var descStatus = $(tdStatus).text().toUpperCase();
+
+                    if ($(td).text().indexOf(search) < 0 || (trataRetStatus != 'TODOS' && descStatus != trataRetStatus)) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            }
+            //Pesquisa Descricao
+            else if (tipoPesquisa == 0 && search.length >= 3) {
+                $.each(rows, function () {
+                    var td = $(this).children("td")[1];
+                    var tdStatus = $(this).children("td")[2];
+                    var descricao = $(td).text().toUpperCase();
+                    var descStatus = $(tdStatus).text().toUpperCase();
+
+                    if (descricao.indexOf(search.toUpperCase()) < 0 || ( trataRetStatus != 'TODOS' && descStatus != trataRetStatus) ) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+            }
+            else
+                $.each(rows, function () {
+                    var tdStatus = $(this).children("td")[2];
+                    var descStatus = $(tdStatus).text().toUpperCase();
+
+                    if ( (trataRetStatus != 'TODOS' && descStatus != trataRetStatus) ) {
+                        $(this).hide();
+                    }
+                    else {
+                        $(this).show();
+                    }
+                });
+        });
+
+
+
+        //Evento combo de status
+        $("#vlStatus").on("change", function () {
+            tipoPesquisa = $("#tipoPesquisa").val();
+            var retStatus = $("#vlStatus").val();
+            var rows = $("#convenioGrid tbody tr");
+
+            var valDescricao = $("#edtPesquisar").val().toUpperCase();
+
+
+            var trataRetPesq = TrataEnumStatus(retStatus);
+
+            $.each(rows, function () {
+                var tdCodigo = $(this).children("td")[0];
+                var tdDescricao = $(this).children("td")[1];
+                var td = $(this).children("td")[2];
+                var pesquisa = '';
+
+                if (tipoPesquisa == '1') {
+                    pesquisa = $(tdCodigo).text().toUpperCase();
+                }
+                else {
+                    pesquisa = $(tdDescricao).text().toUpperCase();
+                }
+
+                if (trataRetPesq == 'TODOS') {
+                    if (pesquisa.length > 0 && pesquisa.includes(valDescricao) == true) {
+                        $(this).show();
+                    }
+                    else if ( pesquisa.includes(valDescricao) == true ) {
+                        $(this).show();
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                }
+                else {
+                    if ( ($(td).text().toUpperCase() == trataRetPesq)  &&  (pesquisa.includes(valDescricao) == true) ) {
+                        $(this).show();
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                }
+            });
+
+        });
+
+        //Função que trata o retorno do status
+        function TrataEnumStatus(retPesquisa) {
+            var trataRetPesq = '';
+
+            if (retPesquisa == '0') {
+                trataRetPesq = "INATIVO";
+            }
+            else if (retPesquisa == '1') {
+                trataRetPesq = "ATIVO";
+            }
+            else {
+                trataRetPesq = "TODOS";
+            }
+
+            return trataRetPesq;
+        }
+
+    });
+
+
+</script>

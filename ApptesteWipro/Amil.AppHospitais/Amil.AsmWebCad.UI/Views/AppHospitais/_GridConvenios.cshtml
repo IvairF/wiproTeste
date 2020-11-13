@@ -1,0 +1,35 @@
+﻿@model List<Amil.AppHospitais.DTO.Convenio>
+
+@if (Model != null)
+{
+    <table class="table table-striped table-hover" id="convenioGrid">
+        <thead>
+            <tr>
+                <th>Código Corporativo</th>
+                <th>Unidade</th>
+                <th>Status</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr data-idConvenio="@item.Id">
+                    <td>@item.CodCorporativo</td>
+                    <td>@item.Nome</td>
+                    <td>@(item.isAtivo ? "Ativo" : "Inativo")</td>
+                    <td><a href="@Url.Action("EditarCriarConvenio", new { id = item.Id  })" class="glyphicon glyphicon-pencil"></a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        $("#convenioGrid tbody tr").on("click", function () {
+            location.href = "../AppHospitais/EditarCriarConvenio/" + $(this).attr("data-idConvenio");
+        });
+    });
+</script>
+*@

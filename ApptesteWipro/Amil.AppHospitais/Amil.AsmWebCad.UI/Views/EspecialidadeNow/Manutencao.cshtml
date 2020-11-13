@@ -1,0 +1,72 @@
+﻿@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.EspecialidadeNowModel
+
+@{
+    ViewBag.Title = "Cadastrar Especiaidade Now";  //Resource
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section SectionHead{
+    @Scripts.Render("~/bundles/especialidadenow")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            EspecialidadeNow.Urls.PesquisaPerfis = '@Url.Action("Pesquisa", "EspecialidadeNow")';
+
+            EspecialidadeNow.Mensagens.SucessoGravacao = '@Resource.MensagemSucessoGravacao';
+            EspecialidadeNow.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusao';
+            PesquisaEspecialidadeNow.Mensagens.SucessoExclusao = '@Resource.MensagemSucessoExclusao';
+            PesquisaEspecialidadeNow.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusao';
+            EspecialidadeNow.Titulo = 'Especialidade Now'; //Resource';
+            ManutencaoEspecialidadeNow.Inicializar();
+
+            $('#Codigo').on('input', function () {
+                $(this).val(this.value.toUpperCase());
+            });
+
+        });
+
+
+    </script>
+}
+
+<form class="form-horizontal" onsubmit="return false;" id="frmManutencaoEspecialidadeNow">
+    <div class="panel-full">
+        @Html.ValidationSummary(true)
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Resource.TituloFormDadosEspecialidadeNow
+                <div class="pull-right" data-toggle="collapse" data-target="#pesquisaEspecialidadeNow">
+                    <button type="button" class="btn btn-default btn-xs" data-toggle="button">
+                        <i class="fa fa-minus-square"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-body collapse in" id="insereEspecialidade">
+                @Html.HiddenFor(a => a.Id)
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-3">
+                        <label class="control-label">Resource.EspecialidadeNow</label>
+                            @Html.TextBoxFor(a => a.Descricao, (object)new { @class = "form-control", @maxlength = 70 })
+                            @Html.ValidationMessageFor(a => a.Descricao)
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="control-label">Resource.Codigo</label>
+                            @Html.TextBoxFor(a => a.Sigla, (object)new { @class = "form-control", @maxlength = 3 })
+                            @Html.ValidationMessageFor(a => a.Sigla)
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="button" class="btn btn-primary" title="@Resource.TituloBotaoSalvar" onclick="ManutencaoEspecialidadeNow.Salvar();">@Resource.Salvar</button>
+                        <button type="reset" class="btn btn-outline btn-primary" onclick="ManutencaoEspecialidadeNow.Voltar();" title="@Resource.TituloBotaoVoltar">@Resource.Voltar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+

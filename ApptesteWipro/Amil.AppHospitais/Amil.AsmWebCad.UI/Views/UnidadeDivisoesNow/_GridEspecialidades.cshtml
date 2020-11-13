@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Amil.AppHospitais.DTO.EspecialidadeMedica>
+
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Código</th>
+            <th>Especialidade</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    <label>
+                        <input type="checkbox" class="" data-idEspecialidade="@item.idEspecialidade" data-codCorporativo="@item.codigoCorporativo" data-nomeEspecialidade="@item.nome" />
+                    </label>
+                </td>
+                <td>@item.codigoCorporativo</td>
+                <td>@item.nome</td>
+            </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="3">Nenhum registro foi encontrado.</td>
+            </tr>
+        }
+    </tbody>
+</table>

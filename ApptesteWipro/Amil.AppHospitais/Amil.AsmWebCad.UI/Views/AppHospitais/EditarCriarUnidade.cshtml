@@ -1,0 +1,707 @@
+﻿@model Amil.AppHospitais.DTO.UnidadeDTO
+
+@{
+    ViewBag.Title = "Cadastrar Unidade";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYpgO1xDENvz2de5_Mf382DLMu8IfrZkY" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function AtualizarValoresGridUnidades(valor) {
+        gradeEspecialidade.PerformCallback(valor);
+    };
+</script>
+
+<div class="card">
+
+    <div class="card-body">
+        @using (Html.BeginForm("EditarCriarUnidade", "AppHospitais", FormMethod.Post, new { id = "unidadeForm" }))
+        {
+            @Html.HiddenFor(x => x.Identificador)
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="nomeUnidade">Nome da Unidade no aplicativo</label>
+                    @Html.TextBoxFor(x => x.Descricao, new { @class = "form-control", id = "nomeUnidade", maxlength = "50", placeholder = "Nome Unidade", required = "" })
+                </div>
+                <div class="form-group">
+                    <label for="codCorporativo">Cód. Corp. Unidade</label>
+                    @Html.TextBoxFor(x => x.CodCorpUnidade, new { @class = "form-control", id = "codCorporativo", placeholder = "Cód. Corp. Unidade", required = "" })
+                </div>
+                <div class="form-group">
+                    @Html.HiddenFor(x => x.Sistema_Origem, new { id = "SistOrigemHidden" })
+                    <label for="sistOrig">Sistema de Origem</label>
+                    <select class="form-control" id="sistOrig" required>
+                        <option selected="selected" value="">Sistema Origem</option>
+                        <option value="SisHosp">SisHosp</option>
+                        <option value="Tasy">Tasy</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="relNOW">Relacionamento unidade do sistema NOW(SISHOSP)</label>
+                    @Html.TextBoxFor(x => x.Identificador_Now, new { @class = "form-control", id = "relNOW", placeholder = "Relacionamento NOW" })
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(x => x.Ativo, new { @class = "form-check-input", id = "Ativo" })
+                        Ativo
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(x => x.ExibeApp, new { @class = "form-check-input", id = "ExibeApp" })
+                        Exibe no App
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(x => x.PreTriagem, new { @class = "form-check-input", id = "PreTriagem", data_dependeexibeapp = "" })
+                        Pre-Triagem
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(x => x.SenhaQRCode, new { @class = "form-check-input", id = "SenhaQRCode", data_dependepretriagem = "" })
+                        Senha por QR Code
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(x => x.SenhaBeacon, new { @class = "form-check-input", id = "SenhaBeacon", @data_dependepretriagem = "" })
+                        Senha por Beacon
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(x => x.SenhaGPS, new { @class = "form-check-input", id = "SenhaGPS", @data_dependepretriagem = "" })
+                        Senha Por GPS
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        @Html.EditorFor(x => x.America, new { @class = "form-check-input", id = "Americas" })
+                        Grupo Américas
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="checkbox"></div>
+                <div class="checkbox" style="height: 10px;"></div>
+                <div class="checkbox"></div>
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <label for="tempoPreTriagem" class="col-sm-6 control-label" style="font-weight: normal !important;">Val. Pré-Triagem (min)</label>
+                        @Html.TextBoxFor(x => x.TempoPreTriagem, new { maxlength = "2", data_dependepretriagem = "", @class = "form-control input-sm col-sm-2", style = "width: 45%;", id = "tempoPreTriagem", placeholder = "Tempo de validade da pre-triagem (min)" })
+                    </div>
+                </div>
+                <div class="checkbox"></div>
+                <div class="checkbox"></div>
+                <div class="form-group">
+                    <div class="col-sm-8">
+                        <label for="raioGPS" class="col-sm-6 control-label" style="font-weight: normal !important;">Raio Máx. por GPS (m)</label>
+                        @Html.TextBoxFor(x => x.RaioMaxGPS, new { data_dependegps = "", @class = "form-control input-sm col-sm-2", style = "width: 50%;", id = "raioGPS", placeholder = "Raio Max. aprox. por GPS (m)" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-10">
+                <fieldset>
+                    <legend>Especialidades no aplicativo</legend>
+                    <button type="button" class="btn btn-primary" style="float: left !important;" data-toggle="modal" data-target="#especialidadeModal">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                    <table class="table table-striped table-hover" id="especialidadesGrid">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Especialidade</th>
+                                <th class="col-xs-1">Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Especialidades != null && Model.Especialidades.Count() > 0)
+                            {
+                                foreach (var especialidade in Model.Especialidades)
+                                {
+                                <tr data-idEspecialidade="@especialidade.idEspecialidade" data-identificador="@especialidade.id">
+                                    <td>@especialidade.codigoCorporativo</td>
+                                    <td>@especialidade.nome</td>
+                                    <td><i class="glyphicon glyphicon-trash" onclick="ExcluirLinha(this);"></i></td>
+                                </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr class="empty-tr">
+                                    <td colspan="3" style="text-align: center;">Nenhum registro foi encontrado.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="col-xs-10">
+                <fieldset>
+                    <legend>Endereço</legend>
+                    <div class="form-group col-sm-3">
+                        <div class="form-group">
+                            <label for="CEP">CEP</label>
+                            @Html.TextBoxFor(x => x.CEP, new { maxlength = "8", @class = "form-control", id = "CEP", placeholder = "CEP", required = "" })
+                        </div>
+                    </div>
+                    <div class="form-inline form-group col-sm-12">
+                        <div class="form-group col-sm-5">
+                            <label for="Logradouro">Logradouro</label>
+                            @Html.TextBoxFor(x => x.Logradouro, new { @class = "form-control", id = "Logradouro", placeholder = "Logradouro", required = "" })
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="Numero">Número</label>
+                            @Html.TextBoxFor(x => x.NumeroLogradouro, new { @class = "form-control", id = "Numero", placeholder = "Número", required = "" })
+                        </div>
+                        <div class="form-group col-sm-5">
+                            <label for="Complemento">Complemento</label>
+                            @Html.TextBoxFor(x => x.Complemento, new { @class = "form-control", id = "Complemento", placeholder = "Complemento" })
+                        </div>
+                    </div>
+                    <div class="form-inline form-group col-sm-12">
+                        <div class="form-group col-sm-2">
+                            <label for="uf">UF</label>
+                            @Html.HiddenFor(x => x.UF, new { id = "ufHidden" })
+                            <select class="form-control" id="uf" required>
+                                <option selected="selected" value="">UF</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AM">AM</option>
+                                <option value="AP">AP</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MG">MG</option>
+                                <option value="MS">MS</option>
+                                <option value="MT">MT</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="PR">PR</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="RS">RS</option>
+                                <option value="SC">SC</option>
+                                <option value="SE">SE</option>
+                                <option value="SP">SP</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-5" id="bairro">
+                            <label for="Municipio">Município</label>
+                            @Html.TextBoxFor(x => x.Cidade, new { @class = "form-control", id = "Municipio", placeholder = "Município", required = "" })
+                        </div>
+                        <div class="form-group col-sm-5">
+                            <label for="Bairro">Bairro</label>
+                            @Html.TextBoxFor(x => x.Bairro, new { @class = "form-control", id = "Bairro", placeholder = "Bairro", required = "" })
+                        </div>
+                    </div>
+                    <div class="form-inline form-group col-sm-12">
+                        <div class="form-group col-sm-4">
+                            <label for="Telefone">Telefone</label>
+                            @Html.TextBoxFor(x => x.Telefone, new { @class = "form-control", placeholder = "Telefone", required = "", id = "Telefone" })
+                        </div>
+                        <div class="form-group col-sm-8">
+                            <label for="Site">Site</label>
+                            @Html.TextBoxFor(x => x.WebSite, new { @class = "form-control", id = "Site", placeholder = "Site" })
+                        </div>
+                    </div>
+                </fieldset>
+                @Html.HiddenFor(x => x.Latitude, new { id = "Latitude" })
+                @Html.HiddenFor(x => x.Longitude, new { id = "Longitude" })
+            </div>
+            <div class="col-xs-10">
+                <fieldset>
+                    <legend>Localização:</legend>
+                </fieldset>
+                <div class="col-md-12" style="margin: 10px;">
+                    <div id="MapCanvas" style="background: #FFF; border-color: #B1BADF; border-style: solid; border-width: 0px 1px 1px 1px; display: block; height: 250px; width: 100%;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-10">
+                <fieldset>
+                    <legend>Fotos:</legend>
+                </fieldset>
+                <div class="form-group">
+                    <label for="uploadFoto">Upload de foto</label>
+                    <input type="file" id="uploadFoto">
+                </div>
+
+                <table class="table table-striped table-hover" id="fotosGrid">
+                    <thead>
+                        <tr>
+                            <th>Foto</th>
+                            <th class="col-xs-1">Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Fotos != null)
+                        {
+                            foreach (var foto in Model.Fotos)
+                            {
+                            <tr data-idFoto="@foto.identificador">
+                                <td>
+                                    <img width="20%" src="@String.Format("data:image/jpg;base64,{0}", foto.foto)" />
+                                    <input type="hidden" value="@foto.foto" />
+                                </td>
+                                <td><i class="glyphicon glyphicon-trash" onclick="ExcluirLinha(this);"></i></td>
+                            </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr class="empty-tr">
+                                <td colspan="2" style="text-align: center;">Nenhum registro foi encontrado.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-10" id="beaconContainer" style="display: none;">
+                <fieldset>
+                    <legend>Código Beacon:</legend>
+                </fieldset>
+                <button type="button" class="btn btn-primary" style="float: left !important;" data-toggle="modal" data-target="#beaconModal">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+                <table id="beaconGrid" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Ativo</th>
+                            <th class="col-xs-1">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Beacons != null)
+                        {
+                            foreach (var beacon in Model.Beacons)
+                            {
+                            <tr data-idBeacon="@beacon.Identificador">
+                                <td>@beacon.Codigo</td>
+                                <td>@(beacon.Ativo ? "Ativo" : "Inativo")</td>
+                                <td>
+                                    <i class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#beaconModal" data-editarbeacon="true"></i>
+                                    <i class="glyphicon glyphicon-trash" onclick="ExcluirLinha(this);"></i>
+                                </td>
+                            </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr class="empty-tr">
+                                <td colspan="3" style="text-align: center;">Nenhum registro foi encontrado.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <input type="button" id="gerarQRCode" value="Gerar QR Code" class="btn btn-primary" style="float: left !important; display: none;" data-toggle="modal" data-target="#QRCodeModal" disabled />
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" value="Confirmar" class="btn btn-success" onclick="Salvar(); return false;" />
+                    <input type="button" value="Cancelar" class="btn btn-danger" onclick="EditarCriarUnidadeController.CancelarForm();" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="modal fade" id="beaconModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="beaconlLabel">Código Beacon</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">Código Beacon:</label>
+                        <input type="text" class="form-control" id="codBeacon">
+                    </div>
+                    <div class="form-group">
+                        <label for="flBeacon">Status</label>
+                        <select class="form-control" id="flBeacon">
+                            <option value="" selected>Selecione</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="AdicionarToken();">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="especialidadeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="especialidadeLabel">Especialidades Médicas</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="salvarEspecialidades" data-dismiss="modal" onclick="javascript: AdicionarEspecialidades();">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="QRCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="QRCodeLabel">QRCode</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" href="#" id="salvarQRCode">Salvar QRCode</a>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Scripts/EditarCriarUnidadeController.js"></script>
+<link href="~/Content/toastr.min.css" rel="stylesheet" />
+<script src="~/Scripts/toastr/toastr.min.js"></script>
+<script src="~/Scripts/outros/JIC.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        EditarCriarUnidadeController.Init();
+    });
+    $('#especialidadeModal').on('show.bs.modal', function (event) {
+        var modal = $(this);
+        $.ajax({
+            url: '@Url.Action("GridEspecialidades")',
+            type: "POST",
+            success: function (partialView) {
+                modal.find(".modal-body").html(partialView);
+                MarcarEspecialidadesModal();
+            }
+        })
+    });
+
+    $('#QRCodeModal').on('show.bs.modal', function (event) {
+        var modal = $(this);
+        var codIdentificador = $("#Identificador").val();
+        $.ajax({
+            url: '@Url.Action("GerarQRCode")',
+            type: "POST",
+            data: { id: codIdentificador },
+            success: function (partialView) {
+                modal.find(".modal-body").html(partialView);
+                modal.find("#salvarQRCode").attr("href", "@Url.Action("SalvarQRCode")/"+ codIdentificador);
+            }
+        });
+
+    });
+    $('#beaconModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        if (button.attr('data-editarBeacon')) {
+
+            var tds = button.parent().parent().children("td");
+            var index = button.parent().parent().index();
+            var codigo = $(tds[0]).text();
+            var ativo = $(tds[1]).text();
+            var modal = $(this)
+            modal.find('.modal-body input#codBeacon').val(codigo);
+            modal.find('.modal-body select#flBeacon').val(ativo);
+            modal.find('.modal-body').append($("<input>").attr("type", "hidden").attr("id", "index").val(index));
+        }
+    });
+
+    function BuscarEndereco() {
+
+        if ($("#Logradouro").val() && $("#Numero").val() && $("#Municipio").val()) {
+            AmilMaps.Geocoding(RetornaEnderecoCompleto(), CallBackGeoCode);
+        } else {
+            AmilMaps.Geocoding("-23.550434, -46.633331", CallBackGeoCode);
+        }
+    }
+
+    function RetornaEnderecoCompleto() {
+        var endCompleto = $("#Logradouro").val() + "," + $("#Numero").val() + "," + $("#Bairro").val() + "," + $("#Municipio").val() + "," + $("#uf").val();
+        return endCompleto;
+    }
+
+    function CallBackGeoCode(location) {
+        $("#Latitude").val(String(location.lat()).replace(".", ","));
+        $("#Longitude").val(String(location.lng()).replace(".", ","));
+
+
+        AmilMaps.settings.StartLatitude = location.lat();
+        AmilMaps.settings.StartLongitude = location.lng();
+        AmilMaps.StartMaps();
+    }
+
+    function limitText(field, maxChar) {
+        var ref = $(field),
+            val = ref.val();
+        if (val.length >= maxChar) {
+            ref.val(function () {
+                return val.substr(0, maxChar);
+            });
+        }
+    }
+
+    function FecharConfirmacaoEspecialidades() {
+        $("#dialog-mask").hide();
+        $("#dialog").hide();
+    }
+
+    function AdicionarEspecialidades() {        
+        $("#especialidadesGrid").find("tbody").find("tr:not(.empty-tr)").remove();
+        if ($("[data-idEspecialidade]:checked").length > 0) {
+            $("#especialidadesGrid").find(".empty-tr").hide();
+            $("[data-idEspecialidade]:checked").each(function () {
+                var cod = $(this).attr("data-idEspecialidade");
+                var codCorporativo = $(this).attr("data-codCorporativo");
+                var nome = $(this).attr("data-nomeEspecialidade");
+                $("#especialidadesGrid").find("tbody")
+                    .append($("<tr>")
+                        .attr("data-idEspecialidade", cod)
+                        .append($("<td>").text(codCorporativo))
+                        .append($("<td>").text(nome))
+                        .append($("<td>").append($("<i>").addClass("glyphicon glyphicon-trash").attr("onclick", "ExcluirLinha(this);"))));
+            });
+        }
+        else {
+            $("#especialidadesGrid").find("tbody").find(".empty-tr").show();
+
+
+
+        }
+
+        //        $("#salvarEspecialidades").modal('hide')
+    }
+
+
+
+    function MarcarEspecialidadesModal() {
+        var selecionados = $("#especialidadesGrid tbody tr[data-idEspecialidade]");
+        $.each(selecionados, function (i, tr) {
+            var id = $(tr).attr("data-idEspecialidade");
+            $("#especialidadeModal .modal-body tbody [data-idEspecialidade='" + id + "']").prop("checked", true);
+        });
+    }
+    function AdicionarToken() {
+        var valido = true;
+        var codBeacon = $("#codBeacon").val();
+        if (!codBeacon) {
+            valido = false;
+            $("#codBeacon").addClass("red-border");
+        }
+        var flBeacon = $("#flBeacon option:selected").val();
+        if (!flBeacon) {
+            valido = false;
+            $("#flBeacon").addClass("red-border");
+        }
+
+
+        if (valido) {
+            var indexRow = $("#beaconModal .modal-body").find("#index").val();;
+            if (indexRow > -1) {
+                var tds = $("#beaconGrid tbody tr").eq(indexRow).children("td");
+                $(tds[0]).text(codBeacon);
+                $(tds[1]).text(flBeacon);
+                $("#beaconModal .modal-body").find("#index").remove();
+                $('#beaconModal').modal('hide');
+            }
+            else {
+                $.ajax({
+                    url: "@Url.Action("ValidarCodBeaconUnico")",
+                    type: "POST",
+                    data: { codBeacon: $("#codBeacon").val() },
+                    success: function (result) {
+                        if (result == "True") {
+                            $("#beaconGrid").find("tbody")
+                            .append($("<tr>")
+                                .append($("<td>").text(codBeacon))
+                                .append($("<td>").text(flBeacon))
+                                .append($("<td>")
+                                    .append($("<i>").addClass("glyphicon glyphicon-edit").attr("data-toggle", "modal").attr("data-target", "#beaconModal").attr("data-editarBeacon", true))
+                                    .append($("<i>").addClass("glyphicon glyphicon-trash").attr("onclick", "ExcluirLinha(this);"))));
+                            $("#beaconGrid").find("tbody").find(".empty-tr").hide();
+                            $("#codBeacon").val('');
+                            $("#flBeacon").val('');
+                            $('#beaconModal').modal('hide');
+                        }
+                        else
+                            alert("Código Beacon já cadastrado");
+                    }
+                });
+
+            }
+            
+        }
+    }
+    
+    function ExcluirLinha(that) {
+        var tr = $(that).parent().parent();
+        var tbody = $(tr).parent();
+        $(tr).remove();
+        if ($(tbody).find("tr:not(.empty-tr)").length == 0)
+            $(tbody).find("tr.empty-tr").show();
+    }
+
+
+    function uploadFile() {
+        var input = document.getElementById('uploadFoto');
+        // var file = $("#objFile")[0].files[0];
+        var file = input.files[0];
+        fr = new FileReader();
+        fr.onload = receivedText;
+        //fr.readAsText(file);
+        fr.readAsDataURL(file);
+    }
+
+    function receivedText() {
+        var b64Data = fr.result.split(',');        
+        var img = new Image();
+        img.src = "data:image/jpg;base64," + b64Data[1];
+        img.onload = function (img) {
+            var imagemLow = jic.compress(img.target, 30, "image/jpg");
+
+            $("#fotosGrid tbody")
+                .append($("<tr>")
+                    .append($("<td>")
+                        .append($(imagemLow).attr("width", "20%"))
+                        .append($("<input>").attr("type", "hidden").val(imagemLow.src.split(',')[1]))
+                    )
+                    .append($("<td>")
+                        .append($("<i>").addClass("glyphicon glyphicon-trash").attr("onclick", "ExcluirLinha(this);"))
+                    )
+                ); 
+        };
+        $("#fotosGrid tbody tr.empty-tr").hide();
+
+    }
+
+    function charCodeFromCharacter(c) {
+        return c.charCodeAt(0);
+    }
+
+    function Salvar() {
+        $.each($("input[type=checkbox]"), function () {
+            $(this).removeAttr("required");
+        });
+        var valido = true;
+        var warningMessages = '';
+        $.each($("[required]:not([type=checkbox])"), function () {
+            if (!$(this).val()) {
+                valido = false;
+                $(this).addClass("red-border");
+                warningMessages += "- " + $(this).parent().children('label').text() + "<br>";
+            }
+            else {
+                $(this).removeClass("red-border");
+            }
+        });
+
+        if (warningMessages.length > 0) {
+            EditarCriarUnidadeController.Mensagem("Aviso:", "Favor, verificar todos os campos obrigatórios:" + "<br><br>" + warningMessages, "warning");
+        }
+
+        if (valido && $("#especialidadesGrid tbody tr:not(.empty-tr)").length == 0) {
+            valido = confirm("Não há especialidades cadastradas. Gostaria de continuar assim mesmo?");
+        }
+        if ($("#SenhaBeacon").is(":checked") && valido && $("#beaconGrid tbody tr:not(.empty-tr)").length == 0) {
+            valido = confirm("Não há beacons cadastrados. Gostaria de continuar assim mesmo?");
+        }
+        if (valido) {
+            $("#Telefone").mask('00000000009');
+            $("#CEP").mask("00000000");
+            $.each($("#beaconGrid tbody tr:not(.empty-tr)"), function (i) {
+                var tds = $(this).children("td");
+                var codBeacon = $(tds[0]).text();
+                var ativo = ($(tds[1]).text() == "Ativo");
+                var id = $(this).attr("data-idBeacon")
+                if (id)
+                    $("form").append($("<input>").attr("type", "hidden").attr("name", "Beacons[" + i + "].Identificador").val(id));
+
+                $("form").append($("<input>").attr("type", "hidden").attr("name", "Beacons[" + i + "].Codigo").val(codBeacon));
+                $("form").append($("<input>").attr("type", "hidden").attr("name", "Beacons[" + i + "].Ativo").val(ativo));
+
+            });
+            $.each($("#especialidadesGrid tbody [data-idespecialidade]"), function (i) {
+                $("form").append($("<input>").attr("type", "hidden").attr("name", "Especialidades[" + i + "].idEspecialidade").val($(this).attr("data-idespecialidade")));
+                $("form").append($("<input>").attr("type", "hidden").attr("name", "Especialidades[" + i + "].id").val($(this).attr("data-identificador")));
+                $("form").append($("<input>").attr("type", "hidden").attr("name", "Especialidades[" + i + "].nome").val($($(this).children("td")[1]).text()));
+            });
+            $.each($("#fotosGrid tbody tr:not(.empty-tr) td input[type=hidden]"), function (i) {
+                var idFoto = $(this).parent().parent().attr("data-idFoto");
+                if (idFoto)
+                    $(this).parent().append($("<input>").attr("type", "hidden").attr("name", "Fotos[" + i + "].identificador").val(idFoto));
+                $(this).attr("name", "Fotos[" + i + "].foto");
+            });
+
+
+            $.ajax({
+                url: "@Url.Action("EditarCriarUnidade")",
+                type: 'POST',
+                data: $('form#unidadeForm').serialize(),
+                success: function (result) {
+                    if (result == "True")
+                        EditarCriarUnidadeController.Mensagem("Sucesso:", "Unidade salva com sucesso!.", "success");
+                    else
+                        EditarCriarUnidadeController.Mensagem("Erro:", "Ocorreu um erro ao tentar salvar a unidade!", "error");
+                },
+                erro: function () {
+                    EditarCriarUnidadeController.Mensagem("Erro:", "Ocorreu um erro ao tentar salvar a unidade!", "error");
+                }
+            });
+            return false;
+        }
+    }
+    function PesquisarUnidadeNow() {
+        var now = $("#relNOW").val();
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("PesquisarUnidadeNow")" + "/" + now,
+            success: function (result) {
+                var teste = "";
+                if (result) {
+                    $("#nomeUnidade").val(result.NomeUnidade);
+                }
+                else {
+                    EditarCriarUnidadeController.Mensagem("Aviso:", "Não foi encontrado unidade do sistema NOW com este código.", "warning");
+                    $("#nomeUnidade").val("");
+                }
+            },
+            error: function (err) {
+                EditarCriarUnidadeController.Mensagem("Aviso:", "Não foi encontrado unidade do sistema NOW com este código.", "warning");
+                $("#nomeUnidade").val("");
+            }
+        });
+    }
+</script>
+

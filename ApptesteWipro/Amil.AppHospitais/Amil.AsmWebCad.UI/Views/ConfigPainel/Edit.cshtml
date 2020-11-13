@@ -1,0 +1,215 @@
+﻿@model Amil.AsmWebCad.UI.Models.PainelConfiguracaoViewModel
+
+@{
+    ViewBag.Title = "HOME >> Painel de Filas do PS >> Configuração >> Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card">
+    <div class="card-body">
+        
+        <div id="notificacao">
+        @if (ViewBag.Notificacao != null)
+        { 
+            <div class="alert alert-success">
+                <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                @if (ViewBag.Notificacao != null)
+                {
+                    @ViewBag.Notificacao
+                }
+            </div>
+        }
+        </div>
+        @using (Html.BeginForm("Edit", "ConfigPainel", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            if (Model.Id > 0)
+            {
+            <div class="form-group height-40">
+                @Html.LabelFor(i => i.Id, new { @class = "col-md-3 col-sm-3 col-lg-3 col-xs-3 control-label" })
+                <div class="col-md-3 col-sm-3 col-lg-2 col-xs-3">                    
+                        @Html.TextBoxFor(i => i.Id, new { @class = "form-control", id = "Codigo", ReadOnly="true" })       
+                </div>
+            </div>
+            }
+            <div class="form-group height-40">
+                @Html.LabelFor(i => i.IdUnidade, new { @class = "col-md-3 col-sm-3 col-lg-3 col-xs-3 control-label" })
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6">
+                    @Html.DropDownListFor(i => i.IdUnidade, Model.Unidades, "Selecione", new { @class = "form-control", id = "Unidade", ReadOnly=true })
+                </div>
+                @Html.ValidationMessageFor(i => i.IdUnidade)
+            </div>
+            <div class="form-group height-40">
+                @Html.LabelFor(i => i.Local, new { @class = "col-md-3 col-sm-3 col-lg-3 col-xs-3 control-label" })
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6">
+                    @Html.TextBoxFor(i => i.Local, new { @class = "form-control", id = "Local" })
+                </div>
+                @Html.ValidationMessageFor(i => i.Local)
+            </div>
+            <div class="form-group height-40">
+                @Html.LabelFor(i => i.IdOrdenacao, new { @class = "col-md-3 col-sm-3 col-lg-3 col-xs-3 control-label" })
+                <div class="col-md-4 col-sm-4 col-lg-3 col-xs-3">
+                    @Html.DropDownListFor(i => i.IdOrdenacao, Model.Ordenacoes, new { @class = "form-control", id = "Ordenacao" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(i => i.TempoRefresh, new { @class = "col-md-3 col-sm-3 col-lg-3 col-xs-3 control-label" })
+                <div class="col-md-3 col-sm-3 col-lg-2 col-xs-3">
+                    @Html.TextBoxFor(i => i.TempoRefresh, new { @class = "form-control", id = "TempoRefresh" })
+                    @Html.ValidationMessageFor(i => i.TempoRefresh)
+                </div>
+
+                @Html.LabelFor(i => i.isAtivo, new { @class = "col-md-1 col-sm-1 col-lg-1 col-xs-1 control-label" })
+                <div class="col-md-3 col-sm-3 col-lg-3 col-xs-3">
+                    @{
+                        List<SelectListItem> listStatus = new List<SelectListItem>();
+                        listStatus.Add(new SelectListItem { Text = "Ativo", Value = "True" });   
+                        listStatus.Add(new SelectListItem { Text = "Inativo", Value = "False" });                       
+                    }
+                    @Html.DropDownListFor(i => i.isAtivo, listStatus, new { @class = "form-control", id = "Ativo" })
+                </div>
+            </div>            
+            <div class="form-group height-40">
+                <div class="col-md-10 col-sm-12 col-xs-12 col-lg-10">
+                    <div class="clearfix">
+                        <span class="pull-right">                                
+                            <input type="submit" value="Salvar" class="btn btn-primary" />
+                            @Html.ActionLink("Voltar", "Index", new { }, new { @class = "btn btn-primary btn-outline" })
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }
+            <div class="row">
+                <div class="col col-lg-1">
+                    @if (Model.Id > 0)
+                    {
+                    <button type="button" class="btn btn-primary" style="float: left !important;" data-toggle="modal" data-target="#especialidadeModal">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                    }
+                    else
+                    {
+                    <button type="button" class="btn btn-primary disabled" style="float: left !important;">
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                    }
+                </div>
+            </div>
+            <div id="contentConfigEspec">
+                @{
+                    Html.RenderPartial("_GridConfigEspec", Model.Especialidades);
+                }
+            </div>
+        
+    </div>
+</div>
+
+<div class="modal fade" id="especialidadeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="especialidadeLabel">Especialidades do Painel</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-outline" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="salvarEspecialidades" data-dismiss="modal" onclick="javascript: AdicionarEspecialidades();">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        if($('#Codigo').length==0){
+            $('#Unidade').removeAttr('ReadOnly')
+        }
+    })
+    $('#especialidadeModal').on('show.bs.modal', function (event) {
+        var modal = $(this);
+        var unidade = $('#Unidade');
+        $.ajax({
+            url: '@Url.Action("GridEspecialidades")/'+unidade.val(),
+            type: "POST",
+            success: function (partialView) {
+                modal.find(".modal-body").html(partialView);
+                EsconderEspecialidadesModal();
+            }
+        });
+    });
+    function EsconderEspecialidadesModal() {
+        var selecionados = $("#especialidadesGrid tbody tr[data-idEspecialidade]");
+        $.each(selecionados, function (i, tr) {
+            var id = $(tr).attr("data-idEspecialidade");
+            $("#especialidadeModal .modal-body tbody [data-idEspecialidade='" + id + "']").hide();
+        });
+    }
+    function AdicionarEspecialidades() {
+        var selecionados = $("#especialidadeModal .modal-body tbody tr").has( 'input[type=checkbox]:checked' );
+        var unidade = $('#Unidade');
+        var listaId = [];
+        $.each(selecionados, function (i, tr) {
+            var jsonEspecialidade = {
+                "IdPainelConfiguracao": $("#Codigo").val(),
+                "IdEspecialidade": $(tr).attr("data-idEspecialidade")
+            };
+            listaId.push(jsonEspecialidade);
+        });
+        var painelConfig = {
+            "Id": $("#Codigo").val(),
+            "IdUnidade": $('#Unidade').val(),
+            "Especialidades": listaId
+        };
+        $.ajax({
+            url: '@Url.Action("AddPainelConfigEspec")',
+            type: "POST",
+            data: JSON.stringify(painelConfig),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                if (data.status == "Success") {
+                    $.post(data.url, function (partial) {
+                        $('#contentConfigEspec').html(partial);
+                        $("#notificacao").html($("<div>").addClass("alert alert-success")
+                                                 .append($("<button>").addClass("close")
+                                                                      .attr("data-dismiss", "alert")
+                                                                      .attr("aria-hidden", "true")
+                                                                      .append("&times;"))
+                                                 .append("Especialidade adicionada com sucesso!"));
+                    });
+                    /*$.each(selecionados, function (i, tr) {
+                        $("#especialidadesGrid").find("tbody")
+                        .append($("<tr>")
+                            .attr("data-idEspecialidade", $(tr).attr("data-idEspecialidade"))
+                            .attr("data-id", data.id)
+                            .append($("<td>").text($(tr).attr("data-nomeespecialidade")))
+                            .append($("<td>").append($("<a>").addClass("glyphicon glyphicon-trash").attr("onclick", "RemoverEspecialidade("+data.id+");"))));
+                    });*/
+                }
+            }
+        });
+    }
+    function RemoverEspecialidade(id) {
+        if (confirm('Tem certeza que deseja remover a Especialidade?')) {
+            $.ajax({
+                url: '@Url.Action("Delete")/'+ id,
+                type: "POST",
+                success: function (data) {
+                    if (data.status == "Success") {
+                        $("#especialidadesGrid tbody tr[data-id='" + id + "']").remove();
+                        $("#notificacao").html($("<div>").addClass("alert alert-success")
+                                                 .append($("<button>").addClass("close")
+                                                                      .attr("data-dismiss","alert")
+                                                                      .attr("aria-hidden","true")
+                                                                      .append("&times;"))
+                                                 .append("Especialidade removida com sucesso!"));
+                    }
+                }
+            });
+        }
+    }
+</script>

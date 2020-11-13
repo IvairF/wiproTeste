@@ -1,0 +1,58 @@
+﻿using Amil.AppHospitais.DTO;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Cors;
+
+namespace Amil.AppHospitais.Api.Controllers
+{
+    [EnableCors("*", "*", "*")]
+    public class GetTokenController : ApiController
+    {
+        [HttpPost]
+        public HttpResponseMessage Post([FromBody]LoginUsuarioDTO usuario)
+        {
+            HttpResponseMessage response = new HttpResponseMessage();
+
+            try
+            {
+                Dictionary<string, string> Details = null;
+
+                using (var client = new HttpClient())
+                {
+                    var user = new Dictionary<string, string>
+                    {
+                        {"Email", usuario.Email },
+                        {"Senha", usuario.Senha },
+                    };                   
+
+                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["LoginAmericas"]);
+                    
+                    var resp = client.PostAsync("GetToken", new FormUrlEncodedContent(user));
+                    resp.Wait(TimeSpan.FromSeconds(40));
+
+                    if (resp.IsCompleted)
+                    {
+                        Details = JsonConvert.DeserializeObject<Dictionary<string, string>>(resp.Result.Content.ReadAsStringAsync().Result);
+                        return Request.CreateResponse(HttpStatusCode.OK, Details);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.BadRequest, resp);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+        
+    }
+}

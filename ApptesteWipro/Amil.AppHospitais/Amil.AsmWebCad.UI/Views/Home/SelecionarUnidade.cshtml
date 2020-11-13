@@ -1,0 +1,37 @@
+﻿@using Amil.PIAVEN.UI.Resources
+@model Amil.PIAVEN.UI.Models.SelecionarUnidadeModel
+@{
+    ViewBag.Title = "Selecionar Unidade";
+    Layout = "~/Views/Shared/_LayoutSemLogin.cshtml";
+}
+<div class="login" style="position: static;">
+    <h1>@Html.Label("Seleção de Unidade")</h1>
+    @using (Html.BeginForm("SelecionarUnidade", "Home", new { ReturnUrl = Request.QueryString["ReturnUrl"] }))
+    {
+        @Html.ValidationSummary(true)
+        <div class="label-text">
+            @Html.Label("Selecione abaixo uma unidade")
+        </div>
+
+        <div class="value-text">
+            @Html.DropDownListFor(model => model.Id, (SelectList)ViewBag.UnidadesBag, "Selecione", new { @class = "form-control" })
+        </div>
+        
+        
+        <p class="submit">
+            <input type="submit" value="Selecionar" id="btn-save" />
+        </p>
+    }
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        $(window).resize(function () {
+            $("#page-wrapper").css("min-height", $(".middle").height() - 50);
+        });
+
+        $("#page-wrapper").css("min-height", $(".middle").height() - 50);
+    });
+</script>

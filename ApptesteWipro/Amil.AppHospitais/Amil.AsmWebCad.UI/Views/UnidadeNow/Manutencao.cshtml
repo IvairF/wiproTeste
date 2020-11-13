@@ -1,0 +1,326 @@
+﻿@using System.Diagnostics.Eventing.Reader
+@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.UnidadeNowModel
+    
+@{
+    ViewBag.Title = Resource.UnidadeTitulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section SectionHead{
+    @Scripts.Render("~/bundles/unidadeNow")
+    @Scripts.Render("~/bundles/EspecialidadeNow")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Unidade.Urls.PesquisaUnidades = '@Url.Action("Pesquisa", "UnidadeNow")';
+            Unidade.Urls.ManutencaoUnidade = '@Url.Action("Manutencao", "UnidadeNow")';
+            Unidade.Urls.limparSession = '@Url.Action("Limpar", "UnidadeNow")';
+            Unidade.Urls.ValidaAcessoPesquisa = '@Url.Action("ValidaAcesso", "UnidadeNow")';
+            Unidade.Urls.EspecialidadeCodigoBaseModal = '@Url.Action("CodigoBaseModal", "UnidadeNow")';
+            Unidade.Urls.UnidadeEspecialidadeCodigoBaseModal = '@Url.Action("CodigoBaseModal", "UnidadeNow")';
+            //Unidade.Urls.ValidarAcessoPesquisa = '@Url.Action("ValidarAcessoPesquisa", "EspecialidadeNow")';
+            Unidade.Urls.PesquisaModalEspecialidades = '@Url.Action("Pesquisa", "EspecialidadeNow")';
+
+
+            Unidade.Urls.PesquisarDivisaoUnidade = '@Url.Action("ListarDivisoes", "UnidadeNow")';
+            Unidade.Urls.ExcluirDivisao = '@Url.Action("ExclusaoDivisao", "UnidadeNow")';
+            Unidade.Urls.IncluirDivisao = '@Url.Action("InclusaoDivisao", "UnidadeNow")';
+
+            Unidade.Urls.PesquisarGrafico = '@Url.Action("ListarGraficos", "UnidadeNow")';
+            Unidade.Urls.ExclusaoGrafico = '@Url.Action("ExclusaoGrafico", "UnidadeNow")';
+
+            Unidade.Urls.PesquisarEspecialidade = '@Url.Action("ListarEspecialidades", "UnidadeNow")';
+            Unidade.Urls.ExcluirEspecialidade = '@Url.Action("ExclusaoEspecialidades", "UnidadeNow")';
+            Unidade.Urls.EditarEspecialidadeUnidade = '@Url.Action("EditarEspecialidade", "UnidadeNow")';
+            Unidade.Urls.InclusaoEspecialidade = '@Url.Action("Manutencao", "UnidadeNow")';
+            Unidade.Urls.IncluirEspecialidadeUnidade = '@Url.Action("IncluirEspecialidadeUnidade", "UnidadeNow")';
+            Unidade.Urls.EspecialidadeUnidadeDivisaoModal = '@Url.Action("CarregarDivisao", "UnidadeNow")';
+            Especialidade.Urls.ValidarAcessoPesquisa = '@Url.Action("ValidarAcessoPesquisa", "EspecialidadeNow")';
+            Especialidade.Urls.PesquisaEspecialidades = '@Url.Action("Pesquisa", "EspecialidadeNow")';
+            @*UnidadeDivisao.Urls.InclusaoDivisao = '@Url.Action("InclusaoDivisao", "UnidadeNow")';*@
+            Unidade.Urls.CarregaFase = '@Url.Action("CarregarFase", "UnidadeNow")';
+
+            Unidade.Titulo = '@Resource.UnidadeTitulo';
+            Unidade.Mensagens.MensagemUF = '@Resource.MensagemUF';
+            Unidade.Mensagens.SucessoExclusao = '@Resource.MensagemSucessoExclusao';
+            Unidade.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusaoEditavel';
+            Unidade.Mensagens.SucessoGravacao = '@Resource.MensagemSucessoGravacao';
+
+            UnidadeDivisao.Mensagens.AlertaDivisao = '@Resource.AlertaDivisao';
+            UnidadeDivisao.Urls.InclusaoDivisao = '@Url.Action("InclusaoDivisao", "UnidadeNow")';
+           
+
+
+            ManutencaoUnidade.Inicializar();
+
+
+            $("#Nome").on("input", function () {
+                var regexp = /[^a-zA-ZÀ-ú. ]/g;
+
+                if (this.value.match(regexp)) {
+                    $(this).val(this.value.replace(regexp, ''));
+                }
+
+                $(this).val(this.value.toLowerCase().replace(/(^| )(\w)/g, function (s) { return s.toUpperCase() }));
+                $(this).val(this.value.replace(/( )+/g, ' '));
+
+            });
+
+            $('.sonumero').on("input", function () {
+                $(this).val(this.value.replace(/\D/g, ''));
+
+            });
+
+            $('#tabprofissional a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            })
+
+        });
+    </script>
+}
+
+@using (Html.BeginForm("frmManutencaoUnidade", "Unidade", FormMethod.Post, new { id = "frmManutencaoUnidade", @class = "form-horizontal", role = "form", onsubmit = "return false;" }))
+{
+ 
+    <div>
+        <div class="panel-full">
+            @Html.ValidationSummary(true)
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @Resource.TituloFormDadosUnidade*
+                    <div class="pull-right" data-toggle="collapse" data-target="#insereGrupo">
+                        <button type="button" class="btn btn-default btn-xs" data-toggle="button">
+                            <i class="fa fa-minus-square"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body collapse in" id="insereGrupo">
+                    <div class="form-group">
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.HiddenFor(a => a.Tipo)
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.Label(Resource.Nome, (object)new { @class = "control-label" })
+                                @Html.TextBoxFor(a => a.Nome, (object)new { @class = "form-control", @maxlength = 50 })
+                                @Html.ValidationMessageFor(a => a.Nome)
+                            </div>
+
+                            <div class="col-lg-2">
+                                @Html.Label(Resource.UF, (object)new { @class = "control-label" })
+                                @Html.DropDownListFor(a => a.UF, (SelectList)ViewBag.UFBag, @Resource.Selecione, (object)new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.UF)
+                            </div>
+
+                            <div class="col-md-2">
+                                @Html.Label(Resource.Regional, (object)new { @class = "control-label" })
+                                @Html.DropDownListFor(a => a.Regional, (SelectList)ViewBag.RegionalBag, @Resource.Selecione, (object)new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.Regional)
+                            </div>
+
+                            <div class="col-md-4">
+                                @Html.Label(Resource.EscalaRisco, (object)new { @class = "control-label" })
+                                @Html.DropDownListFor(a => a.EscalaRisco, (SelectList)ViewBag.StatusUsuarioBag, @Resource.Selecione, (object)new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.EscalaRisco)
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.Label("Base", (object)new { @class = "control-label" })
+                                @Html.DropDownListFor(b => b.BaseWPD, (SelectList)ViewBag.Base, @Resource.Selecione, (object)new { @class = "form-control" })
+                                @Html.ValidationMessageFor(b => b.BaseWPD)
+                            </div>
+
+                            <div class="col-lg-3">
+                                @Html.Label("Codigo na Base", (object)new { @class = "control-label" })
+                                @Html.TextBoxFor(a => a.CodigoCorporativo, (object)new { @class = "form-control", @maxlength = 50 })
+                                @Html.ValidationMessageFor(a => a.CodigoCorporativo)
+                            </div>
+
+                            <div class="col-lg-2">
+                                @Html.Label(Resource.Status, (object)new { @class = "control-label" })
+                                @Html.DropDownListFor(a => a.Status, (SelectList)ViewBag.StatusBag, @Resource.Selecione, (object)new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.Status)
+                            </div>
+
+                        </div>
+
+                        <br />
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" class="btn btn-primary" id="btnSalvar" title="@Resource.TituloBotaoSalvar">@Resource.Salvar</button>
+                            <button type="reset" class="btn btn-outline btn-primary" id="btnVoltar" title="@Resource.TituloBotaoVoltar">@Resource.Voltar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+      
+}
+<div id="divtatbs">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#especialidades" data-toggle="tab" title="Especialidades" onclick="UnidadeEspecialidade.PesquisarEspecialidade();">Especialidades
+            </a>
+        </li>
+        <li>
+            <a href="#divisoes" data-toggle="tab" title="Divisões" onclick="UnidadeDivisao.PesquisarDivisao();">Divisões
+            </a>
+        </li>
+        <li>
+            <a href="#graficos" data-toggle="tab" title="Gráficos" onclick="UnidadeGrafico.PesquisarGrafico();">Gráficos
+            </a>
+        </li>
+
+    </ul>
+
+    <div class="tab-content">
+        <div id="especialidades" class="tab-pane fade in active">
+            <button type="button" class="btn btn-primary" id="btnNovoEsp" title="Incluir Novo" style="float: left !important; margin-bottom: 10px;" data-toggle="modal" data-target="#especialidadesModal">
+                Incluir Especialidade
+            </button>
+
+            <div id="dttEspecialidades" class="dataTables_wrapper form-inline">
+                <table id="grvEspecialidades" style="cursor: pointer" data-dtid="idConselho" class="table table-striped table-bordered dataTable">
+                    <thead>
+                        <tr>
+                            <th data-dtaction="Acoes" data-column-class="align-mid width-5">@Resource.Acoes</th>
+                            <th data-dtcolumn="ESPECIALIDADE" data-column-class="align-left width-60">Especialidade</th>
+                            <th data-dtcolumn="CD_ESPEC_UNIDADE">Codigo na Base</th>
+                            <th data-dtcolumn="ID_UNIDADE_ESPECIALIDADE" data-column-class="hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="divisoes" class="tab-pane fade">
+            <button type="button" class="btn btn-primary" id="btnNovoDivisao" title="Incluir Novo" style="float: left !important; margin-bottom: 10px;" onclick="UnidadeDivisao.IncluirModal();">
+                Incluir Divisão
+            </button>
+
+            <div id="dttDivisoes" class="dataTables_wrapper form-inline">
+                <table id="grvDivisoes" style="cursor: pointer" data-dtid="ID_UNIDADE_DIVISAO" class="table table-striped table-bordered dataTable">
+                    <thead>
+                        <tr>
+                            <th data-dtaction="Acoes" data-column-class="align-mid width-10">@Resource.Acoes</th>
+                            <th data-dtcolumn="NM_DIVISAO" data-column-class="align-left width-50">Divisão</th>
+                            <th data-dtcolumn="ID_UNIDADE_DIVISAO" data-column-class="hide"></th>
+                            <th data-dtcolumn="ID_UNIDADE" data-column-class="hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="graficos" class="tab-pane fade">
+            <button type="button" class="btn btn-primary" id="btnNovoGrafico" title="Incluir Novo" style="float: left !important; margin-bottom: 10px;" onclick="UnidadeGrafico.IncluirModal();">
+                Incluir Gráfico
+            </button>
+
+            <div id="dttGraficos" class="dataTables_wrapper form-inline">
+                <table id="grvGraficos" style="cursor: pointer" data-dtid="idGrafico" class="table table-striped table-bordered dataTable">
+                    <thead>
+                        <tr>
+                            <th data-dtaction="Acoes" data-column-class="align-mid width-5">@Resource.Acoes</th>
+                            <th data-dtcolumn="NOW_FASE.NM_FASE" data-column-class="align-mid width-10">Fase</th>
+                            <th data-dtcolumn="NM_UNIDADE_FASE" data-column-class="align-mid width-20">Titulo</th>
+                            <th data-dtcolumn="QT_PACIENTES_MAXIMO" data-column-class="align-mid width-5" style="font-size:11px;">Fundo de Escala Pacientes</th>
+                            <th data-dtcolumn="QT_MINUTOS_MAXIMO" data-column-class="align-mid width-5" style="font-size:11px;">Fundo de Escala Minutos</th>
+                            <th data-dtcolumn="NR_ORDEM" data-column-class="align-mid width-5" style="font-size:11px;">Ordem de Exibição</th>
+                            <th data-dtcolumn="ID_UNIDADE_FASE" data-column-class="hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+    </div>
+    <div id="divisoes" class="tab-pane fade">
+        <button type="button" class="btn btn-primary" id="btnNovoDivisao"  title="Incluir Novo" style="float: left !important; margin-bottom:10px;" onclick="ManutencaoUnidade.IncluirDivisaoModal();">
+        Incluir Divisão
+        </button>
+</div>
+
+<div class="modal fade" id="especialidadesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="especialidadesLabel">Pesquisa Especialidades</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="codigoBaseModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="CodigoBaseModalLabel">Cadastro Especialidade</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade" id="especialidadeUnidadeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="especialidadeUnidadeModalLabel">Cadastro Especialidade</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_CadastroDivisao")
+@*@Html.Partial("_CadastroGrafico")*@
+<script type="text/javascript">
+
+    $('#especialidadesModal').on('show.bs.modal', function (event) {
+        var modal = $(this);
+        $.ajax({
+            url: '@Url.Action("CarregarPesquisa")',
+            type: "POST",
+            data: {
+                Nome: $("#txtNomeFiltro").val()
+            },
+            success: function (partialView) {
+                modal.find(".modal-body").html(partialView);
+            }
+        });
+    });
+
+</script>
+
+
+
+
+

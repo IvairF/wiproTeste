@@ -1,0 +1,111 @@
+﻿@using Amil.AsmWebCad.UI.Resources;
+@model Amil.AsmWebCad.UI.Models.PerfilModel
+
+
+
+@{
+    ViewBag.Title = Resource.Perfil_Titulo;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section SectionHead{
+    @Scripts.Render("~/bundles/perfil")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Perfil.Urls.PesquisaPerfis = '@Url.Action("Pesquisa", "Perfil")';
+            Perfil.Urls.ManutencaoPerfil = '@Url.Action("Manutencao", "Perfil")';
+            Perfil.Urls.ExclusaoPerfil = '@Url.Action("Exclusao", "Perfil")';
+            Perfil.Urls.IncluirPerfil = '@Url.Action("Incluir", "Perfil")';
+            Perfil.Urls.ValidarAcessoPesquisa = '@Url.Action("ValidarAcesso", "Perfil")';
+            Perfil.Urls.UsuarioPerfil = '@Url.Action("UsuariosPerfil", "Perfil")';
+
+            //AL - Token - Mapeamento da controler e sua action
+            Perfil.Urls.GerarToken = '@Url.Action("GerarToken", "Perfil")';
+
+            Perfil.Titulo = '@Resource.Perfil_Titulo';
+
+            Perfil.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusaoEditavel';
+            Perfil.Mensagens.PreenchaDescricao = '@Resource.MensagemPreenchaNome';
+            Perfil.Mensagens.PreenchaSistema = '@Resource.MensagemPreenchaSistema';
+            
+            PesquisaPerfil.Mensagens.SucessoExclusao = '@Resource.MensagemSucessoExclusao';
+            PesquisaPerfil.Mensagens.ConfirmacaoExclusao = '@Resource.MensagemConfirmacaoExclusao';
+            PesquisaPerfil.Mensagens.PreenchaSistema = '@Resource.MensagemPreenchaSistema';
+            PesquisaPerfil.Inicializar();
+
+            $("#txtCodigoFiltro").on("input", function () {
+                $(this).val(this.value.toUpperCase());
+             
+            });           
+
+        });
+
+
+    </script>
+}
+
+<form class="form-horizontal" role="form" onsubmit="return false;" id="search-form">
+    <div class="panel-full">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                @Resource.PesquisaPerfil
+                <div class="pull-right" data-toggle="collapse" data-target="#pequisaPerfil">
+                    <button type="button" class="btn btn-default btn-xs" data-toggle="button">
+                        <i class="fa fa-minus-square"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="panel-body collapse in" id="pequisaPerfil">
+                <div class="form-group">
+                    @Html.HiddenFor(a => a.PrimeiroAcesso)
+                    <div class="row" >
+                        <div class="col-lg-3">
+                            <label class="control-label">@Resource.Perfil</label>
+                            <input class="form-control" type="text" id="txtDescricaoFiltro" maxlength="70" value="@Model.Descricao"/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="control-label">@Resource.Codigo</label>
+                            <input class="form-control" type="text" id="txtCodigoFiltro" maxlength="50" value="@Model.Codigo"/>
+                        </div>
+                        <div class="col-lg-3">
+                            <label class="control-label">@Resource.Sistema</label>
+                            @Html.DropDownListFor(model => model.IdSistema, (SelectList)ViewBag.SistemaBag, @Resource.Todos, (object)new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <br />
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-primary" onclick="PesquisaPerfil.Pesquisar();" title="@Resource.TituloBotaoPesquisar">@Resource.Pesquisar</button>
+                        <button type="reset" class="btn btn-outline btn-primary" onclick="PesquisaPerfil.Limpar();" title="@Resource.TituloBotaoLimpar">@Resource.Limpar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="panel-full">
+    <div class="pull-left">
+        <div class="form-actions">
+            <button title="@Resource.TituloBotaoNovo" id="btnInserir" class="btn btn-primary btnBotaoGridDireita" type="button" onclick="PesquisaPerfil.Incluir();">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+        </div>
+    </div>
+    <div id="dttPerfis" class="dataTables_wrapper form-inline">
+        <table id="grvPerfis" style="cursor: pointer" data-dtid="idProtocolo" class="table table-striped table-bordered dataTable">
+            <thead>
+                <tr>
+                    <th data-dtcolumn="Descricao">@Resource.Perfil</th>
+                    <th data-dtcolumn="Sistema" data-column-class="align-mid width-10">@Resource.Sistema</th>
+                    <th data-dtcolumn="Codigo" data-column-class="align-mid width-10">@Resource.Codigo</th>
+                    <th data-dtaction="Acoes" data-column-class="align-mid width-10">@Resource.Acoes</th>
+                    <th data-dtcolumn="Id" data-column-class="hide" ></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>

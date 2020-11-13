@@ -1,0 +1,5 @@
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Scripts\bin\Debug\Amil.AppHospitais.Scripts.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Scripts\bin\Debug\Amil.AppHospitais.Scripts.pdb
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Scripts\obj\Debug\Amil.AppHospitais.Scripts.csprojResolveAssemblyReference.cache
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Scripts\obj\Debug\Amil.AppHospitais.Scripts.dll
+C:\SMED\branches\ASM_SEPARA_BASE\dotnet\framework45\AppHospitais\Amil.AppHospitais\Amil.AppHospitais.Scripts\obj\Debug\Amil.AppHospitais.Scripts.pdb
